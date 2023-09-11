@@ -1,0 +1,14 @@
+@use '../../../node_modules/normalize.css/normalize';
+
+@use 'abstracts';
+@use "components";
+
+body {
+    background-color: $background-color;
+    color: $font-color;
+    padding: 2rem;
+}
+
+img, embed, object, video {
+    max-width: 100%;
+}

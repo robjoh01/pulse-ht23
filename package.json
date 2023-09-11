@@ -2,20 +2,31 @@
   "name": "pulse",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "stylelint \"**/*.scss\"",
-    "style": "sass public/styles/scss/style.scss public/styles/style.css --no-source-map",
-    "style-min": "sass public/styles/scss/style.scss public/styles/style.min.css --no-source-map --style compressed"
+    "style-dark": "sass public/styles/scss/style-dark.scss public/styles/style-dark.css --no-source-map",
+    "style-light": "sass public/styles/scss/style-light.scss public/styles/style-light.css --no-source-map",
+    "style": "npm run style-dark & npm run style-light"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robjoh01/pulse-ht23.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robjoh01/pulse-ht23/issues"
+  },
+  "homepage": "https://github.com/robjoh01/pulse-ht23#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "promise-mysql": "^5.2.0",
-    "scss": "^0.2.4"
+    "sass-npm": "^1.0.2"
   },
   "devDependencies": {
     "normalize.css": "^8.0.1",

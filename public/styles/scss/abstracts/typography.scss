@@ -1,0 +1,14 @@
+@use 'variables';
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    line-height: variables.$base-line-height;
+}
