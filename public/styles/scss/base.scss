@@ -2,11 +2,10 @@
 
 @use 'abstracts';
 @use "components";
+@use "pages";
 
 body {
-    background-color: $background-color;
-    color: $font-color;
-    padding: 2rem;
+    background-color: hsl(0, 0%, 93%);
 }
 
 img, embed, object, video {

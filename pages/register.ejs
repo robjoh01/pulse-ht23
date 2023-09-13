@@ -1,0 +1,69 @@
+<%- include("./../partials/header.ejs") %>
+
+<main class="main">
+    <div class="registration-container">
+        <div class="registration-root">
+            <div class="registration-header"></div>
+            <form class="form">
+                <div class="form-input">
+                    <label for="username" id="username-label">Username</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" placeholder="Enter your username..." required>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label for="email" id="email-label">Email</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="email" name="f_email" placeholder="Enter your email..." required>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label for="password" id="password-label">Password</label>
+                    <div class="form-input">
+                        <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" minlength="6" maxlength="12" placeholder="Enter your password..." required>
+                        <div class="form-password-toggle">
+                            <button class="" type="button" aria-label="toggle password visibility">
+                                <!-- Add svg here -->
+                                <i class="bi bi-eye-slash" id="togglePassword"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <label for="password-again" id="password-again-label">Password (Again)</label>
+                    <div class="form-input">
+                        <input class="form-text-input" type="password" aria-invalid="false" id="password-again" name="f_password_again" minlength="6" maxlength="12" placeholder="Enter your password again..." required>
+                        <div class="form-password-toggle">
+                            <button class="" type="button" aria-label="toggle password visibility">
+                                <!-- Add svg here -->
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label>
+                        <span>
+                            <input type="checkbox" required>
+                            <!-- Add SVG here -->
+                        </span>
+                        <span>
+                            <span>I agree to </span>
+                            <a href="#">privacy policy & terms</a>
+                        </span>
+                    </label>
+                </div>
+                <div class="form-input">
+                    <button class="" type="submit">
+                        Sign up
+                    </button>
+                </div>
+                <div class="form-input">
+                    <p>Already have an account?</p>
+                    <p>
+                        <a href="/login">Sign in instead</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include("./../partials/footer.ejs") %>

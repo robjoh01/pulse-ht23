@@ -1,0 +1,67 @@
+<%- include("./../partials/header.ejs") %>
+
+<main class="main">
+    <div class="profile-container">
+        <!-- Grid system -->
+        <div class="profile-root">
+            <div class="profile-header"></div>
+            <form class="form">
+                <div class="form-input">
+                    <img>
+                    <div class="form-input">
+                        <label for="account-settings-upload-image" id="account-settings-upload-image-label">Upload New Photo</label>
+                        <div class="form-output">
+                            <input class="form-text-input" type="file" accept="image/png, image/jpeg" aria-invalid="false" id="account-settings-upload-image" name="f_profile_image">
+                        </div>
+                    </div>
+                    <button type="button">
+                        Reset
+                    </button>
+                    <p>Allowed PNG or JPEG. Max size of 800K.</p>
+                </div>
+                <div class="form-input">
+                    <label for="username" id="username-label">Username</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" value="johnDoe" readonly required>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label for="display-name" id="display-name-label">Display Name</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="display-name" name="f_display_name" value="John Doe">
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label for="email" id="email-label">Email</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="email" aria-invalid="false" id="email" name="f_email" value="johnDoe@example.com">
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label for="phone-number" id="phone-number-label">Phone Number</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="tel" aria-invalid="false" id="phone-number" name="f_phone_number" value="555-XXX">
+                    </div>
+                </div>
+                <div class="form-input">
+                    <button type="button">
+                        Save Changes
+                    </button>
+                    <button type="reset">
+                        Reset
+                    </button>
+                </div>
+                <div class="form-input">
+                    <p>
+                        <a href="/change_password">Change Password</a>
+                    </p>
+                    <button type="button">
+                        Delete Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include("./../partials/footer.ejs") %>

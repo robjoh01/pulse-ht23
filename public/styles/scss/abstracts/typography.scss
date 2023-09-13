@@ -1,5 +1,7 @@
 @use 'variables';
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Old+Permic&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -11,4 +13,8 @@ html {
 
 body {
     line-height: variables.$base-line-height;
+}
+
+a {
+    font-family: 'Noto Sans Old Permic', sans-serif;
 }

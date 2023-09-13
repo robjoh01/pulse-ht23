@@ -1,0 +1,51 @@
+<%- include("./../partials/header.ejs") %>
+
+<main class="main">
+    <div class="login-container">
+        <div class="login-root">
+            <div class="login-header"></div>
+            <form class="form">
+                <div class="form-input">
+                    <label for="username" id="username-label">Username</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="username">
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label for="password" id="password-label">Password</label>
+                    <div class="form-output">
+                        <input class="form-text-input" type="password" aria-invalid="false" id="password">
+                        <div class="form-password-toggle">
+                            <button class="" type="button" aria-label="toggle password visibility">
+                                <!-- Add svg here -->
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <label>
+                        <span>
+                            <input type="checkbox">
+                            <!-- Add svg here -->
+                        </span>
+                        <span>Remember Me</span>
+                    </label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <div class="form-input">
+                    <button class="" type="button">
+                        Login
+                    </button>
+                </div>
+                <div class="form-input">
+                    <p>New on our platform?</p>
+                    <p>
+                        <a href="/register">Create an account</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include("./../partials/footer.ejs") %>
