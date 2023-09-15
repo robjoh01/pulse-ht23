@@ -121,7 +121,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','password1','Admin','admin@gmail.com','555-XXXX'),('ca7941f7-9205-4f31-a92b-02c26bce8e17','roje22','password','Robin Johannesson','robinjohannesson@gmail.com','555-XXXX');
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','Admin','admin@gmail.com','555-XXXX'),('ca7941f7-9205-4f31-a92b-02c26bce8e17','temp','password','Tempy Tempy','tempy@gmail.com','555-XXXX');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,4 +235,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-11 15:53:38
+-- Dump completed on 2023-09-15 16:32:22

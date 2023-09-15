@@ -256,13 +256,22 @@ BEGIN
         username = arg_username
     ;
 
-    -- If the username exists, check if the provided password (if provided) matches the stored password
+   -- If the username exists, check if the provided password (if provided) matches the stored password
     IF (arg_password IS NULL OR stored_password = arg_password) THEN
-        -- Delete the user if the password matches or no password is provided
+        -- Disable foreign key checks temporarily
+        SET FOREIGN_KEY_CHECKS = 0;
+
+        -- Delete the user's assignments from assignment table
+        DELETE FROM `assignment`
+        WHERE `employee_id` = (SELECT `employee_id` FROM `user` WHERE `username` = arg_username);
+
+        -- Delete the user from user table
         DELETE FROM `user`
-        WHERE
-            `username` = arg_username
-        ;
+        WHERE `username` = arg_username;
+
+        -- Re-enable foreign key checks
+        SET FOREIGN_KEY_CHECKS = 1;
+
         RETURN TRUE; -- Deletion successful
     ELSE
         RETURN FALSE; -- Deletion failed (either username doesn't exist or incorrect password)

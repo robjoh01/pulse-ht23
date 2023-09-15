@@ -8,6 +8,15 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10; // Hash exponent
 
 let helpers = {
+    minutesToMilliseconds: function(minutes) {
+        return minutes * 60000;
+    },
+    hoursToMilliseconds: function(hours) {
+        return hours * 3600000;
+    },
+    daysToMilliseconds: function(days) {
+        return days * 86400000;
+    },
     connectDatabase: async function() {
         return await mysql.createConnection(config);
     },
@@ -31,7 +40,7 @@ let helpers = {
     loginUser: async function(username, password) {
         const db = await this.connectDatabase();
 
-        let sql = `SELECT get_hashed_password(?);`;
+        let sql = `SELECT fetch_password(?);`;
         let res = await db.query(sql, [username]);
 
         db.end();
@@ -44,10 +53,41 @@ let helpers = {
 
         return await bcrypt.compare(password, hashedPassword);
     },
+    fetchUserID: async function(username) {
+        const db = await this.connectDatabase();
+
+        let sql = `SELECT fetch_employee_id(?);`;
+        let res = await db.query(sql, [username]);
+
+        db.end();
+
+        return res[0][Object.keys(res[0])[0]];
+    },
+    getUserData: async function(keyword) {
+        const db = await this.connectDatabase();
+
+        let sql = `
+            SELECT
+                *
+            FROM v_users
+            WHERE
+                username = ?
+                OR employee_id = ?
+            ;
+        `;
+
+        let res = await db.query(sql, [keyword, keyword]);
+
+        db.end();
+
+        return JSON.parse(JSON.stringify(res[0]));
+    },
     deleteUser: async function(username, password) {
         const db = await this.connectDatabase();
 
-        let sql = `SELECT get_hashed_password(?);`;
+        // TODO: Throw instead of returning false?
+
+        let sql = `SELECT fetch_password(?);`;
         let res = await db.query(sql, [username]);
 
         const hashedPassword = res[0][Object.keys(res[0])[0]];
@@ -58,7 +98,9 @@ let helpers = {
 
         let isValid = await bcrypt.compare(password, hashedPassword);
 
-        if (!isValid) return;
+        if (!isValid) {
+            return false;
+        }
 
         sql = `SELECT delete_user(?, ?);`;
         res = await db.query(sql, [username, hashedPassword]);

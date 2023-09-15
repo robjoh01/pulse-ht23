@@ -43,7 +43,7 @@ VALUES
 INSERT INTO user
     (`employee_id`, `username`, `password`, `display_name`, `email_address`, `phone_number`)
 VALUES
-    ("2e889992-6993-42c2-9366-cf9249a1e61b", "admin", "password1", "Admin", "admin@gmail.com", "555-XXXX")
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "admin", "$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa", "Admin", "admin@gmail.com", "555-XXXX")
 ;
 
 -- Insert project into database
@@ -98,7 +98,7 @@ SELECT fetch_password("john_doe");
 SET @employee_id = (SELECT fetch_employee_id("john_doe"));
 
 -- Call edit_user with the captured employee_id
-CALL edit_user(@employee_id, NULL, "John Doe", "johndoe@gmail.com", NULL, @success);
+CALL edit_user(@employee_id, NULL, "John Doe", "johndoe@example.com", NULL, @success);
 
 -- Check the result
 SELECT @success;

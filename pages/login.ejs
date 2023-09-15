@@ -4,17 +4,17 @@
     <div class="login-container">
         <div class="login-root">
             <div class="login-header"></div>
-            <form class="form">
+            <form class="form" method="POST" action="/login/posted">
                 <div class="form-input">
                     <label for="username" id="username-label">Username</label>
                     <div class="form-output">
-                        <input class="form-text-input" type="text" aria-invalid="false" id="username">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" value="admin">
                     </div>
                 </div>
                 <div class="form-input">
                     <label for="password" id="password-label">Password</label>
                     <div class="form-output">
-                        <input class="form-text-input" type="password" aria-invalid="false" id="password">
+                        <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" value="password1">
                         <div class="form-password-toggle">
                             <button class="" type="button" aria-label="toggle password visibility">
                                 <!-- Add svg here -->
@@ -25,7 +25,7 @@
                 <div class="form-input">
                     <label>
                         <span>
-                            <input type="checkbox">
+                            <input type="checkbox" name="f_remember">
                             <!-- Add svg here -->
                         </span>
                         <span>Remember Me</span>
@@ -33,7 +33,7 @@
                     <a href="#">Forgot Password?</a>
                 </div>
                 <div class="form-input">
-                    <button class="" type="button">
+                    <button class="" type="submit">
                         Login
                     </button>
                 </div>

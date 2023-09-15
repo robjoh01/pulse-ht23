@@ -5,7 +5,7 @@
         <!-- Grid system -->
         <div class="profile-root">
             <div class="profile-header"></div>
-            <form class="form">
+            <form class="form" method="POST" action="/profile/posted">
                 <div class="form-input">
                     <img>
                     <div class="form-input">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="form-input">
-                    <button type="button">
+                    <button type="submit">
                         Save Changes
                     </button>
                     <button type="reset">
@@ -55,9 +55,12 @@
                     <p>
                         <a href="/change_password">Change Password</a>
                     </p>
-                    <button type="button">
+                    <p>
+                        <a href="/delete">Delete Account</a>
+                    </p>
+                    <!-- <button type="button">
                         Delete Account
-                    </button>
+                    </button> -->
                 </div>
             </form>
         </div>
