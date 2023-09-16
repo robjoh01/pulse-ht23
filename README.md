@@ -1,10 +1,12 @@
-![Banner](./public/img/markup/Template_Logo.png)
-
 <div align="center">
+
+![Banner](./public/img/markup/Template_Logo.png)
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/robjoh01/pulse-ht23/blob/HEAD/LICENSE.txt)
 
 </div>
+
+#
 
 ## Description
 
@@ -29,6 +31,16 @@ COOKIE_SECRET
 GMAIL_NAME
 GMAIL_USER
 GMAIL_PASS
+```
+
+Also create `pulse.json` file (at `config/db/pulse.json`) and create these variables:
+
+```
+host
+user
+password
+database = pulse
+multipleStatements = true
 ```
 
 ## 🔗 Helpful links

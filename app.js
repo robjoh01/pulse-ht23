@@ -15,12 +15,12 @@ require("dotenv").config();
 const app = express();
 const store = new session.MemoryStore();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.set("view engine", "ejs");
 
 const sessionMiddleware = session({
-    secret: process.env.COOKIE_SECRET || "17b54fc2-1761-4e7d-9402-2905f108303e",
+    secret: process.env.COOKIE_SECRET,
     cookie: { maxAge: minutesToMilliseconds(45) },
     resave: false,
     saveUninitialized: false,
