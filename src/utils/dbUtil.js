@@ -3,24 +3,15 @@
 "use strict";
 
 const mysql = require("promise-mysql");
-const config = require("./../config/db/pulse.json");
+const config = require("./../../config/db/pulse.json");
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // Hash exponent
 
-let helpers = {
-    minutesToMilliseconds: function(minutes) {
-        return minutes * 60000;
-    },
-    hoursToMilliseconds: function(hours) {
-        return hours * 3600000;
-    },
-    daysToMilliseconds: function(days) {
-        return days * 86400000;
-    },
+let dbUtil = {
     connectDatabase: async function() {
         return await mysql.createConnection(config);
     },
-    createUser: async function(username, password) {
+    createUser: async function(username, password, displayName = "", email = "", phoneNumber = "") {
         try {
             const db = await this.connectDatabase();
 
@@ -125,6 +116,13 @@ let helpers = {
 
         return res;
     },
+    /**
+    * Checks if the user exists in the database.
+    * @return {Boolean} A value either {true} or {false}.
+    */
+    doesUserExists: async function() {
+
+    },
 };
 
-module.exports = helpers;
+module.exports = dbUtil;
