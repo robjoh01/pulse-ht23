@@ -23,17 +23,26 @@ Nunc tempor viverra dolor et interdum. In ullamcorper risus quis finibus aliquam
 $ npm install
 ```
 
-Create `.env` file and create these variables:
+Create `.env` file:
 
-```
-PORT
-COOKIE_SECRET
-GMAIL_NAME
-GMAIL_USER
-GMAIL_PASS
+```console
+$ touch .env
 ```
 
-Also create `pulse.json` file (at `config/db/pulse.json`) and create these variables:
+```
+PORT=<number>
+COOKIE_SECRET=<id>
+GMAIL_NAME=<string>
+GMAIL_USER=<string>
+GMAIL_PASS=<string>
+```
+
+Also create `pulse.json` file (at `config/db/pulse.json`):
+
+```console
+$ mkdir -p config/db
+$ touch config/db/pulse.json
+```
 
 ```json
 {
