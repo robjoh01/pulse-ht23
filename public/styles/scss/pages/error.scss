@@ -1,0 +1,61 @@
+.error-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: max(50%, 600px);
+    margin: 0 auto;
+}
+
+.error-root {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    @keyframes error-anim {
+        0%, 25%, 50%, 100% {
+            transform: scale(1) rotate(0deg);
+        }
+        12.5%, 37.5% {
+            transform: scale(1.125) rotate(-5deg);
+        }
+        62.5%, 87.5% {
+            transform: scale(1.125) rotate(5deg);
+        }
+    }
+
+    .error-icon {
+        fill: hsl(35, 100%, 59%);
+        stroke: hsl(0, 0%, 11%);
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+        animation-name: error-anim;
+    }
+
+    .error-panel {
+        height: 48px;
+    }
+}
+
+.error-content {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+
+    .error-code {
+        text-align: center;
+        font-size: 5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .error-title {
+        text-align: center;
+        font-size: 3rem;
+    }
+
+    .error-message {
+        text-align: center;
+    }
+}

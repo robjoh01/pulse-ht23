@@ -82,6 +82,10 @@ router.get("/contact", async (req, res) => {
 
     data.title = "Contact";
 
+    data.gmail = process.env.GMAIL_URL;
+    data.github = process.env.GITHUB_URL;
+    data.phone = process.env.PHONE_URL;
+
     res.render("./../pages/contact.ejs", data);
 });
 

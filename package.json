@@ -8,7 +8,10 @@
     "lint": "stylelint \"**/*.scss\"",
     "style-dark": "sass public/styles/scss/style-dark.scss public/styles/style-dark.css --no-source-map",
     "style-light": "sass public/styles/scss/style-light.scss public/styles/style-light.css --no-source-map",
-    "style": "npm run style-dark & npm run style-light"
+    "style": "npm run style-dark & npm run style-light",
+    "style-dark-watch": "sass --watch public/styles/scss/style-dark.scss public/styles/style-dark.css --no-source-map",
+    "style-light-watch": "sass --watch public/styles/scss/style-light.scss public/styles/style-light.css --no-source-map",
+    "style-watch": "npm run style-dark-watch & npm run style-light-watch"
   },
   "repository": {
     "type": "git",

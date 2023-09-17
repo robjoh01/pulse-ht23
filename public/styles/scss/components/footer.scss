@@ -1,3 +1,38 @@
 .footer {
-    
+    bottom: 0;
+    background-color: hsl(0, 0%, 9%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .contact-links {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 2rem;
+
+        a {
+            position: relative;
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 0.8rem;
+            color: hsl(0, 0%, 67%);
+            text-decoration: none;
+            transition: all 250ms ease-in-out 50ms;
+
+            &:hover {
+                color: hsl(0, 0%, 87%);
+            }
+        }
+    }
+}
+
+.copyright {
+    font-size: 14px;
+    letter-spacing: 1.5px;
 }
