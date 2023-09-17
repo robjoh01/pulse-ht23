@@ -35,12 +35,14 @@ GMAIL_PASS
 
 Also create `pulse.json` file (at `config/db/pulse.json`) and create these variables:
 
-```
-host
-user
-password
-database = pulse
-multipleStatements = true
+```json
+{
+    "host": "<hostname>",
+    "user": "<user>",
+    "password": "<password>",
+    "database": "<database>",
+    "multipleStatements": true
+}
 ```
 
 ## 🔗 Helpful links
