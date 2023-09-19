@@ -1,5 +1,3 @@
-// Written by Robin Johannesson
-
 "use strict";
 
 const nodeMailer = require("nodemailer");

@@ -1,0 +1,48 @@
+.drag-drop-root {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.drag-drop-container {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border: 2px dashed hsl(245, 100%, 85%);
+    border-radius: 2rem;
+    min-height: 15rem;
+    padding: 4rem;
+    transition: all 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000); /* easeInOutExpo */
+    background-color: hsl(233, 100%, 98%);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.drag-drop-icon {
+    position: relative;
+    font-size: 6rem;
+    color: darken(orange, 10%);
+    transition: all 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000); /* easeInOutExpo */
+}
+
+.drag-drop-container:hover .drag-drop-icon {
+    transform: scale(1.25);
+}
+
+.drag-drop-label {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        font-style: normal;
+    }
+}

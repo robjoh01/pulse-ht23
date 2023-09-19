@@ -20,6 +20,8 @@ Nunc tempor viverra dolor et interdum. In ullamcorper risus quis finibus aliquam
 ## Installment
 
 ```console
+sudo npm install -g bcrypt
+
 $ npm install
 ```
 

@@ -5,5 +5,8 @@
 @forward 'card';
 
 @forward 'outline';
-@forward 'form';
 @forward 'image';
+
+@forward 'drag-drop-container';
+
+@import 'form';

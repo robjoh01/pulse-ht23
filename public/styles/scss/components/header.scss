@@ -1,7 +1,5 @@
 .header {
     position: relative;
-    display: flex;
-    flex-flow: row wrap;
     border-bottom: 4px solid hsl(0, 0%, 11%);
     box-shadow: 2px 0.5rem 0.5rem 0 hsla(0, 0%, 0%, 0.25);
     -webkit-box-shadow: 2px 0.5rem 0.5rem 0 hsla(0, 0%, 0%, 0.25);
@@ -9,26 +7,48 @@
 
     .nav {
         position: relative;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         align-items: center;
-        justify-content: space-between;
-        width: 100%;
         padding: 0.5rem 4rem;
-        background: hsl(0, 0%, 10%);
-        background: linear-gradient(90deg, hsl(0, 0%, 9%) 0%, hsl(200, 10%, 15%) 25%, hsl(200, 10%, 15%) 75%, hsl(0, 0%, 9%) 100%);
+        background-color: hsl(0, 0%, 9%);
+    }
+}
+
+.nav-logo {
+    width: 100%;
+    display: flex;
+
+    .nav-logo-img {
+        width: 160px;
+        aspect-ratio: 240 / 80;
+
+        img {
+            pointer-events: none;
+            border-radius: 0.5rem;
+        }
     }
 }
 
 .nav-ul {
+    width: 100%;
     display: flex;
-    align-items: center;
     flex-flow: row nowrap;
-    gap: 1rem;
+    align-items: center;
     margin: 0;
+    padding: 0;
 
     .nav-li {
         list-style: none;
     }
+}
+
+.nav-profile {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .nav-link {
@@ -56,9 +76,10 @@
     top: calc(100% + 4px);
     right: 0;
     width: 320px;
-    max-height: 0px;
+    max-height: 0;
     overflow: hidden;
     transition: max-height 1.5s cubic-bezier(1.000, 0.000, 0.000, 1.000) 50ms; /* easeInOutExpo */
+    background-color: hsl(180, 100%, 97%);
 
     &.open-menu {
         max-height: 400px;

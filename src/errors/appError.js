@@ -2,7 +2,7 @@ class AppError extends Error {
     constructor(code, title, message, redirect = "/") {
         super(message);
 
-        this.name = this.constructor.name;  // Use the class name for consistency
+        this.name = this.constructor.name;
         this.type = "redirect";
 
         this.code = code;

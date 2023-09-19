@@ -2,7 +2,7 @@
     bottom: 0;
     background-color: hsl(0, 0%, 9%);
     color: white;
-    padding: 20px;
+    padding: 2rem;
     text-align: center;
 }
 
@@ -15,6 +15,7 @@
         display: flex;
         flex-flow: row nowrap;
         gap: 2rem;
+        list-style: none;
 
         a {
             position: relative;

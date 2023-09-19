@@ -3,12 +3,16 @@
 
 @use '../../../node_modules/normalize.css/normalize';
 
-@use 'abstracts';
-@use "components";
-@use "pages";
+@import 'abstracts';
+@import "components";
+@import "pages";
+
+html, body {
+    height: 100%;
+}
 
 body {
-    background-color: hsl(0, 0%, 87%);
+    background-size: 100vh;
 }
 
 img, embed, object, video {

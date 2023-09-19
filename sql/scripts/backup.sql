@@ -65,7 +65,7 @@ CREATE TABLE `assignment` (
 
 LOCK TABLES `assignment` WRITE;
 /*!40000 ALTER TABLE `assignment` DISABLE KEYS */;
-INSERT INTO `assignment` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','4e658238-d50c-4812-84f2-be58e8be308a',1),('2e889992-6993-42c2-9366-cf9249a1e61b','ba28b243-6889-4c54-a138-ff72333186a2',2);
+INSERT INTO `assignment` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','4e658238-d50c-4812-84f2-be58e8be308a',1),('2e889992-6993-42c2-9366-cf9249a1e61b','ba28b243-6889-4c54-a138-ff72333186a2',2),('ca7941f7-9205-4f31-a92b-02c26bce8e17','6e885bbc-6d26-411e-b978-2962acae4bdd',4);
 /*!40000 ALTER TABLE `assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +111,6 @@ CREATE TABLE `user` (
   `display_name` varchar(32) DEFAULT NULL,
   `email_address` varchar(32) DEFAULT NULL,
   `phone_number` varchar(32) DEFAULT NULL,
-  `image_url` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -122,7 +121,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg');
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','Admin','admin@gmail.com','555-XXXX'),('ca7941f7-9205-4f31-a92b-02c26bce8e17','temp','password','Tempy Tempy','tempy@gmail.com','555-XXXX');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,8 +169,7 @@ SET character_set_client = utf8;
   1 AS `username`,
   1 AS `display_name`,
   1 AS `email_address`,
-  1 AS `phone_number`,
-  1 AS `image_url` */;
+  1 AS `phone_number` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -223,7 +221,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_users` AS select `u`.`employee_id` AS `employee_id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number`,`u`.`image_url` AS `image_url` from `user` `u` group by `u`.`employee_id` */;
+/*!50001 VIEW `v_users` AS select `u`.`employee_id` AS `employee_id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number` from `user` `u` group by `u`.`employee_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -237,4 +235,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-19 21:12:43
+-- Dump completed on 2023-09-19 17:53:16

@@ -6,8 +6,9 @@
 const express = require("express");
 const session = require("express-session");
 const routes = require("./routes/routes.js");
+const routesPosts = require("./routes/routes_posts.js");
 
-const { minutesToMilliseconds } = require("./src/utils/miscUtil.js");
+const { minutesToMilliseconds } = require("./src/utils/conversionUtil.js");
 
 // Make instances
 require("dotenv").config();
@@ -28,16 +29,12 @@ const sessionMiddleware = session({
 });
 
 app.use(sessionMiddleware);
-
 app.use(express.static("public"));
-
 app.use(express.urlencoded({ extended: false }));
-
 app.use(routes);
+app.use(routesPosts);
 
 app.use((error, req, res, next) => {
-    console.error('Error: ', error)
-
     if (error.type == 'redirect') {
         req.session.context = error;
         res.redirect('/error');

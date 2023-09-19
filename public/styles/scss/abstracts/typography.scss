@@ -21,6 +21,7 @@ body {
 
 h1, h2, h3 {
     font-family: 'Inter', sans-serif;
+    color: $font-color-100;
 }
 
 h1 {
@@ -40,8 +41,14 @@ p, span {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
     font-style: italic;
+    color: $font-color-100;
+}
+
+a, span {
+    font-style: normal;
 }
 
 a {
     font-family: 'Manrope', sans-serif;
+    color: hsl(216, 100%, 30%);
 }

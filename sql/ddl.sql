@@ -26,6 +26,7 @@ CREATE TABLE `user`
     `display_name` VARCHAR(32),
     `email_address` VARCHAR(32),
     `phone_number` VARCHAR(32),
+    `image_url` VARCHAR(128),
 
     PRIMARY KEY (`employee_id`)
 );
@@ -70,7 +71,8 @@ SELECT
     u.username,
     u.display_name,
     u.email_address,
-    u.phone_number
+    u.phone_number,
+    u.image_url
 FROM user AS u
 GROUP BY u.employee_id
 ;
@@ -148,10 +150,16 @@ DELIMITER ;
 -- Create functions
 --
 
-DROP FUNCTION IF EXISTS create_user;
-DROP FUNCTION IF EXISTS login_user;
+DROP FUNCTION IF EXISTS generate_guid;
+
 DROP FUNCTION IF EXISTS fetch_employee_id;
 DROP FUNCTION IF EXISTS fetch_password;
+
+DROP FUNCTION IF EXISTS does_user_exist;
+
+DROP FUNCTION IF EXISTS create_user;
+DROP FUNCTION IF EXISTS read_user;
+DROP FUNCTION IF EXISTS update_user;
 DROP FUNCTION IF EXISTS delete_user;
 
 DELIMITER ;;
@@ -161,30 +169,6 @@ BEGIN
     DECLARE guid CHAR(36);
     SET guid = UUID();
     RETURN guid;
-END;;
-
-CREATE FUNCTION create_user (
-    arg_username VARCHAR(16),
-    arg_password VARCHAR(128)
-)
-RETURNS BOOLEAN
-BEGIN
-    DECLARE user_count INT;
-
-    -- Check if the username already exists in the user table
-    SELECT COUNT(*) INTO user_count
-    FROM `user`
-    WHERE username = arg_username;
-
-    -- If the username exists, return FALSE (user creation failed)
-    IF user_count > 0 THEN
-        RETURN FALSE;
-    ELSE
-        -- If the username doesn't exist, insert the new user with a generated GUID
-        INSERT INTO `user` (`employee_id`, `username`, `password`)
-            VALUES (generate_guid(), arg_username, arg_password);
-        RETURN TRUE; -- User creation successful
-    END IF;
 END;;
 
 CREATE FUNCTION fetch_employee_id(
@@ -204,7 +188,7 @@ BEGIN
 END;;
 
 CREATE FUNCTION fetch_password (
-    arg_username VARCHAR(16)
+    arg_employee_id CHAR(36)
 )
 RETURNS VARCHAR(128)
 BEGIN
@@ -213,68 +197,111 @@ BEGIN
     SELECT `password` INTO hashed_password
     FROM `user`
     WHERE
-        `username` = arg_username
+        `employee_id` = arg_employee_id
     ;
 
     RETURN hashed_password;
 END;;
 
-CREATE FUNCTION login_user (
-    arg_username VARCHAR(16),
-    arg_password VARCHAR(128)
+CREATE FUNCTION does_user_exist(
+    username_arg VARCHAR(16),
+    employee_id_arg CHAR(36)
 )
 RETURNS BOOLEAN
 BEGIN
-    DECLARE stored_password VARCHAR(128);
+    DECLARE user_exists BOOLEAN;
 
-    -- Check if the username exists in the user table
-    SELECT `password` INTO stored_password
+    SELECT EXISTS(
+        SELECT 1 
+        FROM `user` 
+        WHERE `employee_id` = employee_id_arg OR `username` = username_arg
+    ) INTO user_exists;
+
+    RETURN user_exists;
+END;;
+
+CREATE FUNCTION create_user (
+    arg_username VARCHAR(16),
+    arg_password VARCHAR(128),
+    arg_email_address VARCHAR(32)
+)
+RETURNS CHAR(36)
+BEGIN
+    DECLARE user_count INT;
+    DECLARE new_employee_id CHAR(36);
+
+    -- Check if the username, email_address, or employee_id already exists in the user table
+    SELECT COUNT(*) INTO user_count
     FROM `user`
-        WHERE username = arg_username
-    ;
+    WHERE username = arg_username OR email_address = arg_email_address;
 
-    -- If the username exists, check if the provided password matches the stored password
-    IF stored_password = arg_password THEN
-        RETURN TRUE; -- Login successful
+    -- If the username or email_address exists, return NULL (user creation failed)
+    IF user_count > 0 THEN
+        RETURN NULL;
     ELSE
-        RETURN FALSE; -- Login failed
+        -- If the username and email_address don't exist, generate a new GUID and insert the new user
+        SET new_employee_id = generate_guid();
+        INSERT INTO `user` (`employee_id`, `username`, `password`, `email_address`)
+            VALUES (new_employee_id, arg_username, arg_password, arg_email_address);
+        RETURN new_employee_id; -- Return the generated GUID (employee_id)
     END IF;
 END;;
 
-CREATE FUNCTION delete_user (
-    arg_username VARCHAR(16),
-    arg_password VARCHAR(128)
+CREATE FUNCTION update_user(
+    employee_id_arg CHAR(36),
+    new_display_name VARCHAR(32),
+    new_email_address VARCHAR(32),
+    new_phone_number VARCHAR(32),
+    new_image_url VARCHAR(128)
 )
 RETURNS BOOLEAN
 BEGIN
-    DECLARE stored_password VARCHAR(128);
+    DECLARE rows_affected INT;
 
-    -- Check if the username exists in the user table
-    SELECT `password` INTO stored_password
-    FROM `user`
+    UPDATE `user`
+    SET
+        `display_name` = new_display_name,
+        `email_address` = new_email_address,
+        `phone_number` = new_phone_number,
+        `image_url` = new_image_url
     WHERE
-        username = arg_username
-    ;
+        `employee_id` = employee_id_arg;
 
-   -- If the username exists, check if the provided password (if provided) matches the stored password
-    IF (arg_password IS NULL OR stored_password = arg_password) THEN
+    SET rows_affected = ROW_COUNT();
+
+    RETURN rows_affected > 0;
+END;;
+
+CREATE FUNCTION delete_user (
+    arg_employee_id CHAR(36)
+)
+RETURNS BOOLEAN
+BEGIN
+    -- Check if the employee_id exists in the user table
+    DECLARE user_count INT;
+
+    SELECT COUNT(*) INTO user_count
+    FROM `user`
+    WHERE `employee_id` = arg_employee_id;
+
+    IF user_count > 0 THEN
         -- Disable foreign key checks temporarily
         SET FOREIGN_KEY_CHECKS = 0;
 
         -- Delete the user's assignments from assignment table
         DELETE FROM `assignment`
-        WHERE `employee_id` = (SELECT `employee_id` FROM `user` WHERE `username` = arg_username);
+        WHERE `employee_id` = arg_employee_id;
 
         -- Delete the user from user table
         DELETE FROM `user`
-        WHERE `username` = arg_username;
+        WHERE `employee_id` = arg_employee_id;
 
         -- Re-enable foreign key checks
         SET FOREIGN_KEY_CHECKS = 1;
 
         RETURN TRUE; -- Deletion successful
     ELSE
-        RETURN FALSE; -- Deletion failed (either username doesn't exist or incorrect password)
+        RETURN FALSE; -- Deletion failed (employee_id doesn't exist)
     END IF;
 END;;
 
