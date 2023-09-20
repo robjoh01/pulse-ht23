@@ -48,7 +48,9 @@ router.get("/", async (req, res, next) => {
         return;
     }
 
-    data.user = await dbUtil.readUser(appUtil.getSessionUser(req));
+    const user = appUtil.getSessionUser(req);
+
+    data.user = await dbUtil.readUser(user.id);
 
     // data.user = await dbUtil.getUserData(data.username);
 

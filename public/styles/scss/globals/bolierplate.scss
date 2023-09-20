@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 100%;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    background-size: 100vh;
+    color: var(--color-fg-100);
+    line-height: var(--base-line-height);
+    font-family: var(--font-inter);
+    background: var(--color-bg);
+    background-image: var(--bg-img);
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center center;
+}
+
+img, embed, object, video {
+    max-width: 100%;
+}

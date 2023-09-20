@@ -1,5 +1,5 @@
 .form-container {
-    color: $font-color-100;
+    color: var(--color-fg-100);
     display: flex;
     flex-flow: column nowrap;
     margin: 0 auto;
@@ -20,12 +20,13 @@
 }
 
 .form-header {
-    color: $font-color-100;
+    color: var(--color-fg-100);
     margin: 0 auto;
     text-align: center;
 
     .form-header-hero {
         padding-bottom: 1rem;
+        content: var(--hero-small-banner);
     }
 
     p {
@@ -72,7 +73,7 @@
         border: 2px solid hsla(0, 0%, 63%, 0.2);
         border-radius: 3rem;
         font-size: 1rem;
-        color: $font-color-100;
+        color: var(--color-fg-100);
         padding: 1.5rem 3rem 1.5rem 1.5rem;
 
         &:focus {
@@ -98,7 +99,7 @@
     }
 
     i {
-        color: $font-color-100;
+        color: var(--color-fg-100);
         position: absolute;
         right: 20px;
         top: 50%;
@@ -113,12 +114,12 @@
     font-size: 0.9rem;
 
     input {
-        accent-color: $font-color-100;
+        accent-color: var(--color-fg-100);
         margin-right: 3px;
     }
 
     span, a {
-        color: $font-color-100;
+        color: var(--color-fg-100);
     }
 
     a {
@@ -134,7 +135,7 @@
     width: 100%;
     height: 3rem;
     background-color: hsl(0, 0%, 43%);
-    color: $font-alt-color-100;
+    color: var(--font-alt-color-100);
     border: none;
     outline: none;
     border-radius: 2.5rem;
@@ -157,7 +158,7 @@
     text-align: center;
 
     a {
-        color: $font-color-100;
+        color: var(--color-fg-100);
         text-decoration: none;
         font-weight: 600;
 

@@ -8,6 +8,7 @@ const dbUtil = require("../src/utils/dbUtil.js");
 const appUtil = require("../src/utils/appUtil.js");
 const conversionUtil = require("../src/utils/conversionUtil.js");
 const emailUtil = require("../src/utils/emailUtil.js");
+const profanityUtil = require("./../src/utils/profanityUtil.js");
 
 // Import errors
 const errors = require("../src/errors/errors.js");
@@ -25,6 +26,17 @@ router.get("/project/:id", async (req, res, next) => {
     data.title = `Project ${id}`;
     data.session = appUtil.getSession(req);
     data.project = project;
+
+    res.render("./../pages/delete.ejs", data);
+});
+
+router.get("/project/managed", async (req, res, next) => {
+    let data = {};
+
+    // const name = req.query.name;
+
+    data.title = `Managed Projects`;
+    data.session = appUtil.getSession(req);
 
     res.render("./../pages/delete.ejs", data);
 });

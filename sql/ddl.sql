@@ -223,6 +223,33 @@ BEGIN
     RETURN user_exists;
 END;;
 
+CREATE FUNCTION create_user (
+    arg_username VARCHAR(16),
+    arg_password VARCHAR(128),
+    arg_email_address VARCHAR(32)
+)
+RETURNS CHAR(36)
+BEGIN
+    DECLARE user_count INT;
+    DECLARE new_employee_id CHAR(36);
+
+    -- Check if the username, email_address, or employee_id already exists in the user table
+    SELECT COUNT(*) INTO user_count
+    FROM `user`
+    WHERE username = arg_username OR email_address = arg_email_address;
+
+    -- If the username or email_address exists, return NULL (user creation failed)
+    IF user_count > 0 THEN
+        RETURN NULL;
+    ELSE
+        -- If the username and email_address don't exist, generate a new GUID and insert the new user
+        SET new_employee_id = generate_guid();
+        INSERT INTO `user` (`employee_id`, `username`, `password`, `email_address`)
+            VALUES (new_employee_id, arg_username, arg_password, arg_email_address);
+        RETURN new_employee_id; -- Return the generated GUID (employee_id)
+    END IF;
+END;;
+
 CREATE FUNCTION update_user(
     employee_id_arg CHAR(36),
     new_display_name VARCHAR(32),

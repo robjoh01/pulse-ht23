@@ -1,8 +1,5 @@
-.my-card {
-    padding: 16px;
-}
+@use '../utils'  as *;
 
-.my-card-content {
-    max-height: 120px;
-    color: #000;
+.card {
+    padding: rem(20);
 }

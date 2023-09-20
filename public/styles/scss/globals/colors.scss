@@ -1,0 +1,74 @@
+:root {
+    --color-fg-100-light: hsl(0, 0%, 13%);
+    --color-fg-200-light: hsl(0, 0%, 26%);
+    --color-fg-300-light: hsl(0, 0%, 38%);
+
+    --color-fg-alt-100-light: hsl(0, 0%, 63%);
+    --color-fg-alt-200-light: hsl(0, 0%, 83%);
+    --color-fg-alt-300-light: hsl(0, 0%, 93%); 
+
+    --color-fg-100-dark: hsl(0, 0%, 63%);
+    --color-fg-200-dark: hsl(0, 0%, 83%);
+    --color-fg-300-dark: hsl(0, 0%, 93%);
+
+    --color-fg-alt-100-dark: hsl(0, 0%, 13%);
+    --color-fg-alt-200-dark: hsl(0, 0%, 26%);
+    --color-fg-alt-300-dark: hsl(0, 0%, 38%);
+
+    --color-bg-light: hsl(0, 0%, 93%);
+    --color-bg-alt-light: hsl(0, 0%, 63%);
+
+    --color-bg-dark: hsl(0, 0%, 13%);
+    --color-bg-alt-dark: hsl(0, 0%, 26%);
+
+    --color-accent-light: hsl(163, 72%, 41%);
+    --color-accent-dark: hsl(56, 72%, 41%);
+}
+
+@mixin light-theme-colors {
+    --color-fg-100: var(--color-fg-100-light);
+    --color-fg-200: var(--color-fg-200-light);
+    --color-fg-300: var(--color-fg-300-light);
+
+    --color-fg-alt-100: var(--color-fg-alt-100-light);
+    --color-fg-alt-200: var(--color-fg-alt-200-light);
+    --color-fg-alt-300: var(--color-fg-alt-300-light);
+
+    --color-bg: var(--color-bg-light);
+    --color-bg-alt: var(--color-bg-alt-light);
+
+    --accent-color: var(--color-accent-light);
+}
+
+@mixin dark-theme-colors {
+    --color-fg-100: var(--color-fg-100-dark);
+    --color-fg-200: var(--color-fg-200-dark);
+    --color-fg-300: var(--color-fg-300-dark);
+
+    --color-fg-alt-100: var(--color-fg-alt-100-dark);
+    --color-fg-alt-200: var(--color-fg-alt-200-dark);
+    --color-fg-alt-300: var(--color-fg-alt-300-dark);
+
+    --color-bg: var(--color-bg-dark);
+    --color-bg-alt: var(--color-bg-alt-dark);
+
+    --color-accent: var(--color-accent-dark);
+}
+
+:root {
+    @include light-theme-colors;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        @include dark-theme-colors;
+    }
+}
+
+body.light {
+    @include light-theme-colors;
+}
+
+body.dark {
+    @include dark-theme-colors;
+}

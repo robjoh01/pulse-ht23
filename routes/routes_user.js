@@ -8,6 +8,7 @@ const dbUtil = require("../src/utils/dbUtil.js");
 const appUtil = require("../src/utils/appUtil.js");
 const conversionUtil = require("../src/utils/conversionUtil.js");
 const emailUtil = require("../src/utils/emailUtil.js");
+const profanityUtil = require("./../src/utils/profanityUtil.js");
 
 // Import errors
 const errors = require("../src/errors/errors.js");
@@ -35,7 +36,7 @@ router.get("/user/login", (req, res, next) => {
 
 router.get("/user/logout", (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/login");
+        new errors.UserNotLoggedInError(next, "/user/login");
         return;
     }
 
@@ -45,12 +46,12 @@ router.get("/user/logout", (req, res, next) => {
 
     req.session.destroy();
 
-    res.redirect("/login");
+    res.redirect("/user/login");
 });
 
 router.get("/user/profile", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/login");
+        new errors.UserNotLoggedInError(next, "/user/login");
         return;
     }
 
@@ -65,7 +66,7 @@ router.get("/user/profile", async (req, res, next) => {
 
 router.get("/user/change_password", (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/login");
+        new errors.UserNotLoggedInError(next, "/user/login");
         return;
     }
 
@@ -81,7 +82,7 @@ router.get("/user/change_password", (req, res, next) => {
 
 router.get("/user/delete", (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/login");
+        new errors.UserNotLoggedInError(next, "/user/login");
         return;
     }
 
@@ -100,22 +101,22 @@ router.post("/user/register/posted", async (req, res, next) => {
         !f_username ||
         !f_password ||
         !f_password_again) {
-        new errors.BadCredentialsError(next, "/register");
+        new errors.BadCredentialsError(next, "/user/register");
         return;
     }
 
     if (profanityUtil.exists(f_username) || profanityUtil.exists(f_password) || profanityUtil.exists(f_password_again)) {
-        new errors.ProfanityDetectedError(next, "/register");
+        new errors.ProfanityDetectedError(next, "/user/register");
         return;
     }
 
     if (f_password != f_password_again) {
-        new errors.PasswordNotMatchError(next, "/register");
+        new errors.PasswordNotMatchError(next, "/user/register");
         return;
     }
 
     if (await dbUtil.doesUserExists(f_username)) {
-        new errors.UserAlreadyExistsError(next, "/register");
+        new errors.UserAlreadyExistsError(next, "/user/register");
         return;
     }
 
@@ -125,13 +126,13 @@ router.post("/user/register/posted", async (req, res, next) => {
 
     if (!id) {
         // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
-        res.redirect("/register");
+        res.redirect("/user/register");
         return;
     }
 
     appUtil.authenticateUser(req, id, f_username, f_password);
 
-    res.redirect("/profile");
+    res.redirect("/user/profile");
 });
 
 router.post("/user/login/posted", async (req, res, next) => {
@@ -143,14 +144,14 @@ router.post("/user/login/posted", async (req, res, next) => {
     const { f_username, f_password, f_remember } = req.body;
 
     if (!f_username || !f_password) {
-        new errors.BadCredentialsError(next, "/login");
+        new errors.BadCredentialsError(next, "/user/login");
         return;
     }
 
     const id = await dbUtil.loginUser(f_username, f_password);
 
     if (!id) {
-        new errors.UserNotFoundError(next, "/login");
+        new errors.UserNotFoundError(next, "/user/login");
         return;
     }
 
@@ -199,7 +200,7 @@ router.post("/user/change_password/posted", async (req, res) => {
     if (dbUtil.loginUser(user.username, f_current_password) && f_new_password === f_new_password_again) {
         // TODO: Add logic
 
-        res.redirect("/profile");
+        res.redirect("/user/profile");
         return;
     }
 
@@ -208,19 +209,19 @@ router.post("/user/change_password/posted", async (req, res) => {
 
 router.post("/user/delete/posted", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/profile");
+        new errors.UserNotLoggedInError(next, "/user/profile");
         return;
     }
 
     const { f_password, f_password_again } = req.body;
 
     if (!f_password || !f_password_again) {
-        new errors.BadCredentialsError(next, "/delete");
+        new errors.BadCredentialsError(next, "/user/delete");
         return;
     }
 
     if (f_password != f_password_again) {
-        new errors.PasswordNotMatchError(next, "/delete");
+        new errors.PasswordNotMatchError(next, "/user/delete");
         return;
     }
 
@@ -229,7 +230,7 @@ router.post("/user/delete/posted", async (req, res, next) => {
     const id = await dbUtil.loginUser(user.username, f_password);
 
     if (!id) {
-        new errors.UserNotFoundError(next, "/delete");
+        new errors.UserNotFoundError(next, "/user/delete");
         return;
     }
 
@@ -237,7 +238,7 @@ router.post("/user/delete/posted", async (req, res, next) => {
 
     if (!wasSuccessful) {
         // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
-        res.redirect("/profile");
+        res.redirect("/user/profile");
         return;
     }
 
@@ -246,7 +247,7 @@ router.post("/user/delete/posted", async (req, res, next) => {
     // TODO: Add toast popup message for successful deletion
     // req.flash("successful", "Yay!");
 
-    res.redirect("/login");
+    res.redirect("/user/login");
 });
 
 module.exports = router;

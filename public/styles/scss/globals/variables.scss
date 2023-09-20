@@ -1,0 +1,30 @@
+@mixin light-theme-variables {
+    --bg-img: url("/img/Background_Pattern_01_Inv.png");
+    --hero-small-banner: url("/img/Pulse_Project.png");
+}
+
+@mixin dark-theme-variables {
+    --bg-img: url("/img/Background_Pattern_01.png");
+    --hero-small-banner: url("/img/Pulse_Project_Transparent.png");
+}
+
+:root {
+    --base-line-height: 1.4;
+    --base-font-size: 1.1rem;
+    --magic-number: calc(var(--base-line-height) * var(--base-font-size));
+    @include light-theme-variables;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        @include dark-theme-variables;
+    }
+}
+
+body.light {
+    @include light-theme-variables;
+}
+
+body.dark {
+    @include dark-theme-variables;
+}
