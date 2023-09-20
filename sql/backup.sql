@@ -78,11 +78,11 @@ DROP TABLE IF EXISTS `project`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `project` (
   `id` char(36) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  `description` varchar(20) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `description` varchar(96) DEFAULT NULL,
   `creation_date` date DEFAULT NULL,
   `modified_date` date DEFAULT NULL,
-  `deadline_date` date DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -154,7 +154,7 @@ SET character_set_client = utf8;
  1 AS `id`,
   1 AS `name`,
   1 AS `description`,
-  1 AS `deadline_date` */;
+  1 AS `due_date` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -205,7 +205,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_projects` AS select `p`.`id` AS `id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`deadline_date` AS `deadline_date` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
+/*!50001 VIEW `v_projects` AS select `p`.`id` AS `id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`due_date` AS `due_date` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -237,4 +237,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-19 21:12:43
+-- Dump completed on 2023-09-20 13:45:07

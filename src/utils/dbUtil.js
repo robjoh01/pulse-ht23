@@ -53,7 +53,7 @@ let dbUtil = {
 
         return res[0][Object.keys(res[0])[0]];
     },
-    readUser: async function(user) {
+    readUser: async function(id) {
         const db = await this.connectDatabase();
 
         let sql = `
@@ -61,12 +61,11 @@ let dbUtil = {
                 *
             FROM v_users
             WHERE
-                username = ?
-                OR employee_id = ?
+                employee_id = ?
             ;
         `;
 
-        let res = await db.query(sql, [user.username, user.id]);
+        let res = await db.query(sql, id);
 
         db.end();
 
@@ -104,7 +103,7 @@ let dbUtil = {
 
         return res[0][Object.keys(res[0])[0]];
     },
-    getUsers: async function() {
+    readUsers: async function() {
         const db = await this.connectDatabase();
 
         let sql = `
@@ -159,6 +158,86 @@ let dbUtil = {
         }
 
         return id;
+    },
+    createProject: async function(id, name, description, dueDate) {
+        const db = await this.connectDatabase();
+        const query = 'SELECT create_project(?, ?, ?, ?);';
+
+        let res = await db.query(query, [id, name, description, dueDate]);
+
+        db.end();
+
+        return res[0][Object.keys(res[0])[0]];
+    },
+    readProject: async function(id) {
+        const db = await this.connectDatabase();
+
+        let sql = `
+            SELECT
+                *
+            FROM v_projects
+            WHERE
+                id = ?
+            ;
+        `;
+
+        let res = await db.query(sql, [id]);
+
+        db.end();
+
+        return JSON.parse(JSON.stringify(res[0]));
+    },
+    updateProject: async function(id, name, description, dueDate) {
+        const db = await this.connectDatabase();
+        const query = 'SELECT update_project(?, ?, ?, ?);';
+
+        let res = await db.query(query, [id, name, description, dueDate]);
+
+        db.end();
+
+        return res[0][Object.keys(res[0])[0]];
+    },
+    deleteProject: async function(id) {
+        const db = await this.connectDatabase();
+        const query = 'SELECT delete_project(?);';
+
+        let res = await db.query(query, [id]);
+
+        db.end();
+
+        return res[0][Object.keys(res[0])[0]];
+    },
+    readProjects: async function() {
+        const db = await this.connectDatabase();
+
+        let sql = `
+        SELECT
+            *
+        FROM v_projects
+        ;
+        `;
+
+        let res = await db.query(sql);
+
+        db.end();
+
+        return res;
+    },
+    readAssignments: async function() {
+        const db = await this.connectDatabase();
+
+        let sql = `
+        SELECT
+            *
+        FROM v_assignments
+        ;
+        `;
+
+        let res = await db.query(sql);
+
+        db.end();
+
+        return res;
     },
 };
 

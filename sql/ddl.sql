@@ -34,11 +34,11 @@ CREATE TABLE `user`
 CREATE TABLE `project`
 (
     `id` CHAR(36) NOT NULL,
-    `name` VARCHAR(20),
-    `description` VARCHAR(20),
+    `name` VARCHAR(32),
+    `description` VARCHAR(96),
     `creation_date` DATE,
     `modified_date` DATE,
-    `deadline_date` DATE,
+    `due_date` DATE,
 
     PRIMARY KEY (`id`)
 );
@@ -82,7 +82,7 @@ SELECT
     p.id,
     p.name,
     p.description,
-    p.deadline_date
+    p.due_date
 FROM project AS p
 GROUP BY p.id
 ORDER BY p.modified_date DESC, p.creation_date DESC
@@ -158,9 +158,12 @@ DROP FUNCTION IF EXISTS fetch_password;
 DROP FUNCTION IF EXISTS does_user_exist;
 
 DROP FUNCTION IF EXISTS create_user;
-DROP FUNCTION IF EXISTS read_user;
 DROP FUNCTION IF EXISTS update_user;
 DROP FUNCTION IF EXISTS delete_user;
+
+DROP FUNCTION IF EXISTS create_project;
+DROP FUNCTION IF EXISTS update_project;
+DROP FUNCTION IF EXISTS delete_project;
 
 DELIMITER ;;
 
@@ -220,33 +223,6 @@ BEGIN
     RETURN user_exists;
 END;;
 
-CREATE FUNCTION create_user (
-    arg_username VARCHAR(16),
-    arg_password VARCHAR(128),
-    arg_email_address VARCHAR(32)
-)
-RETURNS CHAR(36)
-BEGIN
-    DECLARE user_count INT;
-    DECLARE new_employee_id CHAR(36);
-
-    -- Check if the username, email_address, or employee_id already exists in the user table
-    SELECT COUNT(*) INTO user_count
-    FROM `user`
-    WHERE username = arg_username OR email_address = arg_email_address;
-
-    -- If the username or email_address exists, return NULL (user creation failed)
-    IF user_count > 0 THEN
-        RETURN NULL;
-    ELSE
-        -- If the username and email_address don't exist, generate a new GUID and insert the new user
-        SET new_employee_id = generate_guid();
-        INSERT INTO `user` (`employee_id`, `username`, `password`, `email_address`)
-            VALUES (new_employee_id, arg_username, arg_password, arg_email_address);
-        RETURN new_employee_id; -- Return the generated GUID (employee_id)
-    END IF;
-END;;
-
 CREATE FUNCTION update_user(
     employee_id_arg CHAR(36),
     new_display_name VARCHAR(32),
@@ -303,6 +279,63 @@ BEGIN
     ELSE
         RETURN FALSE; -- Deletion failed (employee_id doesn't exist)
     END IF;
+END;;
+
+CREATE FUNCTION create_project(
+    arg_id CHAR(36),
+    arg_name VARCHAR(32),
+    arg_description VARCHAR(96),
+    arg_due_date DATE
+)
+RETURNS BOOLEAN
+BEGIN
+    DECLARE rows_affected INT;
+
+    INSERT INTO `project` (`id`, `name`, `description`, `creation_date`, `modified_date`, `due_date`)
+        VALUES (arg_id, arg_name, arg_description, CURRENT_DATE(), NULL, arg_due_date);
+
+    SET rows_affected = ROW_COUNT();
+
+    RETURN rows_affected > 0;
+END;;
+
+CREATE FUNCTION update_project(
+    arg_id CHAR(36),
+    arg_name VARCHAR(32),
+    arg_description VARCHAR(96),
+    arg_due_date DATE
+)
+RETURNS BOOLEAN
+BEGIN
+    DECLARE rows_affected INT;
+
+    UPDATE `project`
+    SET
+        `name` = arg_name,
+        `description` = arg_description,
+        `due_date` = arg_due_date,
+        `modified_date` = CURRENT_DATE()
+    WHERE
+        `id` = arg_id;
+
+    SET rows_affected = ROW_COUNT();
+
+    RETURN rows_affected > 0;
+END;;
+
+CREATE FUNCTION delete_project(
+    arg_id CHAR(36)
+)
+RETURNS BOOLEAN
+BEGIN
+    DECLARE rows_affected INT;
+
+    DELETE FROM `project`
+    WHERE `id` = arg_id;
+
+    SET rows_affected = ROW_COUNT();
+
+    RETURN rows_affected > 0;
 END;;
 
 DELIMITER ;

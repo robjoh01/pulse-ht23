@@ -48,7 +48,7 @@ VALUES
 
 -- Insert project into database
 INSERT INTO project
-    (`id`, `name`, `description`, `creation_date`, `modified_date`, `deadline_date`)
+    (`id`, `name`, `description`, `creation_date`, `modified_date`, `due_date`)
 VALUES
     ("6e885bbc-6d26-411e-b978-2962acae4bdd", "Sharp Suits", "Lorem Ipsum", "2020-08-22", "2023-09-11", "2023-12-31"),
     ("ba28b243-6889-4c54-a138-ff72333186a2", "Modern Maven", "Lorem Ipsum", "2021-08-22", "2023-09-11", "2023-12-31"),

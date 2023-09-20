@@ -25,7 +25,7 @@ let appUtil = {
     */
     hasUserLoggedIn: function(req, res) {
         if (!this.isUserAuthenticated(req)) {
-            res.redirect("/login");
+            res.redirect("/user/login");
             return false;
         }
 

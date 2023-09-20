@@ -5,8 +5,12 @@
 // Import dependencies
 const express = require("express");
 const session = require("express-session");
+
 const routes = require("./routes/routes.js");
+const routesProject = require("./routes/routes_project.js");
+const routesUser = require("./routes/routes_user.js");
 const routesPosts = require("./routes/routes_posts.js");
+const routesJSON = require("./routes/routes_json.js");
 
 const { minutesToMilliseconds } = require("./src/utils/conversionUtil.js");
 
@@ -29,10 +33,15 @@ const sessionMiddleware = session({
 });
 
 app.use(sessionMiddleware);
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
+
 app.use(routes);
+app.use(routesUser);
+app.use(routesProject);
 app.use(routesPosts);
+app.use(routesJSON);
 
 app.use((error, req, res, next) => {
     if (error.type == 'redirect') {
