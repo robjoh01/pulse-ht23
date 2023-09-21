@@ -112,7 +112,7 @@ router.post("/user/register/posted", async (req, res, next) => {
         return;
     }
 
-    if (profanityUtil.exists(f_username) || profanityUtil.exists(f_password) || profanityUtil.exists(f_password_again)) {
+    if (profanityUtil.exists(f_username)) {
         new errors.ProfanityDetectedError(next, "/user/register");
         return;
     }
