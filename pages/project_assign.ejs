@@ -3,7 +3,7 @@
 <main class="main">
     <h1><%= title %></h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat distinctio voluptas est, incidunt deserunt in maiores aut nihil voluptatem rem ut laboriosam nisi repellendus facere nulla quibusdam. Facilis, cupiditate sunt.</p>
-    <form class="form" method="POST" action="/profile/posted">
+    <form class="form" method="POST" action="/project/assign/posted">
         <div class="drag-drop-root">
             <a href="/media/sample.csv" download>Download .csv sample file</a>
             <div class="drag-drop-container">
@@ -23,15 +23,16 @@
             <br>
             <br>
             <br>
-            <div class="form-selection row">
-                <button class="form-button" type="submit">
-                    Confirm
+            <div class="flex row">
+                <button class="button form-button" type="submit">
+                    <span>Confirm</span>
                 </button>
-                <button class="form-button">
-                    Cancel
-                </button>
+                <a href="/project/managed">
+                    <button class="button form-button" type="button">
+                        <span>Cancel</span>
+                    </button>
+                </a>
             </div>
-            <br>
         </div>
     </form>
 </main>

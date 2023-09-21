@@ -13,6 +13,9 @@ html {
 }
 
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
     background-size: 100vh;
     color: var(--color-fg-100);
     line-height: var(--base-line-height);
@@ -24,6 +27,18 @@ body {
     background-position: center center;
 }
 
+article {
+    margin: auto 0;
+}
+
+ul {
+    margin-bottom: 0;
+}
+
 img, embed, object, video {
     max-width: 100%;
+}
+
+pre {
+    white-space: pre-wrap;
 }

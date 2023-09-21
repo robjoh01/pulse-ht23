@@ -1,0 +1,53 @@
+<%- include("./../partials/header.ejs") %>
+
+<main class="main">
+    <h1>Managed Projects</h1>
+    <article class="article">
+        <div class="project-grid">
+            <% assignments.forEach(function(x) { %>
+                <div class="project-card">
+                    <div class="project-card__banner">
+                        <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
+                            <i class="bi bi-link-45deg"></i>
+                        </button>
+                        <h2><%= x.project_name %></h2>
+                        <% if (x.access_type !== 'comment' && x.access_type !== 'view') { %>
+                        <a href="/project/update/<%= x.project_id %>">
+                            <button class="project-btn">
+                                <i class="bi bi-pencil-fill"></i>
+                            </button>
+                        </a>
+                        <% } %>
+                    </div>
+                    <div class="project-card__content">
+                        <pre class="project-card__description"><%= x.project_description %></pre>
+                        <div class="project-card__date__content">
+                            <i class="bi bi-calendar"></i>
+                            <p class="project-card_date" data-date="<%= x.project_creation_date %>"></p>
+                        </div>
+                        <div class="project-card__date__content">
+                            <i class="bi bi-calendar-x-fill"></i>
+                            <p class="project-card_date" data-date="<%= x.project_due_date %>"></p>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </article>
+    <div class="flex col">
+        <a href="/project/create">
+            <button class="button">
+                <span>Create new project</span>
+            </button>
+        </a>
+        <a href="/project/assign">
+            <button class="button">
+                <span>Assign team members</span>
+            </button>
+        </a>
+    </div>
+</main>
+
+<script type="text/javascript" src="/js/project_managed.js" defer></script>
+
+<%- include("./../partials/footer.ejs") %>

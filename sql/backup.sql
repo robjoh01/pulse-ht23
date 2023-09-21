@@ -50,6 +50,7 @@ CREATE TABLE `assignment` (
   `employee_id` char(36) NOT NULL,
   `project_id` char(36) NOT NULL,
   `access_lvl` int(11) DEFAULT NULL,
+  `creation_date` date DEFAULT NULL,
   PRIMARY KEY (`employee_id`,`project_id`),
   KEY `project_id` (`project_id`),
   KEY `access_lvl` (`access_lvl`),
@@ -65,7 +66,7 @@ CREATE TABLE `assignment` (
 
 LOCK TABLES `assignment` WRITE;
 /*!40000 ALTER TABLE `assignment` DISABLE KEYS */;
-INSERT INTO `assignment` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','4e658238-d50c-4812-84f2-be58e8be308a',1),('2e889992-6993-42c2-9366-cf9249a1e61b','ba28b243-6889-4c54-a138-ff72333186a2',2);
+INSERT INTO `assignment` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','1650f7ca-9b08-4907-af57-671342a219a2',3,'2023-09-21'),('2e889992-6993-42c2-9366-cf9249a1e61b','38a3315d-fe13-4692-b001-872d6656689a',3,'2023-09-21'),('2e889992-6993-42c2-9366-cf9249a1e61b','445390fb-509e-4e3b-985a-f20df536512c',1,'2023-09-21'),('2e889992-6993-42c2-9366-cf9249a1e61b','4e658238-d50c-4812-84f2-be58e8be308a',1,'2023-09-21'),('2e889992-6993-42c2-9366-cf9249a1e61b','8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9',4,'2023-09-21'),('2e889992-6993-42c2-9366-cf9249a1e61b','ba28b243-6889-4c54-a138-ff72333186a2',2,'2023-09-21'),('2e889992-6993-42c2-9366-cf9249a1e61b','bf23b742-a36b-4251-84d1-4db5fb30248d',4,'2023-09-21'),('2e889992-6993-42c2-9366-cf9249a1e61b','d615786c-4610-4558-b2b6-113348aa5dac',2,'2023-09-21');
 /*!40000 ALTER TABLE `assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +94,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES ('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2020-08-22','2023-09-11','2023-12-31'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2021-08-22','2023-09-11','2023-12-31');
+INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2020-08-22','2023-09-11','2023-12-31'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2021-08-22','2023-09-11','2023-12-31'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2019-08-22','2023-10-11','2023-12-31');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,6 +113,8 @@ CREATE TABLE `user` (
   `email_address` varchar(32) DEFAULT NULL,
   `phone_number` varchar(32) DEFAULT NULL,
   `image_url` varchar(128) DEFAULT NULL,
+  `creation_date` date DEFAULT NULL,
+  `logout_date` date DEFAULT NULL,
   PRIMARY KEY (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -122,7 +125,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg');
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-21',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +142,29 @@ SET character_set_client = utf8;
   1 AS `employee_id`,
   1 AS `project_name`,
   1 AS `project_id`,
-  1 AS `access_type` */;
+  1 AS `access_type`,
+  1 AS `creation_date` */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_assignments_extend`
+--
+
+DROP TABLE IF EXISTS `v_assignments_extend`;
+/*!50001 DROP VIEW IF EXISTS `v_assignments_extend`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_assignments_extend` AS SELECT
+ 1 AS `username`,
+  1 AS `employee_id`,
+  1 AS `project_name`,
+  1 AS `project_id`,
+  1 AS `access_type`,
+  1 AS `creation_date`,
+  1 AS `project_description`,
+  1 AS `project_creation_date`,
+  1 AS `project_modified_date`,
+  1 AS `project_due_date` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -154,6 +179,8 @@ SET character_set_client = utf8;
  1 AS `id`,
   1 AS `name`,
   1 AS `description`,
+  1 AS `creation_date`,
+  1 AS `modified_date`,
   1 AS `due_date` */;
 SET character_set_client = @saved_cs_client;
 
@@ -171,7 +198,9 @@ SET character_set_client = utf8;
   1 AS `display_name`,
   1 AS `email_address`,
   1 AS `phone_number`,
-  1 AS `image_url` */;
+  1 AS `image_url`,
+  1 AS `creation_date`,
+  1 AS `logout_date` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -187,7 +216,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_assignments` AS select `u`.`username` AS `username`,`u`.`employee_id` AS `employee_id`,`p`.`name` AS `project_name`,`p`.`id` AS `project_id`,`al`.`type` AS `access_type` from (((`assignment` `a` join `user` `u` on(`a`.`employee_id` = `u`.`employee_id`)) join `project` `p` on(`a`.`project_id` = `p`.`id`)) join `access_level` `al` on(`a`.`access_lvl` = `al`.`id`)) group by `a`.`employee_id`,`a`.`project_id`,`al`.`type` */;
+/*!50001 VIEW `v_assignments` AS select `u`.`username` AS `username`,`u`.`employee_id` AS `employee_id`,`p`.`name` AS `project_name`,`p`.`id` AS `project_id`,`al`.`type` AS `access_type`,`a`.`creation_date` AS `creation_date` from (((`assignment` `a` join `user` `u` on(`a`.`employee_id` = `u`.`employee_id`)) join `project` `p` on(`a`.`project_id` = `p`.`id`)) join `access_level` `al` on(`a`.`access_lvl` = `al`.`id`)) group by `a`.`employee_id`,`a`.`project_id`,`al`.`type` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_assignments_extend`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_assignments_extend`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_assignments_extend` AS select `u`.`username` AS `username`,`u`.`employee_id` AS `employee_id`,`p`.`name` AS `project_name`,`p`.`id` AS `project_id`,`al`.`type` AS `access_type`,`a`.`creation_date` AS `creation_date`,`p`.`description` AS `project_description`,`p`.`creation_date` AS `project_creation_date`,`p`.`modified_date` AS `project_modified_date`,`p`.`due_date` AS `project_due_date` from (((`assignment` `a` join `user` `u` on(`a`.`employee_id` = `u`.`employee_id`)) join `project` `p` on(`a`.`project_id` = `p`.`id`)) join `access_level` `al` on(`a`.`access_lvl` = `al`.`id`)) group by `a`.`employee_id`,`a`.`project_id`,`al`.`type` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -205,7 +252,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_projects` AS select `p`.`id` AS `id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`due_date` AS `due_date` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
+/*!50001 VIEW `v_projects` AS select `p`.`id` AS `id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`creation_date` AS `creation_date`,`p`.`modified_date` AS `modified_date`,`p`.`due_date` AS `due_date` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -223,7 +270,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_users` AS select `u`.`employee_id` AS `employee_id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number`,`u`.`image_url` AS `image_url` from `user` `u` group by `u`.`employee_id` */;
+/*!50001 VIEW `v_users` AS select `u`.`employee_id` AS `employee_id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number`,`u`.`image_url` AS `image_url`,`u`.`creation_date` AS `creation_date`,`u`.`logout_date` AS `logout_date` from `user` `u` group by `u`.`employee_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -237,4 +284,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-20 14:41:45
+-- Dump completed on 2023-09-21 20:13:21

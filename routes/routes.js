@@ -24,7 +24,7 @@ router.get("/error", (req, res) => {
 
     if (!data.context) {
         data.error_code = "404";
-        data.error_title = "Page Not Found ⚠️";
+        data.error_title = "Page Not Found";
         data.error_message = "We couldn′t find the page, that you are looking for."
         data.error_redirect = "/";
     } else {

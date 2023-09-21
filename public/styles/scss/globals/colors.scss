@@ -1,19 +1,19 @@
 :root {
-    --color-fg-100-light: hsl(0, 0%, 13%);
-    --color-fg-200-light: hsl(0, 0%, 26%);
-    --color-fg-300-light: hsl(0, 0%, 38%);
+    --color-fg-100-light: hsl(0, 0%, 26%);
+    --color-fg-200-light: hsl(0, 0%, 17%);
+    --color-fg-300-light: hsl(0, 0%, 13%);
 
-    --color-fg-alt-100-light: hsl(0, 0%, 63%);
+    --color-fg-alt-100-light: hsl(0, 0%, 63%); 
     --color-fg-alt-200-light: hsl(0, 0%, 83%);
-    --color-fg-alt-300-light: hsl(0, 0%, 93%); 
+    --color-fg-alt-300-light: hsl(0, 0%, 97%);
 
     --color-fg-100-dark: hsl(0, 0%, 63%);
     --color-fg-200-dark: hsl(0, 0%, 83%);
     --color-fg-300-dark: hsl(0, 0%, 93%);
 
-    --color-fg-alt-100-dark: hsl(0, 0%, 13%);
-    --color-fg-alt-200-dark: hsl(0, 0%, 26%);
-    --color-fg-alt-300-dark: hsl(0, 0%, 38%);
+    --color-fg-alt-100-dark: hsl(0, 0%, 36%);
+    --color-fg-alt-200-dark: hsl(0, 0%, 13%);
+    --color-fg-alt-300-dark: hsl(0, 0%, 9%);
 
     --color-bg-light: hsl(0, 0%, 93%);
     --color-bg-alt-light: hsl(0, 0%, 63%);
@@ -21,11 +21,35 @@
     --color-bg-dark: hsl(0, 0%, 13%);
     --color-bg-alt-dark: hsl(0, 0%, 26%);
 
-    --color-accent-light: hsl(163, 72%, 41%);
-    --color-accent-dark: hsl(56, 72%, 41%);
+    --color-warning-light: hsl(37, 93%, 50%);
+    --color-warning-dark: hsl(37, 100%, 59%);
+
+    --color-header-bg-light: hsl(0, 0%, 93%);
+    --color-header-bg-dark: hsl(0, 0%, 9%);
+    --color-header-border-dark: hsl(0, 0%, 11%);
+    --color-header-border-light: hsl(0, 0%, 63%);
+
+    --color-footer-bg-light: hsl(200, 10%, 93%);
+    --color-footer-bg-dark: hsl(0, 0%, 13%);
+    --color-footer-border-light: hsl(0, 0%, 63%);
+    --color-footer-border-dark: hsl(0, 0%, 26%);
+
+    --color-form-button-bg-light: hsl(0, 0%, 13%);
+    --color-form-button-bg-dark: hsl(0, 0%, 83%);
+
+    --color-accent-light: hsl(56, 72%, 49%);
+    --color-accent-dark: hsl(163, 72%, 61%);
+
+    --color-form-input-border-light: hsla(0, 0%, 26%, 0.5);
+    --color-form-input-focus-border-light: hsla(0, 0%, 13%, 0.8);
+
+    --color-form-input-border-dark: hsla(0, 0%, 63%, 0.2);
+    --color-form-input-focus-border-dark: hsla(0, 0%, 93%, 0.5);
 }
 
 @mixin light-theme-colors {
+    color-scheme: light;
+
     --color-fg-100: var(--color-fg-100-light);
     --color-fg-200: var(--color-fg-200-light);
     --color-fg-300: var(--color-fg-300-light);
@@ -37,10 +61,23 @@
     --color-bg: var(--color-bg-light);
     --color-bg-alt: var(--color-bg-alt-light);
 
-    --accent-color: var(--color-accent-light);
+    --color-accent: var(--color-accent-light);
+    --color-warning: var(--color-warning-light);
+
+    --color-header-bg: var(--color-header-bg-light);
+    --color-header-border: var(--color-header-border-light);
+
+    --color-footer-bg: var(--color-footer-bg-light);
+    --color-footer-border: var(--color-footer-border-light);
+
+    --color-form-button-bg: var(--color-form-button-bg-light);
+    --color-form-input-border: var(--color-form-input-border-light);
+    --color-form-input-focus-border: var(--color-form-input-focus-border-light);
 }
 
 @mixin dark-theme-colors {
+    color-scheme: dark;
+
     --color-fg-100: var(--color-fg-100-dark);
     --color-fg-200: var(--color-fg-200-dark);
     --color-fg-300: var(--color-fg-300-dark);
@@ -53,6 +90,17 @@
     --color-bg-alt: var(--color-bg-alt-dark);
 
     --color-accent: var(--color-accent-dark);
+    --color-warning: var(--color-warning-dark);
+
+    --color-header-bg: var(--color-header-bg-dark);
+    --color-header-border: var(--color-header-border-dark);
+
+    --color-footer-bg: var(--color-footer-bg-dark);
+    --color-footer-border: var(--color-footer-border-dark);
+
+    --color-form-button-bg: var(--color-form-button-bg-dark);
+    --color-form-input-border: var(--color-form-input-border-dark);
+    --color-form-input-focus-border: var(--color-form-input-focus-border-dark);
 }
 
 :root {

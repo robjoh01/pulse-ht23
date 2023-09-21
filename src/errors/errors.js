@@ -8,6 +8,9 @@ const UserNotFoundError = require("./userNotFoundError.js");
 const UserNotLoggedInError = require("./userNotLoggedInError.js");
 const UserAlreadyExistsError = require("./userAlreadyExistsError.js");
 const ProfanityDetectedError = require("./profanityDetectedError.js");
+const ProjectAlreadyExistsError = require("./projectAlreadyExistsError.js");
+const AccessNotPermittedError = require("./accessNotPermittedError.js");
+const ProjectNotFoundError = require("./projectNotFoundError.js");
 
 module.exports = { 
     PasswordNotMatchError,
@@ -15,5 +18,8 @@ module.exports = {
     UserNotFoundError,
     UserNotLoggedInError,
     UserAlreadyExistsError,
-    ProfanityDetectedError
+    ProfanityDetectedError,
+    ProjectAlreadyExistsError,
+    AccessNotPermittedError,
+    ProjectNotFoundError,
 };

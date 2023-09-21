@@ -31,108 +31,109 @@
     </head>
     <body>
 
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-logo">
-                <div class="nav-logo-img">
-                    <a href="/">
-                        <img src="/img/Pulse_Project_Transparent.png" alt="Pulse Project">
+    <div class="main-layout">
+        <header class="header">
+            <nav class="nav">
+                <div class="nav-logo">
+                    <div class="nav-logo-img">
+                        <a href="/">
+                            <img class="header-hero" alt="Pulse Project">
+                        </a>
+                    </div>
+                </div>
+                <ul class="nav-ul">
+                    <li class="nav-li">
+                        <a class="nav-link" href="/">
+                            <i class="bi bi-calendar-week"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-li">
+                        <a class="nav-link" href="/project/managed">
+                            <i class="bi bi-collection-fill"></i>
+                            <span>Managed</span>
+                        </a>
+                    </li>
+                    <li class="nav-li">
+                        <a class="nav-link" href="/about">
+                            <i class="bi bi-file-text"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li class="nav-li">
+                        <a class="nav-link" href="/contact">
+                            <i class="bi bi-telephone-fill"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <% if (session.authenticated) { %>
+                <div class="nav-profile">
+                    <a class="nav-link nav-profile-link" onclick="toggleMenu()">
+                        <i class="bi bi-person-circle"></i>
+                        <span>Profile</span>
                     </a>
                 </div>
-            </div>
-            <ul class="nav-ul">
-                <li class="nav-li">
-                    <a class="nav-link" href="/">
-                        <i class="bi bi-calendar-week"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-li">
-                    <a class="nav-link" href="/project/managed">
-                        <i class="bi bi-collection-fill"></i>
-                        <span>Managed</span>
-                    </a>
-                </li>
-                <li class="nav-li">
-                    <a class="nav-link" href="/about">
-                        <i class="bi bi-file-text"></i>
-                        <span>About</span>
-                    </a>
-                </li>
-                <li class="nav-li">
-                    <a class="nav-link" href="/contact">
-                        <i class="bi bi-telephone-fill"></i>
-                        <span>Contact</span>
-                    </a>
-                </li>
-            </ul>
+                <% } %>
 
+                <div class="theme-toggle">
+                    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle between color scheme">
+                        <i id="themeToggleBtnIcon" class="bi bi-moon-stars-fill"></i>
+                    </button>
+                </div>
+            </nav>
             <% if (session.authenticated) { %>
-            <div class="nav-profile">
-                <a class="nav-link nav-profile-link" onclick="toggleMenu()">
-                    <i class="bi bi-person-circle"></i>
-                    <span>Profile</span>
-                </a>
+            <div class="nav-profile-wrap" id="navProfile">
+                <div class="profile-menu">
+                    <div class="user-info">
+                        <h2><%= locals?.user?.display_name || "Lorem Ipsum" %></h2>
+                        <img src="" alt="">
+                    </div>
+                    <hr>
+                    <a class="nav-link profile-menu-link" href="/project/assign">
+                        <i class="bi bi-people-fill"></i>
+                        <p>Assign Team Members</p>
+                        <span>></span>
+                    </a>
+                    <a class="nav-link profile-menu-link" href="/user/profile">
+                        <i class="bi bi-gear-fill"></i>
+                        <p>Edit Profile</p>
+                        <span>></span>
+                    </a>
+                    <a class="nav-link profile-menu-link" href="/help">
+                        <i class="bi bi-question-diamond-fill"></i>
+                        <p>Help & Support</p>
+                        <span>></span>
+                    </a>
+                    <a class="nav-link profile-menu-link" href="/user/logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <p>Logout</p>
+                        <span>></span>
+                    </a>
+                </div>
             </div>
             <% } %>
+        </header>
 
-            <div class="theme-toggle">
-                <button class="button theme-toggle-btn" id="themeToggleBtn">
-                    <i id="themeToggleBtnIcon" class="bi bi-moon-stars-fill"></i>
-                </button>
-            </div>
-        </nav>
-        <% if (session.authenticated) { %>
-        <div class="nav-profile-wrap" id="navProfile">
-            <div class="profile-menu">
-                <div class="user-info">
-                    <h2><%= locals?.user?.display_name || "Lorem Ipsum" %></h2>
-                    <img src="" alt="">
-                </div>
-                <hr>
-                <a class="nav-link profile-menu-link" href="/project/assign">
-                    <i class="bi bi-people-fill"></i>
-                    <p>Assign Team Members</p>
-                    <span>></span>
-                </a>
-                <a class="nav-link profile-menu-link" href="/user/profile">
-                    <i class="bi bi-gear-fill"></i>
-                    <p>Edit Profile</p>
-                    <span>></span>
-                </a>
-                <a class="nav-link profile-menu-link" href="/help">
-                    <i class="bi bi-question-diamond-fill"></i>
-                    <p>Help & Support</p>
-                    <span>></span>
-                </a>
-                <a class="nav-link profile-menu-link" href="/user/logout">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <p>Logout</p>
-                    <span>></span>
-                </a>
-            </div>
-        </div>
-        <% } %>
-    </header>
+<script>
+// const navProfile = document.getElementById("navProfile");
 
-    <script>
-    // const navProfile = document.getElementById("navProfile");
+// function toggleMenu() {
+//     navProfile.classList.toggle("open-menu");
+// }
 
-    // function toggleMenu() {
-    //     navProfile.classList.toggle("open-menu");
-    // }
+// function closeMenu() {
+//     navProfile.classList.remove("open-menu");
+// }
 
-    // function closeMenu() {
-    //     navProfile.classList.remove("open-menu");
-    // }
+// let timeoutId = null;
 
-    // let timeoutId = null;
+// navProfile.addEventListener("mouseenter", () => {
+//     clearTimeout(timeoutId);
+// })
 
-    // navProfile.addEventListener("mouseenter", () => {
-    //     clearTimeout(timeoutId);
-    // })
-
-    // navProfile.addEventListener("mouseleave", () => {
-    //     timeoutId = setTimeout(closeMenu, 500);
-    // });
-    </script>
+// navProfile.addEventListener("mouseleave", () => {
+//     timeoutId = setTimeout(closeMenu, 500);
+// });
+</script>

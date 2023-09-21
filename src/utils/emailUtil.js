@@ -1,5 +1,8 @@
 "use strict";
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const nodeMailer = require("nodemailer");
 
 /*
@@ -39,7 +42,7 @@ let emailUtil = {
     },
     sendMailAsServer: async function(emails, subject, html, attachments = []) {
         const res = await gmailTransporter.sendMail({
-            from: `${process.env.GMAIL_NAME} <${process.env.GMAIL_USER}>`,
+            from: `${process.env.GMAIL_NAME} <noreply.${process.env.GMAIL_USER}>`,
             to: emails,
             subject,
             html,

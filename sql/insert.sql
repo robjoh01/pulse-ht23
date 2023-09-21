@@ -41,9 +41,9 @@ VALUES
 
 -- Insert admin into database
 INSERT INTO user
-    (`employee_id`, `username`, `password`, `display_name`, `email_address`, `phone_number`, `image_url`)
+    (`employee_id`, `username`, `password`, `display_name`, `email_address`, `phone_number`, `image_url`, `creation_date`)
 VALUES
-    ("2e889992-6993-42c2-9366-cf9249a1e61b", "admin", "$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa", "John Doe", "johndoe@example.com", "555-XXXX", "https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg")
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "admin", "$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa", "John Doe", "johndoe@example.com", "555-XXXX", "https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg", CURRENT_DATE())
 ;
 
 -- Insert project into database
@@ -52,15 +52,28 @@ INSERT INTO project
 VALUES
     ("6e885bbc-6d26-411e-b978-2962acae4bdd", "Sharp Suits", "Lorem Ipsum", "2020-08-22", "2023-09-11", "2023-12-31"),
     ("ba28b243-6889-4c54-a138-ff72333186a2", "Modern Maven", "Lorem Ipsum", "2021-08-22", "2023-09-11", "2023-12-31"),
-    ("4e658238-d50c-4812-84f2-be58e8be308a", "Quirky Quarters", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31")
+    ("4e658238-d50c-4812-84f2-be58e8be308a", "Quirky Quarters", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31"),
+
+    ("38a3315d-fe13-4692-b001-872d6656689a", "Project A", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31"),
+    ("bf23b742-a36b-4251-84d1-4db5fb30248d", "Project B", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31"),
+    ("445390fb-509e-4e3b-985a-f20df536512c", "Project C", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31"),
+    ("d615786c-4610-4558-b2b6-113348aa5dac", "Project D", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31"),
+    ("1650f7ca-9b08-4907-af57-671342a219a2", "Project E", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31"),
+    ("8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9", "Project F", "Lorem Ipsum", "2019-08-22", "2023-10-11", "2023-12-31")
 ;
 
 -- Insert project into database
 INSERT INTO assignment
-    (`employee_id`, `project_id`, `access_lvl`)
+    (`employee_id`, `project_id`, `access_lvl`, `creation_date`)
 VALUES
-    ("2e889992-6993-42c2-9366-cf9249a1e61b", "4e658238-d50c-4812-84f2-be58e8be308a", "1"),
-    ("2e889992-6993-42c2-9366-cf9249a1e61b", "ba28b243-6889-4c54-a138-ff72333186a2", "2")
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "4e658238-d50c-4812-84f2-be58e8be308a", "1", CURRENT_DATE()),
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "ba28b243-6889-4c54-a138-ff72333186a2", "2", CURRENT_DATE()),
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "38a3315d-fe13-4692-b001-872d6656689a", "3", CURRENT_DATE()),
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "bf23b742-a36b-4251-84d1-4db5fb30248d", "4", CURRENT_DATE()),
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "445390fb-509e-4e3b-985a-f20df536512c", "1", CURRENT_DATE()),
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "d615786c-4610-4558-b2b6-113348aa5dac", "2", CURRENT_DATE()),
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "1650f7ca-9b08-4907-af57-671342a219a2", "3", CURRENT_DATE()),
+    ("2e889992-6993-42c2-9366-cf9249a1e61b", "8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9", "4", CURRENT_DATE())
 ;
 
 --

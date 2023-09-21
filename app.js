@@ -14,8 +14,8 @@ const routesJSON = require("./routes/routes_json.js");
 
 const { minutesToMilliseconds } = require("./src/utils/conversionUtil.js");
 
-// Make instances
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 const store = new session.MemoryStore();

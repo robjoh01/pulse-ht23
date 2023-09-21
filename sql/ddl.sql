@@ -27,6 +27,8 @@ CREATE TABLE `user`
     `email_address` VARCHAR(32),
     `phone_number` VARCHAR(32),
     `image_url` VARCHAR(128),
+    `creation_date` DATE,
+    `logout_date` DATE,
 
     PRIMARY KEY (`employee_id`)
 );
@@ -48,6 +50,7 @@ CREATE TABLE `assignment`
     `employee_id` CHAR(36) NOT NULL,
     `project_id` CHAR(36) NOT NULL,
     `access_lvl` INT,
+    `creation_date` DATE,
 
     FOREIGN KEY (`employee_id`) REFERENCES user(`employee_id`),
     FOREIGN KEY (`project_id`) REFERENCES project(`id`),
@@ -64,6 +67,7 @@ SHOW TABLES;
 DROP VIEW IF EXISTS v_users;
 DROP VIEW IF EXISTS v_projects;
 DROP VIEW IF EXISTS v_assignments;
+DROP VIEW IF EXISTS v_assignments_extend;
 
 CREATE VIEW v_users AS
 SELECT
@@ -72,7 +76,9 @@ SELECT
     u.display_name,
     u.email_address,
     u.phone_number,
-    u.image_url
+    u.image_url,
+    u.creation_date,
+    u.logout_date
 FROM user AS u
 GROUP BY u.employee_id
 ;
@@ -82,6 +88,8 @@ SELECT
     p.id,
     p.name,
     p.description,
+    p.creation_date,
+    p.modified_date,
     p.due_date
 FROM project AS p
 GROUP BY p.id
@@ -94,7 +102,27 @@ SELECT
     u.employee_id,
     p.name AS `project_name`,
     p.id AS `project_id`,
-    al.type AS `access_type`
+    al.type AS `access_type`,
+    a.creation_date AS `creation_date`
+FROM assignment AS a
+    JOIN `user` AS u ON a.employee_id = u.employee_id
+    JOIN project AS p ON a.project_id = p.id
+    JOIN access_level AS al ON a.access_lvl = al.id
+GROUP BY a.employee_id, a.project_id, al.type
+;
+
+CREATE VIEW v_assignments_extend AS
+SELECT
+    u.username,
+    u.employee_id,
+    p.name AS `project_name`,
+    p.id AS `project_id`,
+    al.type AS `access_type`,
+    a.creation_date AS `creation_date`,
+    p.description AS `project_description`,
+    p.creation_date AS `project_creation_date`,
+    p.modified_date AS `project_modified_date`,
+    p.due_date AS `project_due_date`
 FROM assignment AS a
     JOIN `user` AS u ON a.employee_id = u.employee_id
     JOIN project AS p ON a.project_id = p.id
@@ -107,6 +135,8 @@ GROUP BY a.employee_id, a.project_id, al.type
 --
 
 DROP PROCEDURE IF EXISTS edit_user;
+DROP PROCEDURE IF EXISTS user_update_password;
+DROP PROCEDURE IF EXISTS user_logout;
 
 DELIMITER ;;
 
@@ -140,6 +170,25 @@ BEGIN
     SET success = TRUE;
 END;;
 
+CREATE PROCEDURE user_update_password(
+    IN emp_id CHAR(36),
+    IN new_password VARCHAR(128)
+)
+BEGIN
+    UPDATE `user`
+    SET `password` = new_password
+    WHERE `employee_id` = emp_id;
+END;;
+
+CREATE PROCEDURE user_logout(
+    IN emp_id CHAR(36)
+)
+BEGIN
+    UPDATE `user`
+    SET `logout_date` = CURRENT_DATE()
+    WHERE `employee_id` = emp_id;
+END;;
+
 DELIMITER ;
 
 --
@@ -156,11 +205,11 @@ DROP FUNCTION IF EXISTS fetch_employee_id;
 DROP FUNCTION IF EXISTS fetch_password;
 
 DROP FUNCTION IF EXISTS does_user_exist;
-
 DROP FUNCTION IF EXISTS create_user;
 DROP FUNCTION IF EXISTS update_user;
 DROP FUNCTION IF EXISTS delete_user;
 
+DROP FUNCTION IF EXISTS does_project_exist;
 DROP FUNCTION IF EXISTS create_project;
 DROP FUNCTION IF EXISTS update_project;
 DROP FUNCTION IF EXISTS delete_project;
@@ -244,8 +293,8 @@ BEGIN
     ELSE
         -- If the username and email_address don't exist, generate a new GUID and insert the new user
         SET new_employee_id = generate_guid();
-        INSERT INTO `user` (`employee_id`, `username`, `password`, `email_address`)
-            VALUES (new_employee_id, arg_username, arg_password, arg_email_address);
+        INSERT INTO `user` (`employee_id`, `username`, `password`, `email_address`, `creation_date`)
+            VALUES (new_employee_id, arg_username, arg_password, arg_email_address, CURRENT_DATE());
         RETURN new_employee_id; -- Return the generated GUID (employee_id)
     END IF;
 END;;
@@ -309,21 +358,36 @@ BEGIN
 END;;
 
 CREATE FUNCTION create_project(
-    arg_id CHAR(36),
+    arg_employee_id CHAR(36),
     arg_name VARCHAR(32),
     arg_description VARCHAR(96),
     arg_due_date DATE
 )
-RETURNS BOOLEAN
+RETURNS CHAR(36)
 BEGIN
-    DECLARE rows_affected INT;
+    DECLARE new_project_id CHAR(36);
+    DECLARE admin_employee_id CHAR(36);
 
+    -- Generate a new GUID for the project ID
+    SET new_project_id = generate_guid();
+
+    -- Fetch admin's employee_id based on the username
+    SELECT `employee_id` INTO admin_employee_id
+    FROM `user`
+    WHERE `username` = 'admin';
+
+    -- Insert the new project with the generated GUID
     INSERT INTO `project` (`id`, `name`, `description`, `creation_date`, `modified_date`, `due_date`)
-        VALUES (arg_id, arg_name, arg_description, CURRENT_DATE(), NULL, arg_due_date);
+        VALUES (new_project_id, arg_name, arg_description, CURRENT_DATE(), NULL, arg_due_date)
+    ;
 
-    SET rows_affected = ROW_COUNT();
+    -- Insert assignment record for the user and admin with default access_lvl of 1 (ownership)
+    INSERT INTO `assignment` (`employee_id`, `project_id`, `access_lvl`, `creation_date`)
+        VALUES (arg_employee_id, new_project_id, 1, CURRENT_DATE()),
+               (admin_employee_id, new_project_id, 2, CURRENT_DATE())
+    ;
 
-    RETURN rows_affected > 0;
+    RETURN new_project_id;
 END;;
 
 CREATE FUNCTION update_project(
@@ -357,12 +421,36 @@ RETURNS BOOLEAN
 BEGIN
     DECLARE rows_affected INT;
 
+    -- Disable foreign key checks temporarily
+    SET FOREIGN_KEY_CHECKS = 0;
+
+    -- Delete the project from the project table
     DELETE FROM `project`
     WHERE `id` = arg_id;
+
+    -- Re-enable foreign key checks
+    SET FOREIGN_KEY_CHECKS = 1;
 
     SET rows_affected = ROW_COUNT();
 
     RETURN rows_affected > 0;
+END;;
+
+CREATE FUNCTION does_project_exist(
+    name_arg VARCHAR(32),
+    id_arg CHAR(36)
+)
+RETURNS BOOLEAN
+BEGIN
+    DECLARE project_exists BOOLEAN;
+
+    SELECT EXISTS(
+        SELECT 1 
+        FROM `project` 
+        WHERE `id` = id_arg OR `name` = name_arg
+    ) INTO project_exists;
+
+    RETURN project_exists;
 END;;
 
 DELIMITER ;

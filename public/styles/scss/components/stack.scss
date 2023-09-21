@@ -1,0 +1,31 @@
+.stacked {
+    display: grid;
+}
+
+.stacked > * {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    &.col {
+        flex-flow: column nowrap;
+    }
+
+    &.row {
+        flex-flow: row nowrap;
+    }
+
+    &.col-wrap {
+        flex-flow: column wrap;
+    }
+
+    &.row-wrap {
+        flex-flow: row wrap;
+    }
+}

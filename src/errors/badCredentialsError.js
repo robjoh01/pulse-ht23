@@ -5,7 +5,7 @@ class BadCredentialsError extends AppError {
         super(
             401,
             "Bad Credentials",
-            "Invalid username or password. Please ensure you've entered the correct credentials and try again.",
+            "Invalid input. Please ensure you've entered the correct credentials and try again.",
             redirect
         );
         next(this);

@@ -3,8 +3,8 @@
 const themeToggleBtn = document.getElementById("themeToggleBtn");
 const themeToggleBtnIcon = document.getElementById("themeToggleBtnIcon");
 
-const isMatched = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
-themeToggleBtnIcon.className = isMatched ? "bi-brightness-high-fill" : "bi-moon-stars-fill";
+const matchMedia = window.matchMedia?.("(prefers-color-scheme: dark)");
+themeToggleBtnIcon.className = matchMedia.matches ? "bi-brightness-high-fill" : "bi-moon-stars-fill";
 
 const overrideColorTheme = localStorage.getItem("color-theme");
 
@@ -12,6 +12,14 @@ if (overrideColorTheme) {
     document.body.className = overrideColorTheme;
     themeToggleBtnIcon.className = (overrideColorTheme === "dark") ? "bi-brightness-high-fill" : "bi-moon-stars-fill";
 }
+
+matchMedia.addEventListener("change", e => {
+    if (overrideColorTheme) {
+        return;
+    }
+
+    themeToggleBtnIcon.className = e.matches ? "bi-brightness-high-fill" : "bi-moon-stars-fill";
+});
 
 themeToggleBtn.addEventListener("click", () => {
     if (themeToggleBtnIcon.classList.contains("bi-moon-stars-fill")) {

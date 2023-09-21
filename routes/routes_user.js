@@ -2,6 +2,8 @@
 
 // Import dependencies
 const express = require("express");
+const multer  = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 // Import libraries
 const dbUtil = require("../src/utils/dbUtil.js");
@@ -22,7 +24,7 @@ router.get("/user/register", (req, res, next) => {
     data.title = "Register";
     data.session = appUtil.getSession(req);
 
-    res.render("./../pages/register.ejs", data);
+    res.render("./../pages/user_register.ejs", data);
 });
 
 router.get("/user/login", (req, res, next) => {
@@ -31,18 +33,18 @@ router.get("/user/login", (req, res, next) => {
     data.title = "Login";
     data.session = appUtil.getSession(req);
 
-    res.render("./../pages/login.ejs", data);
+    res.render("./../pages/user_login.ejs", data);
 });
 
-router.get("/user/logout", (req, res, next) => {
+router.get("/user/logout", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
     }
 
-    // TODO: Call the database and update logout date
+    const user = appUtil.getSessionUser(req);
 
-    // TODO: Add popup window and ask: Are you sure?
+    await dbUtil.logoutUser(user.id);
 
     req.session.destroy();
 
@@ -57,11 +59,18 @@ router.get("/user/profile", async (req, res, next) => {
 
     let data = {};
 
+    const user = appUtil.getSessionUser(req);
+
     data.title = "Profile";
     data.session = appUtil.getSession(req);
-    data.user = await dbUtil.readUser(appUtil.getSessionUser(req));
+    data.user = await dbUtil.readUser(user.id);
 
-    res.render("./../pages/profile.ejs", data);
+    // Add default image
+    if (!data.user.image_url) {
+        data.user.image_url = "https://demos.themeselection.com/materio-mui-react-nextjs-admin-template-free/images/avatars/1.png";
+    }
+
+    res.render("./../pages/user_profile.ejs", data);
 });
 
 router.get("/user/change_password", (req, res, next) => {
@@ -75,9 +84,7 @@ router.get("/user/change_password", (req, res, next) => {
     data.title = "Change Password";
     data.session = appUtil.getSession(req);
 
-    // res.sendStatus(200);
-
-    res.render("./../pages/change_password.ejs", data);
+    res.render("./../pages/user_change_password.ejs", data);
 });
 
 router.get("/user/delete", (req, res, next) => {
@@ -91,7 +98,7 @@ router.get("/user/delete", (req, res, next) => {
     data.title = "Delete Account";
     data.session = appUtil.getSession(req);
 
-    res.render("./../pages/delete.ejs", data);
+    res.render("./../pages/user_delete.ejs", data);
 });
 
 router.post("/user/register/posted", async (req, res, next) => {
@@ -115,20 +122,23 @@ router.post("/user/register/posted", async (req, res, next) => {
         return;
     }
 
-    if (await dbUtil.doesUserExists(f_username)) {
+    let doesUserExists = await dbUtil.doesUserExists(f_username);
+
+    if (doesUserExists) {
         new errors.UserAlreadyExistsError(next, "/user/register");
         return;
     }
 
     let id = await dbUtil.createUser(f_username, f_password, f_email);
 
-    // TODO: Send email notifcation via (f_email)
-
     if (!id) {
         // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
         res.redirect("/user/register");
         return;
     }
+
+    // TODO: Enable this for production ready
+    //emailUtil.sendMailAsServer(f_email, "Welcome to Pulse!", "<h1>Hello, World!</h1>\n<p>Welcome To Jurassic Park</p>\n<a href=\"www.google.com\">Click here</a>");
 
     appUtil.authenticateUser(req, id, f_username, f_password);
 
@@ -185,7 +195,7 @@ router.post("/user/profile/posted", async (req, res) => {
         // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
     }
 
-    res.redirect("/profile");
+    res.redirect("/user/profile");
 });
 
 router.post("/user/change_password/posted", async (req, res) => {
@@ -195,16 +205,23 @@ router.post("/user/change_password/posted", async (req, res) => {
 
     const { f_current_password, f_new_password, f_new_password_again } = req.body;
 
-    const user = appUtil.getSessionUser(req);
-
-    if (dbUtil.loginUser(user.username, f_current_password) && f_new_password === f_new_password_again) {
-        // TODO: Add logic
-
-        res.redirect("/user/profile");
+    if (!f_current_password ||
+        !f_new_password ||
+        !f_new_password_again) {
+        new errors.BadCredentialsError(next, "/user/profile");
         return;
     }
 
-    res.status(403).json({ msg: "Bad Credentials" });
+    if (f_new_password != f_new_password_again) {
+        new errors.PasswordNotMatchError(next, "/user/profile");
+        return;
+    }
+
+    await dbUtil.updateUserPassword(user.id, f_new_password);
+
+    req.session.user.password = f_new_password; // Update password in the session.
+
+    res.redirect("/user/profile");
 });
 
 router.post("/user/delete/posted", async (req, res, next) => {
@@ -248,6 +265,18 @@ router.post("/user/delete/posted", async (req, res, next) => {
     // req.flash("successful", "Yay!");
 
     res.redirect("/user/login");
+});
+
+router.post("/user/profile/image/posted", async (req, res, next) => {
+    if (!appUtil.isUserAuthenticated(req)) {
+        new errors.UserNotLoggedInError(next, "/user/profile");
+        return;
+    }
+
+    // TODO: Create logic for retrive the image and updating the data table in the database.
+    // https://www.npmjs.com/package/multer
+
+    res.redirect("/user/profile");
 });
 
 module.exports = router;

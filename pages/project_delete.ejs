@@ -1,0 +1,25 @@
+<%- include("./../partials/header.ejs") %>
+
+<main class="main">
+    <div class="form-container">
+        <div class="form-root">
+            <div class="form-header">
+                <h1>Are you sure you want to delete the project?</h1>
+                <p>This action will permanently remove all of '<%= project.name %>' data from our system.</p>
+            </div>
+            <form class="form" method="POST" action="/project/delete/posted">
+                <input name="f_id" required hidden value="<%= project.id %>">
+                <button class="button form-button" type="submit">
+                    <span>Accept</span>
+                </button>
+                <a href="/project/managed">
+                    <button class="button form-button" type="button">
+                        <span>Go Back</span>
+                    </button>
+                </a>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include("./../partials/footer.ejs") %>

@@ -1,6 +1,7 @@
-// Written by Robin Johannesson
-
 "use strict";
+
+// Import errors
+const errors = require("./../errors/errors.js");
 
 let appUtil = {
     getSession: function(req) {
@@ -51,7 +52,7 @@ let appUtil = {
     invalidateUser: function(req) {
         req.session.authenticated = false;
         req.session.user = { };
-    },
+    }
 };
 
 module.exports = appUtil;
