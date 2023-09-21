@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 
-VAR=${1:-"."}
-
-mariadb --table pulse < "$VAR/reset.sql"
-mysqldump --result-file="$VAR/backup.sql" pulse
+mariadb --table pulse < "./reset.sql"
+mysqldump --result-file="./backup.sql" pulse

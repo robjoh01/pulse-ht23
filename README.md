@@ -33,10 +33,14 @@ $ touch .env
 
 ```
 PORT=<number>
+SALT_ROUNDS=number
 COOKIE_SECRET=<id>
 GMAIL_NAME=<string>
 GMAIL_USER=<string>
 GMAIL_PASS=<string>
+PHONE_URL=<string>
+GITHUB_URL=<string>
+GMAIL_URL=<string>
 ```
 
 Also create `pulse.json` file (at `config/db/pulse.json`):
@@ -54,6 +58,13 @@ $ touch config/db/pulse.json
     "database": "<database>",
     "multipleStatements": true
 }
+```
+
+Then initialize the database locally:
+
+```console
+$ cd sql
+$ ./scripts/run.bash
 ```
 
 ## 🔗 Helpful links

@@ -14,7 +14,7 @@ let dbUtil = {
     * Checks if the user exists in the database.
     * @return {Boolean} A value either {true} or {false}.
     */
-    doesUserExists: async function(username, id = "") {
+    doesUserExists: async function(username, id = null) {
         const db = await this.connectDatabase();
 
         let sql = `SELECT does_user_exist(?, ?);`;
@@ -144,7 +144,7 @@ let dbUtil = {
         const db = await this.connectDatabase();
 
         let sql = `SELECT does_user_exist(?, ?);`;
-        let res = await db.query(sql, [username, ""]);
+        let res = await db.query(sql, [username, null]);
 
         const doesUserExist = res[0][Object.keys(res[0])[0]]; // Check if user is exists
 
