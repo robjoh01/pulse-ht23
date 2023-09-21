@@ -5,6 +5,7 @@
 // Import dependencies
 const express = require("express");
 const session = require("express-session");
+const bodyParser = require("body-parser");
 
 const routes = require("./routes/routes.js");
 const routesProject = require("./routes/routes_project.js");
@@ -36,6 +37,14 @@ app.use(sessionMiddleware);
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(bodyParser.json());
+
+app.set('json spaces', 4);
 
 app.use(routes);
 app.use(routesUser);
