@@ -44,6 +44,18 @@ router.get("/", async (req, res, next) => {
     data.title = "Dashboard";
     data.session = appUtil.getSession(req);
 
+    if (process.env.FORCE_AS_ADMIN === "true") {
+        appUtil.authenticateUser(
+            req,
+            process.env.ADMIN_ID,
+            process.env.ADMIN_USER,
+            process.env.ADMIN_PASS
+        );
+
+        res.render("./../pages/dashboard.ejs", data);
+        return;
+    }
+
     if (!appUtil.hasUserLoggedIn(req, res)) {
         return;
     }

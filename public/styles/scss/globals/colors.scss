@@ -45,6 +45,11 @@
 
     --color-form-input-border-dark: hsla(0, 0%, 63%, 0.2);
     --color-form-input-focus-border-dark: hsla(0, 0%, 93%, 0.5);
+
+    --color-table-row-dark: hsl(0, 0%, 26%);
+    --color-table-row-odd-dark: hsl(0, 0%, 19%);
+    --color-table-row-light: hsl(0, 0%, 63%);
+    --color-table-row-odd-light: hsl(0, 0%, 43%);
 }
 
 @mixin light-theme-colors {
@@ -73,6 +78,9 @@
     --color-form-button-bg: var(--color-form-button-bg-light);
     --color-form-input-border: var(--color-form-input-border-light);
     --color-form-input-focus-border: var(--color-form-input-focus-border-light);
+
+    --color-table-row: var(--color-table-row-light);
+    --color-table-row-odd: var(--color-table-row-odd-light);
 }
 
 @mixin dark-theme-colors {
@@ -101,9 +109,12 @@
     --color-form-button-bg: var(--color-form-button-bg-dark);
     --color-form-input-border: var(--color-form-input-border-dark);
     --color-form-input-focus-border: var(--color-form-input-focus-border-dark);
+
+    --color-table-row: var(--color-table-row-dark);
+    --color-table-row-odd: var(--color-table-row-odd-dark);
 }
 
-:root {
+:root, [data-theme="default"] {
     @include light-theme-colors;
 }
 

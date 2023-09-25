@@ -1,0 +1,75 @@
+@use "../utils" as *;
+
+.primary-table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+
+    .primary-th,
+    .primary-td {
+        padding: 0.5rem;
+    }
+
+    .primary-flex {
+        justify-content: unset;
+    }
+
+    .primary-thead {
+        .primary-tr {
+        }
+
+        .primary-th {
+        }
+    }
+
+    .primary-tbody {
+        .primary-tr {
+            background-color: var(--color-table-row);
+        }
+
+        .primary-tr:nth-child(odd) {
+            background-color: var(--color-table-row-odd);
+        }
+    }
+}
+
+.primary-table .primary-thead,
+.primary-table .primary-tbody {
+
+}
+
+.primary-table .primary-thead {
+    background-color: var(--color-bg);
+    color: var(--color-fg-300);
+}
+
+.primary-table {
+    .primary-th {
+        &:nth-child(1) {
+            width: 5%;
+        }
+
+        &:nth-child(2) {
+            width: 30%;
+        }
+        &:nth-child(3) {
+            width: 20%;
+        }
+
+        &:nth-child(4) {
+            width: 20%;
+        }
+
+        &:nth-child(5) {
+            width: 20%;
+        }
+
+        &:nth-child(6) {
+            width: 20%;
+        }
+
+        &:nth-child(7) {
+            width: 5%;
+        }
+    }
+}

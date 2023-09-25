@@ -7,25 +7,25 @@
     grid-row: 1 / 2;
 }
 
-.flex {
+.primary-flex {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
 
-    &.col {
+    &.primary-col {
         flex-flow: column nowrap;
     }
 
-    &.row {
+    &.primary-row {
         flex-flow: row nowrap;
     }
 
-    &.col-wrap {
+    &.primary-col-wrap {
         flex-flow: column wrap;
     }
 
-    &.row-wrap {
+    &.primary-row-wrap {
         flex-flow: row wrap;
     }
 }

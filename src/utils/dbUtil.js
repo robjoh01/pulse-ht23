@@ -40,13 +40,13 @@ let dbUtil = {
 
         return await hashUtil.compare(user.password, hashedPassword);
     },
-    createUser: async function(username, password, email) {
+    createUser: async function(id, username, password, email) {
         const db = await this.connectDatabase();
 
         const hashedPassword = await hashUtil.hash(password);
 
-        const query = 'SELECT create_user(?, ?, ?);';
-        let res = await db.query(query, [username, hashedPassword, email]);
+        const query = 'SELECT create_user(?, ?, ?, ?);';
+        let res = await db.query(query, [id, username, hashedPassword, email]);
 
         db.end();
 

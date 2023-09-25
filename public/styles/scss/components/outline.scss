@@ -8,6 +8,10 @@
 .main {
     max-width: 800px;
     margin: 4rem auto;
+
+    &.extend {
+        min-width: 80%;
+    }
 }
 
 .main-full {

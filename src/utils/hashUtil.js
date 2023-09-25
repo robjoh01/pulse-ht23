@@ -1,5 +1,7 @@
 "use strict";
 
+const {v4: uuidv4 } = require("uuid");
+
 const bcrypt = require('bcrypt');
 
 const dotenv = require("dotenv");
@@ -11,6 +13,9 @@ let hashUtil = {
     },
     compare: async function(password, hash) {
         return await bcrypt.compare(password, hash);
+    },
+    generateGuid: function() {
+        return uuidv4();
     }
 };
 

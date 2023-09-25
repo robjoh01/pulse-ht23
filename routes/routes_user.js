@@ -11,6 +11,7 @@ const appUtil = require("../src/utils/appUtil.js");
 const conversionUtil = require("../src/utils/conversionUtil.js");
 const emailUtil = require("../src/utils/emailUtil.js");
 const profanityUtil = require("./../src/utils/profanityUtil.js");
+const hashUtil = require('../src/utils/hashUtil.js');
 
 // Import errors
 const errors = require("../src/errors/errors.js");
@@ -129,9 +130,16 @@ router.post("/user/register/posted", async (req, res, next) => {
         return;
     }
 
-    let id = await dbUtil.createUser(f_username, f_password, f_email);
+    const id = hashUtil.generateGuid();
 
     if (!id) {
+        new errors.UnkownError(next, "/user/register");
+        return;
+    }
+
+    const wasSuccessful = await dbUtil.createUser(id, f_username, f_password, f_email);
+
+    if (!wasSuccessful) {
         // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
         res.redirect("/user/register");
         return;

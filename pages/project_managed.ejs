@@ -1,38 +1,73 @@
 <%- include("./../partials/header.ejs") %>
 
-<main class="main">
+<main class="main extend">
     <h1>Managed Projects</h1>
     <article class="article">
-        <div class="project-grid">
-            <% assignments.forEach(function(x) { %>
-                <div class="project-card">
-                    <div class="project-card__banner">
+        <form>
+            <input type="text" placeholder="Search through the table">
+        </form>
+        <table class="primary-table">
+            <thead class="primary-thead">
+                <tr class="primary-tr">
+                    <th class="primary-th">
+                        <span></span>
+                    </td>
+                    <th class="primary-th">
+                        <span>Name</span>
+                    </td>
+                    <th class="primary-th">
+                        <div class="primary-flex primary-row">
+                            <i class="bi bi-calendar"></i>
+                            <span>Creation</span>
+                        </div>
+                    </td>
+                    <th class="primary-th">
+                        <div class="primary-flex primary-row">
+                            <i class="bi bi-calendar-x-fill"></i>
+                            <span>Start</span>
+                        </div>
+                    </td>
+                    <th class="primary-th">
+                        <div class="primary-flex primary-row">
+                            <i class="bi bi-calendar-x-fill"></i>
+                            <span>End</span>
+                        </div>
+                    </td>
+                    <th class="primary-th">
+                        <div class="primary-flex primary-row">
+                            <i class="bi bi-calendar-x-fill"></i>
+                            <span>Report</span>
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody class="primary-tbody">
+                <% assignments.forEach(function(x) { %>
+                <tr class="primary-tr">
+                    <td class="primary-td">
                         <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
                             <i class="bi bi-link-45deg"></i>
                         </button>
-                        <h2><%= x.project_name %></h2>
-                        <% if (x.access_type !== 'comment' && x.access_type !== 'view') { %>
-                        <a href="/project/update/<%= x.project_id %>">
-                            <button class="project-btn">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                        </a>
-                        <% } %>
-                    </div>
-                    <div class="project-card__content">
-                        <pre class="project-card__description"><%= x.project_description %></pre>
-                        <div class="project-card__date__content">
-                            <i class="bi bi-calendar"></i>
-                            <p class="project-card_date" data-date="<%= x.project_creation_date %>"></p>
-                        </div>
-                        <div class="project-card__date__content">
-                            <i class="bi bi-calendar-x-fill"></i>
-                            <p class="project-card_date" data-date="<%= x.project_due_date %>"></p>
-                        </div>
-                    </div>
-                </div>
-            <% }); %>
-        </div>
+                    </td>
+                    <td class="primary-td">
+                        <a href="/project/update/<%= x.project_id %>"><%= x.project_name %></a>
+                    </td>
+                    <td class="primary-td">
+                        <span>2023-09-25</span>
+                    </td>
+                    <td class="primary-td">
+                        <span>2023-09-25</span>
+                    </td>
+                    <td class="primary-td">
+                        <span>2023-09-25</span>
+                    </td>
+                    <td class="primary-td">
+                        <span>2023-09-25</span>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
     </article>
     <div class="flex col">
         <a href="/project/create">
