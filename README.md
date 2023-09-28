@@ -70,12 +70,26 @@ $ cd sql
 $ ./scripts/run.bash
 ```
 
+## Stylelint
+
+To run stylelint:
+
+```console
+$ npm run lint
+```
+
 ## Unit Testing
 
 To run the tests:
 
 ```console
 $ npm run test
+```
+
+or
+
+```console
+$ npm run test-extend
 ```
 
 ## Updating the stylesheet
