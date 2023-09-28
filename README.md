@@ -20,8 +20,7 @@ Nunc tempor viverra dolor et interdum. In ullamcorper risus quis finibus aliquam
 ## Installment
 
 ```console
-sudo npm install -g bcrypt
-
+$ sudo npm install -g bcrypt
 $ npm install
 ```
 
@@ -33,7 +32,7 @@ $ touch .env
 
 ```
 PORT=<number>
-SALT_ROUNDS=number
+SALT_ROUNDS=<number>
 COOKIE_SECRET=<id>
 GMAIL_NAME=<string>
 GMAIL_USER=<string>
@@ -41,6 +40,10 @@ GMAIL_PASS=<string>
 PHONE_URL=<string>
 GITHUB_URL=<string>
 GMAIL_URL=<string>
+FORCE_AS_ADMIN=<boolean>
+ADMIN_ID=<string>
+ADMIN_USER=<string>
+ADMIN_PASS=<string>
 ```
 
 Also create `pulse.json` file (at `config/db/pulse.json`):
@@ -65,6 +68,28 @@ Then initialize the database locally:
 ```console
 $ cd sql
 $ ./scripts/run.bash
+```
+
+## Unit Testing
+
+To run the tests:
+
+```console
+$ npm run test
+```
+
+## Updating the stylesheet
+
+To update the project stylesheet with SASS:
+
+```console
+$ npm run style
+```
+
+or
+
+```console
+$ npm run style-watch
 ```
 
 ## 🔗 Helpful links
