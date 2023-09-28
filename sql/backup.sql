@@ -42,7 +42,7 @@ CREATE TABLE `assignment` (
 
 LOCK TABLES `assignment` WRITE;
 /*!40000 ALTER TABLE `assignment` DISABLE KEYS */;
-INSERT INTO `assignment` VALUES ('Assignment G','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','1650f7ca-9b08-4907-af57-671342a219a2','2023-09-26','fortnightly',NULL),('Assignment C','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','38a3315d-fe13-4692-b001-872d6656689a','2023-09-26','fortnightly',NULL),('Assignment E','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','445390fb-509e-4e3b-985a-f20df536512c','2023-09-26','daily',NULL),('Assignment A','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','4e658238-d50c-4812-84f2-be58e8be308a','2023-09-26','daily',NULL),('Assignment H','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','2023-09-26','','2023-10-25'),('Assignment B','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','ba28b243-6889-4c54-a138-ff72333186a2','2023-09-26','weekly',NULL),('Assignment D','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','bf23b742-a36b-4251-84d1-4db5fb30248d','2023-09-26','monthly',NULL),('Assignment F','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','d615786c-4610-4558-b2b6-113348aa5dac','2023-09-26','weekly',NULL);
+INSERT INTO `assignment` VALUES ('Assignment G','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','1650f7ca-9b08-4907-af57-671342a219a2','2023-09-26','fortnightly','0000-00-00'),('Assignment C','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','38a3315d-fe13-4692-b001-872d6656689a','2023-09-26','fortnightly','0000-00-00'),('Assignment E','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','445390fb-509e-4e3b-985a-f20df536512c','2023-09-26','daily','0000-00-00'),('Assignment A','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','4e658238-d50c-4812-84f2-be58e8be308a','2023-09-26','daily','0000-00-00'),('Assignment H','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','2023-09-26','','2023-10-25'),('Assignment B','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','ba28b243-6889-4c54-a138-ff72333186a2','2023-09-26','weekly','0000-00-00'),('Assignment D','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','bf23b742-a36b-4251-84d1-4db5fb30248d','2023-09-26','monthly','0000-00-00'),('Assignment F','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','d615786c-4610-4558-b2b6-113348aa5dac','2023-09-26','weekly','0000-00-00');
 /*!40000 ALTER TABLE `assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -616,4 +616,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-28 12:20:33
+-- Dump completed on 2023-09-28 13:30:09
