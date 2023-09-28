@@ -1,36 +1,38 @@
 <%- include("./../partials/header.ejs") %>
 
-<main class="main">
-    <div class="form-container">
-        <div class="form-root">
-            <div class="form-header">
-                <h1>Are you sure you want to delete your account?</h1>
-                <p>This action will permanently remove all your data from our system.</p>
+<div class="main-layout">
+    <main class="main">
+        <div class="form-container">
+            <div class="form-root">
+                <div class="form-header">
+                    <h1>Are you sure you want to delete your account?</h1>
+                    <p>This action will permanently remove all your data from our system.</p>
+                </div>
+                <form class="form" method="POST" action="/user/delete/posted">
+                    <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
+                    <div class="form-input">
+                        <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" required placeholder="Enter your password">
+                        <!-- <label class="form-input-label label" for="password" id="password-label">Password</label> -->
+                        <button class="form-password-button" type="button" id="passwordToggle" aria-label="Toggle password visibility">
+                            <i id="passwordIcon" class="bi bi-eye-slash-fill"></i>
+                        </button>
+                    </div>
+                    <div class="form-input">
+                        <input class="form-text-input" type="password" aria-invalid="false" id="password-again" name="f_password_again" required placeholder="Enter your password (again)">
+                        <!-- <label class="form-input-label label" for="password-again" id="password-again-label">Password (again)</label> -->
+                    </div>
+                    <button class="button form-button" type="submit">
+                        <span>Accept</span>
+                    </button>
+                    <a href="/user/profile">
+                        <button class="button form-button" type="button">
+                            <span>Cancel</span>
+                        </button>
+                    </a>
+                </form>
             </div>
-            <form class="form" method="POST" action="/user/delete/posted">
-                <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
-                <div class="form-input">
-                    <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" required placeholder="Enter your password">
-                    <!-- <label class="form-input-label label" for="password" id="password-label">Password</label> -->
-                    <button class="form-password-button" type="button" id="passwordToggle" aria-label="Toggle password visibility">
-                        <i id="passwordIcon" class="bi bi-eye-slash-fill"></i>
-                    </button>
-                </div>
-                <div class="form-input">
-                    <input class="form-text-input" type="password" aria-invalid="false" id="password-again" name="f_password_again" required placeholder="Enter your password (again)">
-                    <!-- <label class="form-input-label label" for="password-again" id="password-again-label">Password (again)</label> -->
-                </div>
-                <button class="button form-button" type="submit">
-                    <span>Accept</span>
-                </button>
-                <a href="/user/profile">
-                    <button class="button form-button" type="button">
-                        <span>Cancel</span>
-                    </button>
-                </a>
-            </form>
         </div>
-    </div>
-</main>
+    </main>
 
-<%- include("./../partials/footer.ejs") %>
+    <%- include("./../partials/footer.ejs") %>
+</div>

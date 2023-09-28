@@ -1,64 +1,66 @@
 <%- include("./../partials/header.ejs") %>
 
-<main class="main">
-    <div class="form-container">
-        <div class="form-root">
-            <div class="form-header"></div>
-            <form class="form-img" method="POST" action="/user/profile/image/posted" enctype="multipart/form-data">
-                <label id="profileImgLabel" for="profileImgFile" role="button">
-                    <img id="profileImg" src="<%= user.image_url %>" alt="Profile Image" width="120px" height="120px">
-                    <input id="profileImgFile" type="file" accept="image/png, image/jpeg" name="f_img" required hidden>
-                </label>
-                <div class="form-img-input">
-                    <div class="form-img-input-selections">
-                        <button id="profileImgSubmit" class="button form-button" type="submit">
-                            <span>Upload</span>
-                        </button>
-                        <button id="profileImgReset" class="button form-button" type="reset">
-                            <span>Cancel</span>
-                        </button>
+<div class="main-layout">
+    <main class="main">
+        <div class="form-container">
+            <div class="form-root">
+                <div class="form-header"></div>
+                <form class="form-img" method="POST" action="/user/profile/image/posted" enctype="multipart/form-data">
+                    <label id="profileImgLabel" for="profileImgFile" role="button">
+                        <img id="profileImg" src="<%= user.image_url %>" alt="Profile Image" width="120px" height="120px">
+                        <input id="profileImgFile" type="file" accept="image/png, image/jpeg" name="f_img" required hidden>
+                    </label>
+                    <div class="form-img-input">
+                        <div class="form-img-input-selections">
+                            <button id="profileImgSubmit" class="button form-button" type="submit">
+                                <span>Upload</span>
+                            </button>
+                            <button id="profileImgReset" class="button form-button" type="reset">
+                                <span>Cancel</span>
+                            </button>
+                        </div>
+                        <span>Allowed PNG or JPEG. Max size of 800K.</span>
                     </div>
-                    <span>Allowed PNG or JPEG. Max size of 800K.</span>
-                </div>
-            </form>
-            <form class="form" method="POST" action="/user/profile/posted">
-                <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= user.employee_id %>" required hidden>
-                <div class="form-input">
-                    <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required readonly value="<%= user.username %>">
-                    <i class="bi bi-person-fill"></i>
-                </div>
-                <div class="form-input">
-                    <input class="form-text-input" type="text" aria-invalid="false" id="display-name" name="f_display_name" value="<%= user.display_name %>">
-                    <i class="bi bi-fonts"></i>
-                </div>
-                <div class="form-input">
-                    <input class="form-text-input" type="email" aria-invalid="false" id="email" name="f_email" value="<%= user.email_address %>">
-                    <i class="bi bi-postcard-fill"></i>
-                </div>
-                <div class="form-input">
-                    <input class="form-text-input" type="tel" aria-invalid="false" id="phone-number" name="f_phone_number" value="<%= user.phone_number %>">
-                    <i class="bi bi-telephone-fill"></i>
-                </div>
-                <div class="form-link">
-                    <p>Change password? <strong><a href="/user/change_password">Click here</a></strong></p>
-                </div>
-                <button class="button form-button" type="submit">
-                    <span>Save Changes</span>
-                </button>
-                <button class="button form-button" type="reset">
-                    <span>Reset</span>
-                </button>
-                <div class="form-filler"></div>
-                <a href="/user/delete">
-                    <button class="button form-button" type="button">
-                        <span>Delete Account</span>
+                </form>
+                <form class="form" method="POST" action="/user/profile/posted">
+                    <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= user.employee_id %>" required hidden>
+                    <div class="form-input">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required readonly value="<%= user.username %>">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="form-input">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="display-name" name="f_display_name" value="<%= user.display_name %>">
+                        <i class="bi bi-fonts"></i>
+                    </div>
+                    <div class="form-input">
+                        <input class="form-text-input" type="email" aria-invalid="false" id="email" name="f_email" value="<%= user.email_address %>">
+                        <i class="bi bi-postcard-fill"></i>
+                    </div>
+                    <div class="form-input">
+                        <input class="form-text-input" type="tel" aria-invalid="false" id="phone-number" name="f_phone_number" value="<%= user.phone_number %>">
+                        <i class="bi bi-telephone-fill"></i>
+                    </div>
+                    <div class="form-link">
+                        <p>Change password? <strong><a href="/user/change_password">Click here</a></strong></p>
+                    </div>
+                    <button class="button form-button" type="submit">
+                        <span>Save Changes</span>
                     </button>
-                </a>
-            </form>
+                    <button class="button form-button" type="reset">
+                        <span>Reset</span>
+                    </button>
+                    <div class="form-filler"></div>
+                    <a href="/user/delete">
+                        <button class="button form-button" type="button">
+                            <span>Delete Account</span>
+                        </button>
+                    </a>
+                </form>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
-<script type="text/javascript" src="/js/user-profile.js" defer></script>
+    <script type="text/javascript" src="/js/user-profile.js" defer></script>
 
-<%- include("./../partials/footer.ejs") %>
+    <%- include("./../partials/footer.ejs") %>
+</div>

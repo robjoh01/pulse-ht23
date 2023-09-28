@@ -1,0 +1,188 @@
+.primary-sidebar {
+    position: fixed;
+    z-index: 999;
+    width: 320px;
+    height: 100%;
+    background-color: hsl(245, 29%, 9%);
+    padding: 6px 14px;
+    display: grid;
+    grid-template-rows: 60px 1fr 60px;
+
+    .logo-content .logo {
+        color: #fff;
+        display: flex;
+        height: 50px;
+        width: 100%;
+        align-items: center;
+
+        i {
+            font-size: 28px;
+            margin-right: 5px;
+        }
+
+        .logo-name {
+            font-size: 20px;
+            font-weight: 400;
+        }
+    }
+
+    #sidebarBtn {
+        position: absolute;
+        color: #fff;
+        left: 90%;
+        top: 6px;
+        font-size: 20px;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        transform: translateX(-50%);
+    }
+
+    .nav-list {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 1rem;
+
+        .spacer {
+            height: 50px;
+        }
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        margin-top: 20px;
+
+        li {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            list-style: none;
+            margin: 0 5px;
+            line-height: 50px;
+
+            #navSearch {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                border-radius: 12px;
+                outline: none;
+                border: none;
+                background-color: #1d1b31;
+                padding-left: 50px;
+                font-size: 18px;
+                color: #fff;
+
+                ~.bx-search {
+                    position: absolute;
+                    z-index: 99;
+                    color: #fff;
+                    font-size: 22px;
+                }
+            }
+
+            a {
+                color: #fff;
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                border-radius: 12px;
+                transition: all 400ms ease;
+
+                &:hover {
+                    color: #11001d;
+                    background-color: #fff;
+                }
+
+                i {
+                    min-width: 50px;
+                    height: 50px;
+                    border-radius: 12px;
+                    line-height: 50px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    *>.tooltip {
+        position: absolute;
+        left: 122px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 6px;
+        width: 122px;
+        height: 35px;
+        background-color: #fff;
+        line-height: 35px;
+        text-align: center;
+        box-shadow:0 5px 10px hsla(0, 0%, 0%, 0.2);
+        transition: 0ms;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    *:hover>.tooltip {
+        transition: all 500ms ease;
+        opacity: 1;
+        top: 50%;
+    }
+
+    .profile-container {
+        // position: absolute;
+        color: #fff;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+        .profile-root {
+            position: relative;
+            padding: 10px 6px;
+            height: 60px;
+            background-color: #1d1b31;
+
+            .profile-content {
+                display: flex;
+                flex-flow: row nowrap;
+                gap: 0.8rem;
+
+                i {
+                    font-size: 45px;
+                    object-fit: cover;
+                    border-radius: 12px;
+                }
+
+                .profile-details {
+                    display: flex;
+                    flex-flow: column nowrap;
+
+                    .profile-name {
+                        font-size: 15px;
+                        font-weight: 400;
+                        font-style: italic;
+                        text-decoration: underline;
+                    }
+
+                    .profile-role {
+                        font-size: 12px;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+
+    #logout {
+        position: absolute;
+        left: 88%;
+        bottom: 5px;
+        transform: translate(-50%);
+        min-width: 50px;
+        line-height: 50px;
+        font-size: 20px;
+        border-radius: 12px;
+    }
+}

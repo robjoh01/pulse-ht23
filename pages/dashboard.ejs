@@ -1,17 +1,17 @@
 <%- include("./../partials/header.ejs") %>
 
-<main class="main main-full">
-    <div class="calendar" id="calendar"></div>
-    <section class="section">
-        <!-- Add news here -->
-    </section>
-    <aside class="aside">
+<div class="main-layout">
+    <main class="main">
         <section class="section">
-            <!-- Add control panel here -->
+            <!-- Add news here -->
         </section>
-    </aside>
-</main>
+        <aside class="aside">
+            <section class="section">
+                <!-- Add control panel here -->
+            </section>
+        </aside>
+    </main>
 
-<script type="text/javascript" src="/js/calendar.js" defer></script>
-
-<%- include("./../partials/footer.ejs") %>
+    <script type="text/javascript" src="/js/calendar.js" defer></script>
+    <%- include("./../partials/footer.ejs") %>
+</div>

@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
+    "test-extend": "jest --coverage",
     "lint": "stylelint \"**/*.scss\"",
     "style": "sass public/styles/scss/style.scss public/styles/dist.css --no-source-map --style compressed",
     "style-watch": "sass --watch public/styles/scss/style.scss public/styles/dist.css --no-source-map --style compressed"

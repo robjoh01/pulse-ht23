@@ -39,32 +39,24 @@ router.get("/error", (req, res) => {
 });
 
 router.get("/", async (req, res, next) => {
-    let data = {};
-
-    data.title = "Dashboard";
-    data.session = appUtil.getSession(req);
-
-    if (process.env.FORCE_AS_ADMIN === "true") {
-        appUtil.authenticateUser(
-            req,
-            process.env.ADMIN_ID,
-            process.env.ADMIN_USER,
-            process.env.ADMIN_PASS
-        );
-
-        res.render("./../pages/dashboard.ejs", data);
-        return;
-    }
-
     if (!appUtil.hasUserLoggedIn(req, res)) {
         return;
     }
 
-    const user = appUtil.getSessionUser(req);
+    res.redirect("/dashboard");
+});
 
-    data.user = await dbUtil.readUser(user.id);
+router.get("/dashboard", async (req, res, next) => {
+    if (!appUtil.isUserAuthenticated(req)) {
+        new errors.UserNotLoggedInError(next, "/user/login");
+        return;
+    }
 
-    // data.user = await dbUtil.getUserData(data.username);
+    let data = {};
+
+    data.title = "Dashboard";
+    data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
     // [
     //   'employee_id',
@@ -74,31 +66,52 @@ router.get("/", async (req, res, next) => {
     //   'phone_number'
     // ]
 
-    // console.table(await dbUtil.getUsers());
-
     res.render("./../pages/dashboard.ejs", data);
 });
 
-router.get("/about", async (req, res, next) => {
+router.get("/calendar", async (req, res, next) => {
+    if (!appUtil.isUserAuthenticated(req)) {
+        new errors.UserNotLoggedInError(next, "/user/login");
+        return;
+    }
+
     let data = {};
 
-    data.title = "About";
+    data.title = "Calendar";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
-    res.render("./../pages/about.ejs", data);
+    res.render("./../pages/calendar.ejs", data);
 });
 
-router.get("/contact", async (req, res, next) => {
+router.get("/projects", async (req, res, next) => {
+    if (!appUtil.isUserAuthenticated(req)) {
+        new errors.UserNotLoggedInError(next, "/user/login");
+        return;
+    }
+
     let data = {};
 
-    data.title = "Contact";
+    data.title = "Projects";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
-    data.gmail = process.env.GMAIL_URL;
-    data.github = process.env.GITHUB_URL;
-    data.phone = process.env.PHONE_URL;
+    res.render("./../pages/projects.ejs", data);
+});
 
-    res.render("./../pages/contact.ejs", data);
+router.get("/reports", async (req, res, next) => {
+    if (!appUtil.isUserAuthenticated(req)) {
+        new errors.UserNotLoggedInError(next, "/user/login");
+        return;
+    }
+
+    let data = {};
+
+    data.title = "Reports";
+    data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+
+    res.render("./../pages/reports.ejs", data);
 });
 
 router.get("/help", async (req, res, next) => {

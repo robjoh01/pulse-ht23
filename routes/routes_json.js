@@ -72,4 +72,18 @@ router.post("/json/user/", async (req, res, next) => {
     res.json(data);
 });
 
+router.post("/json/employees/", async (req, res, next) => {
+    const { f_id } = req.body;
+    const data = await dbUtil.readEmployees(f_id);
+
+    res.json(data);
+});
+
+router.post("/json/managers/", async (req, res, next) => {
+    const { f_id } = req.body;
+    const data = await dbUtil.readUser(f_id);
+
+    res.json(data);
+});
+
 module.exports = router;

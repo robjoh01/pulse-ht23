@@ -1,42 +1,44 @@
 <%- include("./../partials/header.ejs") %>
 
-<main class="main">
-    <h1><%= title %></h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat distinctio voluptas est, incidunt deserunt in maiores aut nihil voluptatem rem ut laboriosam nisi repellendus facere nulla quibusdam. Facilis, cupiditate sunt.</p>
-    <form class="form" method="POST" action="/project/assign/posted">
-        <div class="drag-drop-root">
-            <a href="/media/sample.csv" download>Download .csv sample file</a>
-            <div class="drag-drop-container">
-                <label class="drag-drop-label" for="drag-drop-input" id="drag-drop-area">
-                    <i class="drag-drop-icon bi bi-cloud-arrow-up-fill"></i>
-                    <p>Drag and drop or click here to upload .csv file.</p>
-                    <span>Upload .csv file from desktop</span>
-                    <input type="file" accept=".csv" id="drag-drop-input" hidden>
-                </label>
-            </div>
-            <label for="project-select">Choose a project:</label>
-            <select id="project-select">
-                <option value="de1a78fd-2d8d-4a41-a70f-6f74515abf16">Pulse</option>
-                <option value="d631eebc-3eb1-4897-be96-db52a62a4cc2">Tempy</option>
-                <option value="f100bdf3-95e1-460b-9f00-66e16a9a9935">Hello World</option>
-            </select>
-            <br>
-            <br>
-            <br>
-            <div class="flex row">
-                <button class="button form-button" type="submit">
-                    <span>Confirm</span>
-                </button>
-                <a href="/project/managed">
-                    <button class="button form-button" type="button">
-                        <span>Cancel</span>
+<div class="main-layout">
+    <main class="main">
+        <h1><%= title %></h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat distinctio voluptas est, incidunt deserunt in maiores aut nihil voluptatem rem ut laboriosam nisi repellendus facere nulla quibusdam. Facilis, cupiditate sunt.</p>
+        <form class="form" method="POST" action="/project/assign/posted">
+            <div class="drag-drop-root">
+                <a href="/media/sample.csv" download>Download .csv sample file</a>
+                <div class="drag-drop-container">
+                    <label class="drag-drop-label" for="drag-drop-input" id="drag-drop-area">
+                        <i class="drag-drop-icon bi bi-cloud-arrow-up-fill"></i>
+                        <p>Drag and drop or click here to upload .csv file.</p>
+                        <span>Upload .csv file from desktop</span>
+                        <input type="file" accept=".csv" id="drag-drop-input" hidden>
+                    </label>
+                </div>
+                <label for="project-select">Choose a project:</label>
+                <select id="project-select">
+                    <option value="de1a78fd-2d8d-4a41-a70f-6f74515abf16">Pulse</option>
+                    <option value="d631eebc-3eb1-4897-be96-db52a62a4cc2">Tempy</option>
+                    <option value="f100bdf3-95e1-460b-9f00-66e16a9a9935">Hello World</option>
+                </select>
+                <br>
+                <br>
+                <br>
+                <div class="flex row">
+                    <button class="button form-button" type="submit">
+                        <span>Confirm</span>
                     </button>
-                </a>
+                    <a href="/project/managed">
+                        <button class="button form-button" type="button">
+                            <span>Cancel</span>
+                        </button>
+                    </a>
+                </div>
             </div>
-        </div>
-    </form>
-</main>
+        </form>
+    </main>
 
-<script type="module" src="/js/drag-drop.js"></script>
+    <script type="module" src="/js/drag-drop.js"></script>
 
-<%- include("./../partials/footer.ejs") %>
+    <%- include("./../partials/footer.ejs") %>
+</div>

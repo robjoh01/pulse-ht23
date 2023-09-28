@@ -5,18 +5,11 @@
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `employee`;
 DROP TABLE IF EXISTS `project_manager`;
+
 DROP TABLE IF EXISTS `project`;
+DROP TABLE IF EXISTS `project_archive`;
 DROP TABLE IF EXISTS `assignment`;
 DROP TABLE IF EXISTS `report`;
-DROP TABLE IF EXISTS `report_frequency`;
-
-CREATE TABLE `report_frequency`
-(
-    `id` INT AUTO_INCREMENT,
-    `type` CHAR(16),
-
-    PRIMARY KEY (`id`)
-);
 
 CREATE TABLE `user`
 (
@@ -28,8 +21,8 @@ CREATE TABLE `user`
     `phone_number` VARCHAR(32),
     `image_url` VARCHAR(128),
     `creation_date` DATE,
+    `modified_date` DATE,
     `logout_date` DATE,
-    `role` INT,
 
     PRIMARY KEY (`id`)
 );
@@ -55,11 +48,22 @@ CREATE TABLE `project`
     `id` CHAR(36) NOT NULL,
     `name` VARCHAR(32),
     `description` VARCHAR(96),
-    `creation_date` DATE,
+    `creation_date` DATE DEFAULT CURRENT_DATE(),
     `modified_date` DATE,
     `due_date` DATE,
     `start_date` DATE,
     `end_date` DATE,
+    `report_frequency` ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
+
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `project_archive`
+(
+    `id` CHAR(36) NOT NULL,
+    `name` VARCHAR(32),
+    `description` VARCHAR(96),
+    `creation_date` DATE DEFAULT CURRENT_DATE(),
 
     PRIMARY KEY (`id`)
 );
@@ -70,12 +74,12 @@ CREATE TABLE `assignment`
     `employee_id` CHAR(36) NOT NULL,
     `project_id` CHAR(36) NOT NULL,
     `creation_date` DATE,
-    `report_frequency`INT,
+    `report_frequency` ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
+    `report_custom_submission_date` DATE,
 
+    PRIMARY KEY (`employee_id`, `project_id`),
     FOREIGN KEY (`employee_id`) REFERENCES employee(`id`),
-    FOREIGN KEY (`project_id`) REFERENCES project(`id`),
-    FOREIGN KEY (`report_frequency`) REFERENCES report_frequency(`id`),
-    PRIMARY KEY (`employee_id`, `project_id`)
+    FOREIGN KEY (`project_id`) REFERENCES project(`id`)
 );
 
 CREATE TABLE `report`
@@ -84,6 +88,7 @@ CREATE TABLE `report`
     `project_id` CHAR(36) NOT NULL,
     `creation_date` DATE,
     `text` LONGTEXT,
+    `has_been_read` BOOLEAN,
 
     FOREIGN KEY (`employee_id`) REFERENCES employee(`id`),
     FOREIGN KEY (`project_id`) REFERENCES project(`id`),

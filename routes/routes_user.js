@@ -29,6 +29,23 @@ router.get("/user/register", (req, res, next) => {
 });
 
 router.get("/user/login", (req, res, next) => {
+    if (appUtil.isUserAuthenticated(req)) {
+        res.redirect("/");
+        return;
+    }
+
+    if (process.env.FORCE_AS_ADMIN === "true") {
+        appUtil.authenticateUser(
+            req,
+            process.env.ADMIN_ID,
+            process.env.ADMIN_USER,
+            process.env.ADMIN_PASS
+        );
+
+        res.redirect("/");
+        return;
+    }
+
     let data = {};
 
     data.title = "Login";
@@ -60,11 +77,9 @@ router.get("/user/profile", async (req, res, next) => {
 
     let data = {};
 
-    const user = appUtil.getSessionUser(req);
-
     data.title = "Profile";
     data.session = appUtil.getSession(req);
-    data.user = await dbUtil.readUser(user.id);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
     // Add default image
     if (!data.user.image_url) {

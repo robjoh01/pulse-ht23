@@ -1,43 +1,45 @@
 <%- include("./../partials/header.ejs") %>
 
-<main class="main">
-    <div class="form-container">
-        <div class="form-root">
-            <div class="form-header"></div>
-            <form class="form" method="POST" action="/project/update/posted">
-                <input name="f_id" required hidden value="<%= project.id %>">
-                <div class="form-input">
-                    <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" required placeholder="Enter a project name" value="<%= project.name %>">
-                    <label class="form-input-label label" for="name" id="nameLabel">Name</label>
-                </div>
-                <div class="form-input">
-                    <textarea class="form-input-textarea" aria-invalid="false" id="description" name="f_description" rows="5" cols="33"><%= project.description %></textarea>
-                </div>
-                <div class="form-input">
-                    <input class="form-text-input" type="date" aria-invalid="false" id="dueDate" name="f_due_date" value="<%= new Date(project.due_date).toISOString().split('T')[0] %>">
-                    <label class="form-input-label label" for="dueDate" id="dueDateLabel">Due Date</label>
-                </div>
-                <button class="button form-button" type="submit">
-                    <span>Save changes</span>
-                </button>
-                <button class="button form-button" type="reset">
-                    <span>Reset</span>
-                </button>
-                <div class="form-filler"></div>
-                <a href="/project/managed">
-                    <button class="button form-button" type="button">
-                        <span>Go Back</span>
+<div class="main-layout">
+    <main class="main">
+        <div class="form-container">
+            <div class="form-root">
+                <div class="form-header"></div>
+                <form class="form" method="POST" action="/project/update/posted">
+                    <input name="f_id" required hidden value="<%= project.id %>">
+                    <div class="form-input">
+                        <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" required placeholder="Enter a project name" value="<%= project.name %>">
+                        <label class="form-input-label label" for="name" id="nameLabel">Name</label>
+                    </div>
+                    <div class="form-input">
+                        <textarea class="form-input-textarea" aria-invalid="false" id="description" name="f_description" rows="5" cols="33"><%= project.description %></textarea>
+                    </div>
+                    <div class="form-input">
+                        <input class="form-text-input" type="date" aria-invalid="false" id="dueDate" name="f_due_date" value="<%= new Date(project.due_date).toISOString().split('T')[0] %>">
+                        <label class="form-input-label label" for="dueDate" id="dueDateLabel">Due Date</label>
+                    </div>
+                    <button class="button form-button" type="submit">
+                        <span>Save changes</span>
                     </button>
-                </a>
-                <div class="form-spacer-x4"></div>
-                <a href="/project/delete/<%= project.id %>">
-                    <button class="button form-button" type="button">
-                        <span>Delete project</span>
+                    <button class="button form-button" type="reset">
+                        <span>Reset</span>
                     </button>
-                </a>
-            </form>
+                    <div class="form-filler"></div>
+                    <a href="/project/managed">
+                        <button class="button form-button" type="button">
+                            <span>Go Back</span>
+                        </button>
+                    </a>
+                    <div class="form-spacer-x4"></div>
+                    <a href="/project/delete/<%= project.id %>">
+                        <button class="button form-button" type="button">
+                            <span>Delete project</span>
+                        </button>
+                    </a>
+                </form>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
-<%- include("./../partials/footer.ejs") %>
+    <%- include("./../partials/footer.ejs") %>
+</div>

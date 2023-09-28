@@ -1,11 +1,13 @@
 .main-layout {
+    position: relative;
     min-height: 100vh;
     min-height: 100dvh;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 1fr auto;
 }
 
 .main {
+    position: relative;
     max-width: 800px;
     margin: 4rem auto;
 
