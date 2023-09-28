@@ -97,7 +97,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2023-09-28','2023-10-11','2023-12-31','0000-00-00','0000-00-00','monthly'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','monthly'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','weekly'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','fortnightly'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','daily'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2023-09-28','2023-10-11','2023-12-31','0000-00-00','0000-00-00','daily'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','weekly'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','daily'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','fortnightly');
+INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2023-09-28','2023-10-11','2023-12-31','0000-00-00','0000-00-00','monthly'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2023-09-28','0000-00-00','2023-10-28','0000-00-00','0000-00-00','monthly'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2023-09-28','0000-00-00','2023-10-01','0000-00-00','0000-00-00','weekly'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','fortnightly'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','daily'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2023-09-28','2023-10-11','2023-12-31','0000-00-00','0000-00-00','daily'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','weekly'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2023-09-28','0000-00-00','2023-11-15','0000-00-00','0000-00-00','daily'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','fortnightly');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -443,7 +443,8 @@ SET character_set_client = utf8;
   1 AS `due_date`,
   1 AS `start_date`,
   1 AS `end_date`,
-  1 AS `report_frequency` */;
+  1 AS `report_frequency`,
+  1 AS `severity` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -567,7 +568,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_projects` AS select `p`.`id` AS `project_id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`creation_date` AS `creation_date`,`p`.`modified_date` AS `modified_date`,`p`.`due_date` AS `due_date`,`p`.`start_date` AS `start_date`,`p`.`end_date` AS `end_date`,`p`.`report_frequency` AS `report_frequency` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
+/*!50001 VIEW `v_projects` AS select `p`.`id` AS `project_id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`creation_date` AS `creation_date`,`p`.`modified_date` AS `modified_date`,`p`.`due_date` AS `due_date`,`p`.`start_date` AS `start_date`,`p`.`end_date` AS `end_date`,`p`.`report_frequency` AS `report_frequency`,case when to_days(`p`.`due_date`) - to_days(curdate()) <= 7 then 'high' when to_days(`p`.`due_date`) - to_days(curdate()) <= 30 then 'mid' else 'low' end AS `severity` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -617,4 +618,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-28 23:07:31
+-- Dump completed on 2023-09-28 23:33:51

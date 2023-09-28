@@ -74,8 +74,8 @@ router.get("/project/update/:id", async (req, res, next) => {
         return;
     }
 
-    const id = req.params.id;
-    const project = await dbUtil.readProject(id);
+    const projectId = req.params.id;
+    const project = await dbUtil.fetchProject(projectId);
 
     if (!project) {
         new errors.ProjectNotFoundError(next, "/project/managed");
@@ -83,7 +83,7 @@ router.get("/project/update/:id", async (req, res, next) => {
     }
 
     const user = appUtil.getSessionUser(req);
-    const assignment = await dbUtil.readAssignmentForUser(id, user.id);
+    const assignment = await dbUtil.fetchAssignmentsWithFilter(projectId, user.id);
 
     if (!assignment) {
         new errors.AccessNotPermittedError(next, "/project/managed");
@@ -91,7 +91,7 @@ router.get("/project/update/:id", async (req, res, next) => {
     }
 
     if (assignment.access_type === "comment" || assignment.access_type === "view") {
-        res.redirect(`/project/view/${id}`);
+        res.redirect(`/project/view/${projectId}`);
         return;
     }
 
@@ -117,7 +117,7 @@ router.post("/project/update/posted", async (req, res, next) => {
         return;
     }
 
-    const project = await dbUtil.readProject(f_id);
+    const project = await dbUtil.fetchProject(f_id);
 
     if (!project) {
         new errors.ProjectNotFoundError(next, "/project/managed");
@@ -150,7 +150,7 @@ router.get("/project/delete/:id", async (req, res, next) => {
 
     let data = {};
 
-    const project = await dbUtil.readProject(id);
+    const project = await dbUtil.fetchProject(id);
 
     data.title = `Delete ${project.name}`;
     data.session = appUtil.getSession(req);
@@ -167,7 +167,7 @@ router.post("/project/delete/posted", async (req, res, next) => {
 
     const { f_id } = req.body;
 
-    const project = await dbUtil.readProject(f_id);
+    const project = await dbUtil.fetchProject(f_id);
 
     if (!project) {
         new errors.ProjectNotFoundError(next, "/project/managed");
@@ -192,7 +192,7 @@ router.get("/project/view/:id", async (req, res, next) => {
     }
 
     const id = req.params.id;
-    const project = await dbUtil.readProject(id);
+    const project = await dbUtil.fetchProject(id);
 
     if (!project) {
         new errors.ProjectNotFoundError(next, "/project/managed");
@@ -200,7 +200,7 @@ router.get("/project/view/:id", async (req, res, next) => {
     }
 
     const user = appUtil.getSessionUser(req);
-    const assignment = await dbUtil.readAssignmentForUser(id, user.id);
+    const assignment = await dbUtil.fetchAssignmentsWithFilter(id, user.id);
 
     if (!assignment) {
         new errors.AccessNotPermittedError(next, "/project/managed");

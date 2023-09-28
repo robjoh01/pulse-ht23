@@ -1,7 +1,7 @@
     <div class="primary-sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo">
-                <i class='bx bxs-report'></i>
+                <i class='bx bxs-network-chart'></i>
                 <span>Pulse</span>
             </div>
             <i class="bx bx-menu" id="sidebarBtn"></i>
@@ -27,13 +27,23 @@
                 </a>
                 <span class="primary-tooltip">Calendar</span>
             </li>
-            <li>
-                <a class="nav-item" href="/dashboard">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="nav-item-label">Dashboard</span>
-                </a>
-                <span class="primary-tooltip">Dashboard</span>
-            </li>
+                <% if (user.role != "Employee") { %>
+                <li>
+                    <a class="nav-item" href="/dashboard">
+                        <i class='bx bxs-dashboard' ></i>
+                        <span class="nav-item-label">Dashboard</span>
+                    </a>
+                    <span class="primary-tooltip">Dashboard</span>
+                </li>
+                <% } else { %>
+                <li>
+                    <a class="nav-item" href="/report">
+                        <i class='bx bxs-report'></i>
+                        <span class="nav-item-label">Report</span>
+                    </a>
+                    <span class="primary-tooltip">Report</span>
+                </li>
+                <% } %>
             <% } else { %>
             <li>
                 <a class="nav-item" href="/user/login">

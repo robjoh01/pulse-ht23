@@ -84,7 +84,7 @@ router.get("/dashboard", async (req, res, next) => {
     res.render("./../pages/dashboard.ejs", data);
 });
 
-router.get("/reports", async (req, res, next) => {
+router.get("/report", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -96,7 +96,7 @@ router.get("/reports", async (req, res, next) => {
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
-    res.render("./../pages/reports.ejs", data);
+    res.render("./../pages/report.ejs", data);
 });
 
 router.get("/about", async (req, res, next) => {

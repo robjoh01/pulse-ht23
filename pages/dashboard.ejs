@@ -21,7 +21,7 @@ report_frequency: 'fortnightly' -->
                 <table class="primary-table">
                     <thead class="primary-thead">
                         <tr class="primary-tr">
-                            <th class="primary-th">
+                            <th class="primary-th" colspan="2">
                                 <span></span>
                             </td>
                             <th class="primary-th">
@@ -56,6 +56,7 @@ report_frequency: 'fortnightly' -->
                     <tbody class="primary-tbody">
                         <% projects.forEach(function(x) { %>
                         <tr class="primary-tr">
+                            <td class="primary-td color-tab <%= x.severity %>"></td>
                             <td class="primary-td">
                                 <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
                                     <i class="bi bi-link-45deg"></i>

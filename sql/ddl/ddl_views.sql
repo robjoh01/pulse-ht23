@@ -75,7 +75,12 @@ SELECT
     p.due_date,
     p.start_date,
     p.end_date,
-    p.report_frequency
+    p.report_frequency,
+    CASE
+        WHEN DATEDIFF(p.due_date, CURDATE()) <= 7 THEN 'high'
+        WHEN DATEDIFF(p.due_date, CURDATE()) <= 30 THEN 'mid'
+        ELSE 'low'
+    END AS severity
 FROM `project` AS p
 GROUP BY p.id
 ORDER BY p.modified_date DESC, p.creation_date DESC
