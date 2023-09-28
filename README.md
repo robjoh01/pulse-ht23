@@ -33,7 +33,7 @@ $ touch .env
 ```
 PORT=<number>
 SALT_ROUNDS=<number>
-COOKIE_SECRET=<id>
+COOKIE_SECRET=<string> (guid)
 GMAIL_NAME=<string>
 GMAIL_USER=<string>
 GMAIL_PASS=<string>
@@ -41,9 +41,10 @@ PHONE_URL=<string>
 GITHUB_URL=<string>
 GMAIL_URL=<string>
 FORCE_AS_ADMIN=<boolean>
-ADMIN_ID=<string>
+ADMIN_ID=<string> (guid)
 ADMIN_USER=<string>
 ADMIN_PASS=<string>
+CONFIG_MODE=<string> (dev|dist)
 ```
 
 Also create `pulse.json` file (at `config/db/pulse.json`):
