@@ -35,4 +35,12 @@ a, span {
 
 a {
     font-family: var(--font-manrope);
+
+    span {
+        color: var(--color-link-100);
+    }
+
+    &:hover span {
+        color: var(--color-link-300);
+    }
 }

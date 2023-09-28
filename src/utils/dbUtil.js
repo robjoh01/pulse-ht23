@@ -288,6 +288,16 @@ let dbUtil = {
 
         return JSON.parse(JSON.stringify(rows));
     },
+    fetchAssignmentsWithFilter: async function(projectId = null, employeeId = null) {
+        const db = await this.connectDatabase();
+        const sql = `CALL fetch_assignments_filter(?, ?);`;
+
+        const [rows] =  await db.query(sql, [projectId, employeeId]);
+
+        db.end();
+
+        return JSON.parse(JSON.stringify(rows));
+    },
     fetchReport: async function(projectId, employeeId) {
         const db = await this.connectDatabase();
         const sql = `CALL fetch_report(?, ?);`;

@@ -19,6 +19,7 @@ DROP PROCEDURE IF EXISTS fetch_project_archives;
 
 DROP PROCEDURE IF EXISTS fetch_assignment;
 DROP PROCEDURE IF EXISTS fetch_assignments;
+DROP PROCEDURE IF EXISTS fetch_assignments_filter;
 
 DROP PROCEDURE IF EXISTS fetch_report;
 DROP PROCEDURE IF EXISTS fetch_reports;
@@ -144,6 +145,20 @@ BEGIN
     SELECT
         *
     FROM v_assignments
+    ;
+END;;
+
+CREATE PROCEDURE fetch_assignments_filter(
+    arg_project_id CHAR(36),
+    arg_employee_id CHAR(36)
+)
+BEGIN
+    SELECT
+        *
+    FROM v_assignments
+    WHERE
+        `project_id` = arg_project_id
+        OR `employee_id` = arg_employee_id
     ;
 END;;
 

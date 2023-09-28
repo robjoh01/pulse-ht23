@@ -46,29 +46,6 @@ router.get("/", async (req, res, next) => {
     res.redirect("/dashboard");
 });
 
-router.get("/dashboard", async (req, res, next) => {
-    if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/user/login");
-        return;
-    }
-
-    let data = {};
-
-    data.title = "Dashboard";
-    data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
-
-    // [
-    //   'employee_id',
-    //   'username',
-    //   'display_name',
-    //   'email_address',
-    //   'phone_number'
-    // ]
-
-    res.render("./../pages/dashboard.ejs", data);
-});
-
 router.get("/calendar", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
@@ -84,7 +61,7 @@ router.get("/calendar", async (req, res, next) => {
     res.render("./../pages/calendar.ejs", data);
 });
 
-router.get("/projects", async (req, res, next) => {
+router.get("/dashboard", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -92,11 +69,19 @@ router.get("/projects", async (req, res, next) => {
 
     let data = {};
 
-    data.title = "Projects";
+    const protocol = req.protocol;
+    const host = req.hostname;
+    const url = req.originalUrl;
+    const port = process.env.PORT || PORT;
+
+    data.title = "Dashboard";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.baseUrl = `${protocol}://${host}:${port}`;
+    data.fullUrl = `${protocol}://${host}:${port}${url}`;
+    data.projects = await dbUtil.fetchProjects();
 
-    res.render("./../pages/projects.ejs", data);
+    res.render("./../pages/dashboard.ejs", data);
 });
 
 router.get("/reports", async (req, res, next) => {
@@ -112,6 +97,36 @@ router.get("/reports", async (req, res, next) => {
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
     res.render("./../pages/reports.ejs", data);
+});
+
+router.get("/about", async (req, res, next) => {
+    let data = {};
+
+    data.title = "About";
+    data.session = appUtil.getSession(req);
+
+    if (appUtil.isUserAuthenticated(req)) {
+        data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    }
+
+    res.render("./../pages/about.ejs", data);
+});
+
+router.get("/contact", async (req, res, next) => {
+    let data = {};
+
+    data.title = "Contact";
+    data.session = appUtil.getSession(req);
+
+    if (appUtil.isUserAuthenticated(req)) {
+        data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    }
+
+    data.gmail = process.env.GMAIL_URL;
+    data.github = process.env.GITHUB_URL;
+    data.phone = process.env.PHONE_URL;
+
+    res.render("./../pages/contact.ejs", data);
 });
 
 router.get("/help", async (req, res, next) => {

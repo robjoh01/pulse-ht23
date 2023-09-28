@@ -478,7 +478,8 @@ SET character_set_client = utf8;
   1 AS `phone_number`,
   1 AS `image_url`,
   1 AS `creation_date`,
-  1 AS `logout_date` */;
+  1 AS `logout_date`,
+  1 AS `role` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -602,7 +603,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_users` AS select `u`.`id` AS `id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number`,`u`.`image_url` AS `image_url`,`u`.`creation_date` AS `creation_date`,`u`.`logout_date` AS `logout_date` from `user` `u` group by `u`.`id` order by `u`.`logout_date` desc,`u`.`creation_date` desc */;
+/*!50001 VIEW `v_users` AS select `u`.`id` AS `id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number`,`u`.`image_url` AS `image_url`,`u`.`creation_date` AS `creation_date`,`u`.`logout_date` AS `logout_date`,case when `e`.`id` is not null then 'Employee' when `pm`.`id` is not null then 'Project Manager' else 'other' end AS `role` from ((`user` `u` left join `employee` `e` on(`u`.`id` = `e`.`id`)) left join `project_manager` `pm` on(`u`.`id` = `pm`.`id`)) group by `u`.`id` order by `u`.`logout_date` desc,`u`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -616,4 +617,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-28 13:30:09
+-- Dump completed on 2023-09-28 23:07:31

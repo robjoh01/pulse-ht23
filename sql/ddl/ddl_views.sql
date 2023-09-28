@@ -20,8 +20,15 @@ SELECT
     u.phone_number,
     u.image_url,
     u.creation_date,
-    u.logout_date
+    u.logout_date,
+    CASE
+        WHEN e.id IS NOT NULL THEN 'Employee'
+        WHEN pm.id IS NOT NULL THEN 'Project Manager'
+        ELSE 'other' -- Modify as needed for additional cases
+    END AS `role`
 FROM user AS u
+    LEFT JOIN employee AS e ON u.id = e.id
+    LEFT JOIN project_manager AS pm ON u.id = pm.id
 GROUP BY u.id
 ORDER BY u.logout_date DESC, u.creation_date DESC
 ;

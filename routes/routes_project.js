@@ -16,32 +16,6 @@ const errors = require("./../src/errors/errors.js");
 // Make instances
 const router = express.Router();
 
-router.get("/project/managed", async (req, res, next) => {
-    if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/user/login");
-        return;
-    }
-
-    let data = {};
-
-    data.title = `Managed Projects`;
-    data.session = appUtil.getSession(req);
-
-    const protocol = req.protocol;
-    const host = req.hostname;
-    const url = req.originalUrl;
-    const port = process.env.PORT || PORT;
-  
-    data.baseUrl = `${protocol}://${host}:${port}`;
-    data.fullUrl = `${protocol}://${host}:${port}${url}`;
-
-    const user = appUtil.getSessionUser(req);
-
-    data.assignments = await dbUtil.readAssignmentsForUser(user.id);
-
-    res.render("./../pages/project_managed.ejs", data);
-});
-
 router.get("/project/create", (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");

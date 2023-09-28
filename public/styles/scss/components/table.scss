@@ -16,6 +16,7 @@
 
     .primary-thead {
         .primary-tr {
+            background-color: var(--color-table-header);
         }
 
         .primary-th {
@@ -29,6 +30,10 @@
 
         .primary-tr:nth-child(odd) {
             background-color: var(--color-table-row-odd);
+        }
+
+        .primary-td span {
+            text-transform: capitalize;
         }
     }
 }

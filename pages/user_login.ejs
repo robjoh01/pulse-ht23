@@ -1,44 +1,47 @@
-<%- include("./../partials/header-raw.ejs") %>
+<%- include("./../partials/header.ejs") %>
 
-<div class="main-layout">
-    <main class="main">
-        <div class="form-container">
-            <div class="form-root">
-                <div class="form-header">
-                    <img class="header-hero" alt="Pulse Project">
-                    <h2>Welcome to Pulse 👋🏻</h2>
-                    <p>Please sign-in to your account and start the adventure</p>
-                </div>
-                <form class="form" method="POST" action="/user/login/posted">
-                    <div class="form-input">
-                        <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required placeholder="Enter your username" autocorrect="off" autocapitalize="none">
-                        <!-- <label class="form-input-label" for="username" id="username-label">Username</label> -->
-                        <i class="bi bi-person-fill"></i>
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main">
+            <div class="form-container">
+                <div class="form-root">
+                    <div class="form-header">
+                        <img class="header-hero" alt="Pulse Project">
+                        <h2>Welcome to Pulse 👋🏻</h2>
+                        <p>Please sign-in to your account and start the adventure</p>
                     </div>
-                    <div class="form-input">
-                        <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" required placeholder="Enter your password" autocomplete="true">
-                        <!-- <label class="form-input-label" for="password" id="password-label">Password</label> -->
-                        <button class="form-password-button" type="button" id="passwordToggle" aria-label="Toggle password visibility">
-                            <i id="passwordIcon" class="bi bi-eye-slash-fill"></i>
+                    <form class="form" method="POST" action="/user/login/posted">
+                        <div class="form-input">
+                            <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required placeholder="Enter your username" autocorrect="off" autocapitalize="none">
+                            <!-- <label class="form-input-label" for="username" id="username-label">Username</label> -->
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="form-input">
+                            <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" required placeholder="Enter your password" autocomplete="true">
+                            <!-- <label class="form-input-label" for="password" id="password-label">Password</label> -->
+                            <button class="form-password-button" type="button" id="passwordToggle" aria-label="Toggle password visibility">
+                                <i id="passwordIcon" class="bi bi-eye-slash-fill"></i>
+                            </button>
+                        </div>
+                        <div class="remember-input">
+                            <label class="label">
+                                <input class="input" type="checkbox" name="f_remember">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                        <button class="button form-button" type="submit">
+                            <span>Login</span>
                         </button>
-                    </div>
-                    <div class="remember-input">
-                        <label class="label">
-                            <input class="input" type="checkbox" name="f_remember">
-                            <span>Remember me</span>
-                        </label>
-                        <a href="#">Forgot Password?</a>
-                    </div>
-                    <button class="button form-button" type="submit">
-                        <span>Login</span>
-                    </button>
-                    <div class="form-link">
-                        <p>Don't have an account? <strong><a href="/user/register">Register</a></strong></p>
-                    </div>
-                </form>
+                        <div class="form-link">
+                            <p>Don't have an account? <strong><a href="/user/register">Register</a></strong></p>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <script type="text/javascript" src="/js/form.js" defer></script>
 

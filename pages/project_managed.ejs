@@ -1,88 +1,91 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="main-layout">
-    <main class="main extend">
-        <h1>Managed Projects</h1>
-        <article class="article">
-            <form>
-                <input type="text" placeholder="Search through the table">
-            </form>
-            <table class="primary-table">
-                <thead class="primary-thead">
-                    <tr class="primary-tr">
-                        <th class="primary-th">
-                            <span></span>
-                        </td>
-                        <th class="primary-th">
-                            <span>Name</span>
-                        </td>
-                        <th class="primary-th">
-                            <div class="primary-flex primary-row">
-                                <i class="bi bi-calendar"></i>
-                                <span>Creation</span>
-                            </div>
-                        </td>
-                        <th class="primary-th">
-                            <div class="primary-flex primary-row">
-                                <i class="bi bi-calendar-x-fill"></i>
-                                <span>Start</span>
-                            </div>
-                        </td>
-                        <th class="primary-th">
-                            <div class="primary-flex primary-row">
-                                <i class="bi bi-calendar-x-fill"></i>
-                                <span>End</span>
-                            </div>
-                        </td>
-                        <th class="primary-th">
-                            <div class="primary-flex primary-row">
-                                <i class="bi bi-calendar-x-fill"></i>
-                                <span>Report</span>
-                            </div>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody class="primary-tbody">
-                    <% assignments.forEach(function(x) { %>
-                    <tr class="primary-tr">
-                        <td class="primary-td">
-                            <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
-                                <i class="bi bi-link-45deg"></i>
-                            </button>
-                        </td>
-                        <td class="primary-td">
-                            <a href="/project/update/<%= x.project_id %>"><%= x.project_name %></a>
-                        </td>
-                        <td class="primary-td">
-                            <span>2023-09-25</span>
-                        </td>
-                        <td class="primary-td">
-                            <span>2023-09-25</span>
-                        </td>
-                        <td class="primary-td">
-                            <span>2023-09-25</span>
-                        </td>
-                        <td class="primary-td">
-                            <span>2023-09-25</span>
-                        </td>
-                    </tr>
-                    <% }); %>
-                </tbody>
-            </table>
-        </article>
-        <div class="flex col">
-            <a href="/project/create">
-                <button class="button">
-                    <span>Create new project</span>
-                </button>
-            </a>
-            <a href="/project/assign">
-                <button class="button">
-                    <span>Assign team members</span>
-                </button>
-            </a>
-        </div>
-    </main>
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main extend">
+            <h1>Managed Projects</h1>
+            <article class="article">
+                <form>
+                    <input type="text" placeholder="Search through the table">
+                </form>
+                <table class="primary-table">
+                    <thead class="primary-thead">
+                        <tr class="primary-tr">
+                            <th class="primary-th">
+                                <span></span>
+                            </td>
+                            <th class="primary-th">
+                                <span>Name</span>
+                            </td>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar"></i>
+                                    <span>Creation</span>
+                                </div>
+                            </td>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar-x-fill"></i>
+                                    <span>Start</span>
+                                </div>
+                            </td>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar-x-fill"></i>
+                                    <span>End</span>
+                                </div>
+                            </td>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar-x-fill"></i>
+                                    <span>Report</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody class="primary-tbody">
+                        <% assignments.forEach(function(x) { %>
+                        <tr class="primary-tr">
+                            <td class="primary-td">
+                                <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
+                                    <i class="bi bi-link-45deg"></i>
+                                </button>
+                            </td>
+                            <td class="primary-td">
+                                <a href="/project/update/<%= x.project_id %>"><%= x.project_name %></a>
+                            </td>
+                            <td class="primary-td">
+                                <span>2023-09-25</span>
+                            </td>
+                            <td class="primary-td">
+                                <span>2023-09-25</span>
+                            </td>
+                            <td class="primary-td">
+                                <span>2023-09-25</span>
+                            </td>
+                            <td class="primary-td">
+                                <span>2023-09-25</span>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </article>
+            <div class="flex col">
+                <a href="/project/create">
+                    <button class="button">
+                        <span>Create new project</span>
+                    </button>
+                </a>
+                <a href="/project/assign">
+                    <button class="button">
+                        <span>Assign team members</span>
+                    </button>
+                </a>
+            </div>
+        </main>
+    </div>
 
     <script type="text/javascript" src="/js/project_managed.js" defer></script>
 

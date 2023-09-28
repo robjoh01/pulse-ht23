@@ -15,22 +15,56 @@
     --color-fg-alt-200-dark: hsl(0, 0%, 13%);
     --color-fg-alt-300-dark: hsl(0, 0%, 9%);
 
-    --color-bg-light: hsl(0, 0%, 93%);
-    --color-bg-alt-light: hsl(0, 0%, 63%);
+    --color-bg-100-light: hsl(0, 0%, 26%);
+    --color-bg-200-light: hsl(0, 0%, 63%);
+    --color-bg-300-light: hsl(0, 0%, 93%);
 
-    --color-bg-dark: hsl(0, 0%, 13%);
-    --color-bg-alt-dark: hsl(0, 0%, 26%);
+    --color-bg-alt-100-light: hsl(0, 0%, 26%);
+    --color-bg-alt-200-light: hsl(0, 0%, 13%);
+    --color-bg-alt-300-light: hsl(0, 0%, 9%);
+
+    --color-bg-100-dark: hsl(0, 0%, 26%);
+    --color-bg-200-dark: hsl(0, 0%, 13%);
+    --color-bg-300-dark: hsl(0, 0%, 9%);
+
+    --color-bg-alt-100-dark: hsl(0, 0%, 26%);
+    --color-bg-alt-200-dark: hsl(0, 0%, 63%);
+    --color-bg-alt-300-dark: hsl(0, 0%, 93%);
+
+    --color-sidebar-light: hsla(300, 20%, 63%, 0.2);
+    --color-sidebar-dark: hsla(260, 20%, 19%, 0.2);
+
+    --color-sidebar-border-light: hsla(0, 0%, 0%, 0.2);
+    --color-sidebar-border-dark: hsla(0, 0%, 63%, 0.2);
+
+    --color-link-100-light: hsl(210, 100%, 63%);
+    --color-link-200-light: hsl(210, 100%, 46%);
+    --color-link-300-light: hsl(210, 100%, 26%);
+
+    --color-link-100-dark: hsl(210, 100%, 63%);
+    --color-link-200-dark: hsl(210, 100%, 73%);
+    --color-link-300-dark: hsl(210, 100%, 93%);
+
+    --color-border-100-light: hsla(0, 0%, 63%, 0.2);
+    --color-border-200-light: hsla(0, 0%, 26%, 0.2);
+    --color-border-300-light: hsla(0, 0%, 13%, 0.2);
+
+    --color-border-100-dark: hsla(0, 0%, 63%, 0.2);
+    --color-border-200-dark: hsla(0, 0%, 83%, 0.2);
+    --color-border-300-dark: hsla(0, 0%, 93%, 0.2);
 
     --color-warning-light: hsl(37, 93%, 50%);
     --color-warning-dark: hsl(37, 100%, 59%);
 
-    --color-header-bg-light: hsl(0, 0%, 93%);
-    --color-header-bg-dark: hsl(0, 0%, 9%);
+    --color-header-bg-light: hsla(300, 20%, 63%, 0.2);
+    --color-header-bg-dark: hsla(260, 20%, 19%, 0.2);
+
     --color-header-border-dark: hsl(0, 0%, 11%);
     --color-header-border-light: hsl(0, 0%, 63%);
 
-    --color-footer-bg-light: hsl(200, 10%, 93%);
-    --color-footer-bg-dark: hsl(0, 0%, 13%);
+    --color-footer-bg-light: hsla(300, 20%, 63%, 0.2);
+    --color-footer-bg-dark: hsla(260, 20%, 19%, 0.2);
+
     --color-footer-border-light: hsl(0, 0%, 63%);
     --color-footer-border-dark: hsl(0, 0%, 26%);
 
@@ -46,10 +80,13 @@
     --color-form-input-border-dark: hsla(0, 0%, 63%, 0.2);
     --color-form-input-focus-border-dark: hsla(0, 0%, 93%, 0.5);
 
+    --color-table-header-light: hsl(0, 0%, 73%);
+    --color-table-row-light: hsl(0, 0%, 83%);
+    --color-table-row-odd-light: hsl(0, 0%, 88%);
+
+    --color-table-header-dark: hsl(0, 0%, 13%);
     --color-table-row-dark: hsl(0, 0%, 26%);
-    --color-table-row-odd-dark: hsl(0, 0%, 19%);
-    --color-table-row-light: hsl(0, 0%, 63%);
-    --color-table-row-odd-light: hsl(0, 0%, 43%);
+    --color-table-row-odd-dark: hsl(0, 0%, 21%);
 }
 
 @mixin light-theme-colors {
@@ -63,8 +100,24 @@
     --color-fg-alt-200: var(--color-fg-alt-200-light);
     --color-fg-alt-300: var(--color-fg-alt-300-light);
 
-    --color-bg: var(--color-bg-light);
-    --color-bg-alt: var(--color-bg-alt-light);
+    --color-bg-100: var(--color-bg-100-light);
+    --color-bg-200: var(--color-bg-200-light);
+    --color-bg-300: var(--color-bg-300-light);
+
+    --color-bg-alt-100: var(--color-bg-alt-100-light);
+    --color-bg-alt-200: var(--color-bg-alt-200-light);
+    --color-bg-alt-300: var(--color-bg-alt-300-light);
+
+    --color-sidebar: var(--color-sidebar-light);
+    --color-sidebar-border: var(--color-sidebar-border-light);
+
+    --color-link-100: var(--color-link-100-light);
+    --color-link-200: var(--color-link-200-light);
+    --color-link-300: var(--color-link-300-light);
+
+    --color-border-100: var(--color-border-100-light);
+    --color-border-200: var(--color-border-200-light);
+    --color-border-300: var(--color-border-300-light);
 
     --color-accent: var(--color-accent-light);
     --color-warning: var(--color-warning-light);
@@ -79,6 +132,7 @@
     --color-form-input-border: var(--color-form-input-border-light);
     --color-form-input-focus-border: var(--color-form-input-focus-border-light);
 
+    --color-table-header: var(--color-table-header-light);
     --color-table-row: var(--color-table-row-light);
     --color-table-row-odd: var(--color-table-row-odd-light);
 }
@@ -94,8 +148,24 @@
     --color-fg-alt-200: var(--color-fg-alt-200-dark);
     --color-fg-alt-300: var(--color-fg-alt-300-dark);
 
-    --color-bg: var(--color-bg-dark);
-    --color-bg-alt: var(--color-bg-alt-dark);
+    --color-bg-100: var(--color-bg-100-dark);
+    --color-bg-200: var(--color-bg-200-dark);
+    --color-bg-300: var(--color-bg-300-dark);
+
+    --color-bg-alt-100: var(--color-bg-alt-100-dark);
+    --color-bg-alt-200: var(--color-bg-alt-200-dark);
+    --color-bg-alt-300: var(--color-bg-alt-300-dark);
+
+    --color-sidebar: var(--color-sidebar-dark);
+    --color-sidebar-border: var(--color-sidebar-border-dark);
+
+    --color-link-100: var(--color-link-100-dark);
+    --color-link-200: var(--color-link-200-dark);
+    --color-link-300: var(--color-link-300-dark);
+
+    --color-border-100: var(--color-border-100-dark);
+    --color-border-200: var(--color-border-200-dark);
+    --color-border-300: var(--color-border-300-dark);
 
     --color-accent: var(--color-accent-dark);
     --color-warning: var(--color-warning-dark);
@@ -110,6 +180,7 @@
     --color-form-input-border: var(--color-form-input-border-dark);
     --color-form-input-focus-border: var(--color-form-input-focus-border-dark);
 
+    --color-table-header: var(--color-table-header-dark);
     --color-table-row: var(--color-table-row-dark);
     --color-table-row-odd: var(--color-table-row-odd-dark);
 }

@@ -1,5 +1,6 @@
 .footer {
     background-color: var(--color-footer-bg);
+    backdrop-filter: blur(16px);
     color: var(--color-fg-100);
     padding: 1rem 2rem;
     text-align: center;
