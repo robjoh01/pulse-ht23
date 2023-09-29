@@ -43,7 +43,13 @@ router.get("/", async (req, res, next) => {
         return;
     }
 
-    res.redirect("/dashboard");
+    const user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+
+    if (user.role === "Employee") {
+        res.redirect("/report");
+    } else {
+        res.redirect("/dashboard");
+    }
 });
 
 router.get("/calendar", async (req, res, next) => {
@@ -69,6 +75,13 @@ router.get("/dashboard", async (req, res, next) => {
 
     let data = {};
 
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+
+    if (data.user.role === "Employee") {
+        new errors.AccessNotPermittedError(next, "/user/profile");
+        return;
+    }
+
     const protocol = req.protocol;
     const host = req.hostname;
     const url = req.originalUrl;
@@ -76,7 +89,6 @@ router.get("/dashboard", async (req, res, next) => {
 
     data.title = "Dashboard";
     data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.baseUrl = `${protocol}://${host}:${port}`;
     data.fullUrl = `${protocol}://${host}:${port}${url}`;
     data.projects = await dbUtil.fetchProjects();
@@ -92,9 +104,14 @@ router.get("/report", async (req, res, next) => {
 
     let data = {};
 
+    const user = appUtil.getSessionUser(req);
+
     data.title = "Reports";
     data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.user = await dbUtil.fetchUser(user.id);
+    data.assignments = await dbUtil.fetchAssignmentsForEmployee(user.id);
+
+    // TODO: Make report page
 
     res.render("./../pages/report.ejs", data);
 });

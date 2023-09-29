@@ -72,7 +72,7 @@ FIELDS
 LINES
     TERMINATED BY '\n'
 IGNORE 1 LINES
-    (`id`, `name`, `description`, `creation_date`, `modified_date`, `due_date`, `start_date`, `end_date`, `report_frequency`)
+    (`id`, `name`, `description`, `creation_date`, `modified_date`, `start_date`, `end_date`)
 ;
 
 --
@@ -87,7 +87,7 @@ FIELDS
 LINES
     TERMINATED BY '\n'
 IGNORE 1 LINES
-    (`name`, `employee_id`, `project_id`, `creation_date`, `report_frequency`, `report_custom_submission_date`)
+    (`employee_id`, `project_id`, `creation_date`)
 ;
 
 --

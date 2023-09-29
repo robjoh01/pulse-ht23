@@ -76,9 +76,15 @@ report_frequency: 'fortnightly' -->
                             <td class="primary-td">
                                 <span><%= x.end_date %></span>
                             </td>
+                            <% if (x.report_frequency) { %>
                             <td class="primary-td">
                                 <span><%= x.report_frequency %></span>
                             </td>
+                            <% } else { %>
+                            <td class="primary-td">
+                                <span><%= x.report_custom_submission_date %></span>
+                            </td>
+                            <% } %>
                         </tr>
                         <% }); %>
                     </tbody>

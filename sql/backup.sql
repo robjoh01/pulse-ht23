@@ -23,7 +23,6 @@ DROP TABLE IF EXISTS `assignment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `assignment` (
-  `name` varchar(26) DEFAULT NULL,
   `employee_id` char(36) NOT NULL,
   `project_id` char(36) NOT NULL,
   `creation_date` date DEFAULT NULL,
@@ -42,7 +41,6 @@ CREATE TABLE `assignment` (
 
 LOCK TABLES `assignment` WRITE;
 /*!40000 ALTER TABLE `assignment` DISABLE KEYS */;
-INSERT INTO `assignment` VALUES ('Assignment G','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','1650f7ca-9b08-4907-af57-671342a219a2','2023-09-26','fortnightly','0000-00-00'),('Assignment C','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','38a3315d-fe13-4692-b001-872d6656689a','2023-09-26','fortnightly','0000-00-00'),('Assignment E','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','445390fb-509e-4e3b-985a-f20df536512c','2023-09-26','daily','0000-00-00'),('Assignment A','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','4e658238-d50c-4812-84f2-be58e8be308a','2023-09-26','daily','0000-00-00'),('Assignment H','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','2023-09-26','','2023-10-25'),('Assignment B','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','ba28b243-6889-4c54-a138-ff72333186a2','2023-09-26','weekly','0000-00-00'),('Assignment D','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','bf23b742-a36b-4251-84d1-4db5fb30248d','2023-09-26','monthly','0000-00-00'),('Assignment F','c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','d615786c-4610-4558-b2b6-113348aa5dac','2023-09-26','weekly','0000-00-00');
 /*!40000 ALTER TABLE `assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,10 +81,8 @@ CREATE TABLE `project` (
   `description` varchar(96) DEFAULT NULL,
   `creation_date` date DEFAULT curdate(),
   `modified_date` date DEFAULT NULL,
-  `due_date` date DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `report_frequency` enum('daily','weekly','fortnightly','monthly') DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -97,7 +93,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2023-09-28','2023-10-11','2023-12-31','0000-00-00','0000-00-00','monthly'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2023-09-28','0000-00-00','2023-10-28','0000-00-00','0000-00-00','monthly'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2023-09-28','0000-00-00','2023-10-01','0000-00-00','0000-00-00','weekly'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','fortnightly'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','daily'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2023-09-28','2023-10-11','2023-12-31','0000-00-00','0000-00-00','daily'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','weekly'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2023-09-28','0000-00-00','2023-11-15','0000-00-00','0000-00-00','daily'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2023-09-28','0000-00-00','2023-12-31','0000-00-00','0000-00-00','fortnightly');
+INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2023-09-29','2023-10-11','2023-12-20','2023-12-31'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2023-09-29','0000-00-00','2023-10-01','2023-10-01'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2023-09-29','2023-10-11','2023-11-20','2023-12-31'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2023-09-29','0000-00-00','2021-11-15','2023-11-15'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2023-09-29','0000-00-00','2023-11-10','2023-12-31');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -276,7 +272,6 @@ CREATE TABLE `report` (
 
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
-INSERT INTO `report` VALUES ('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','2002-10-24','Hello, World!',1),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','ba28b243-6889-4c54-a138-ff72333186a2','2000-09-25','Hello, World!',0),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','bf23b742-a36b-4251-84d1-4db5fb30248d','2023-09-26','Hello, World!',0);
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,7 +303,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-28',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','johnnyDoe','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-28',NULL,NULL);
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-29',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','johnnyDoe','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-29',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -365,12 +360,14 @@ DROP TABLE IF EXISTS `v_assignments`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_assignments` AS SELECT
- 1 AS `name`,
-  1 AS `employee_id`,
+ 1 AS `employee_id`,
   1 AS `project_id`,
   1 AS `creation_date`,
   1 AS `report_frequency`,
-  1 AS `report_custom_submission_date` */;
+  1 AS `report_custom_submission_date`,
+  1 AS `project_name`,
+  1 AS `project_start_date`,
+  1 AS `project_end_date` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -440,10 +437,8 @@ SET character_set_client = utf8;
   1 AS `description`,
   1 AS `creation_date`,
   1 AS `modified_date`,
-  1 AS `due_date`,
   1 AS `start_date`,
   1 AS `end_date`,
-  1 AS `report_frequency`,
   1 AS `severity` */;
 SET character_set_client = @saved_cs_client;
 
@@ -496,7 +491,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_assignments` AS select `a`.`name` AS `name`,`a`.`employee_id` AS `employee_id`,`a`.`project_id` AS `project_id`,`a`.`creation_date` AS `creation_date`,`a`.`report_frequency` AS `report_frequency`,`a`.`report_custom_submission_date` AS `report_custom_submission_date` from (`assignment` `a` join `employee` `e` on(`a`.`employee_id` = `e`.`id`)) group by `a`.`employee_id`,`a`.`project_id` order by `a`.`creation_date` desc */;
+/*!50001 VIEW `v_assignments` AS select `a`.`employee_id` AS `employee_id`,`a`.`project_id` AS `project_id`,`a`.`creation_date` AS `creation_date`,`a`.`report_frequency` AS `report_frequency`,`a`.`report_custom_submission_date` AS `report_custom_submission_date`,`p`.`name` AS `project_name`,`p`.`start_date` AS `project_start_date`,`p`.`end_date` AS `project_end_date` from ((`assignment` `a` join `employee` `e` on(`a`.`employee_id` = `e`.`id`)) join `project` `p` on(`a`.`project_id` = `p`.`id`)) group by `a`.`employee_id`,`a`.`project_id` order by `a`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -568,7 +563,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_projects` AS select `p`.`id` AS `project_id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`creation_date` AS `creation_date`,`p`.`modified_date` AS `modified_date`,`p`.`due_date` AS `due_date`,`p`.`start_date` AS `start_date`,`p`.`end_date` AS `end_date`,`p`.`report_frequency` AS `report_frequency`,case when to_days(`p`.`due_date`) - to_days(curdate()) <= 7 then 'high' when to_days(`p`.`due_date`) - to_days(curdate()) <= 30 then 'mid' else 'low' end AS `severity` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
+/*!50001 VIEW `v_projects` AS select `p`.`id` AS `project_id`,`p`.`name` AS `name`,`p`.`description` AS `description`,`p`.`creation_date` AS `creation_date`,`p`.`modified_date` AS `modified_date`,`p`.`start_date` AS `start_date`,`p`.`end_date` AS `end_date`,case when to_days(`p`.`end_date`) - to_days(curdate()) <= 7 then 'high' when to_days(`p`.`end_date`) - to_days(curdate()) <= 30 then 'mid' else 'low' end AS `severity` from `project` `p` group by `p`.`id` order by `p`.`modified_date` desc,`p`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -618,4 +613,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-28 23:33:51
+-- Dump completed on 2023-09-29 19:03:34

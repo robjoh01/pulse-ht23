@@ -1,4 +1,1 @@
 employee_id,project_id,creation_date,text,has_been_read
-"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9","2002-10-24","Hello, World!",1
-"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","ba28b243-6889-4c54-a138-ff72333186a2","2000-09-25","Hello, World!",0
-"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","bf23b742-a36b-4251-84d1-4db5fb30248d","2023-09-26","Hello, World!",0

@@ -34,10 +34,16 @@ a, span {
 }
 
 a {
+    color: var(--color-link-100);
     font-family: var(--font-manrope);
+
+    &:hover {
+        color: var(--color-link-300);
+    }
 
     span {
         color: var(--color-link-100);
+        font-family: var(--font-manrope);
     }
 
     &:hover span {

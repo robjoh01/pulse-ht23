@@ -81,11 +81,6 @@ router.get("/user/profile", async (req, res, next) => {
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
-    // Add default image
-    if (!data.user.image_url) {
-        data.user.image_url = "https://demos.themeselection.com/materio-mui-react-nextjs-admin-template-free/images/avatars/1.png";
-    }
-
     res.render("./../pages/user_profile.ejs", data);
 });
 

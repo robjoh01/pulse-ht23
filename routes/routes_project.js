@@ -16,7 +16,7 @@ const errors = require("./../src/errors/errors.js");
 // Make instances
 const router = express.Router();
 
-router.get("/project/create", (req, res, next) => {
+router.get("/project/create", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -26,6 +26,7 @@ router.get("/project/create", (req, res, next) => {
 
     data.title = "Create a new project";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
     res.render("./../pages/project_create.ejs", data);
 });
@@ -65,7 +66,7 @@ router.post("/project/create/posted", async (req, res, next) => {
         return;
     }
 
-    res.redirect("/project/managed");
+    res.redirect("/projects");
 });
 
 router.get("/project/update/:id", async (req, res, next) => {
@@ -78,28 +79,23 @@ router.get("/project/update/:id", async (req, res, next) => {
     const project = await dbUtil.fetchProject(projectId);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/project/managed");
+        new errors.ProjectNotFoundError(next, "/projects");
         return;
     }
 
-    const user = appUtil.getSessionUser(req);
-    const assignment = await dbUtil.fetchAssignmentsWithFilter(projectId, user.id);
+    const user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
-    if (!assignment) {
-        new errors.AccessNotPermittedError(next, "/project/managed");
-        return;
-    }
-
-    if (assignment.access_type === "comment" || assignment.access_type === "view") {
-        res.redirect(`/project/view/${projectId}`);
+    if (user.role === "Employee") {
+        new errors.AccessNotPermittedError(next, "/projects");
         return;
     }
 
     let data = {};
+
     data.title = `Update ${project.name}`;
     data.session = appUtil.getSession(req);
+    data.user = user;
     data.project = project;
-    data.assignment = assignment;
 
     res.render("./../pages/project_update.ejs", data);
 });
@@ -120,7 +116,7 @@ router.post("/project/update/posted", async (req, res, next) => {
     const project = await dbUtil.fetchProject(f_id);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/project/managed");
+        new errors.ProjectNotFoundError(next, "/projects");
         return;
     }
 
@@ -154,6 +150,7 @@ router.get("/project/delete/:id", async (req, res, next) => {
 
     data.title = `Delete ${project.name}`;
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.project = project;
 
     res.render("./../pages/project_delete.ejs", data);
@@ -170,7 +167,7 @@ router.post("/project/delete/posted", async (req, res, next) => {
     const project = await dbUtil.fetchProject(f_id);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/project/managed");
+        new errors.ProjectNotFoundError(next, "/projects");
         return;
     }
 
@@ -182,7 +179,7 @@ router.post("/project/delete/posted", async (req, res, next) => {
         // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
     }
 
-    res.redirect("/project/managed");
+    res.redirect("/projects");
 });
 
 router.get("/project/view/:id", async (req, res, next) => {
@@ -195,7 +192,7 @@ router.get("/project/view/:id", async (req, res, next) => {
     const project = await dbUtil.fetchProject(id);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/project/managed");
+        new errors.ProjectNotFoundError(next, "/projects");
         return;
     }
 
@@ -203,20 +200,21 @@ router.get("/project/view/:id", async (req, res, next) => {
     const assignment = await dbUtil.fetchAssignmentsWithFilter(id, user.id);
 
     if (!assignment) {
-        new errors.AccessNotPermittedError(next, "/project/managed");
+        new errors.AccessNotPermittedError(next, "/projects");
         return;
     }
 
     let data = {};
     data.title = `Viewing ${project.name}`;
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.project = project;
     data.assignment = assignment;
 
     res.render("./../pages/project_view.ejs", data);
 });
 
-router.get("/project/assign/", (req, res, next) => {
+router.get("/project/assign/", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -228,6 +226,8 @@ router.get("/project/assign/", (req, res, next) => {
 
     data.title = "Assign team members";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.projects = await dbUtil.fetchProjects();
 
     res.render("./../pages/project_assign.ejs", data);
 });

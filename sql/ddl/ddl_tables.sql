@@ -50,10 +50,8 @@ CREATE TABLE `project`
     `description` VARCHAR(96),
     `creation_date` DATE DEFAULT CURRENT_DATE(),
     `modified_date` DATE,
-    `due_date` DATE,
     `start_date` DATE,
     `end_date` DATE,
-    `report_frequency` ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
 
     PRIMARY KEY (`id`)
 );
@@ -70,7 +68,6 @@ CREATE TABLE `project_archive`
 
 CREATE TABLE `assignment`
 (
-    `name` VARCHAR(26),
     `employee_id` CHAR(36) NOT NULL,
     `project_id` CHAR(36) NOT NULL,
     `creation_date` DATE,

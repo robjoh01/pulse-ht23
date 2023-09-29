@@ -17,7 +17,7 @@
                             <textarea class="form-input-textarea" aria-invalid="false" id="description" name="f_description" rows="5" cols="33"><%= project.description %></textarea>
                         </div>
                         <div class="form-input">
-                            <input class="form-text-input" type="date" aria-invalid="false" id="dueDate" name="f_due_date" value="<%= new Date(project.due_date).toISOString().split('T')[0] %>">
+                            <input class="form-text-input" type="date" aria-invalid="false" id="dueDate" name="f_due_date" value="<%= project.due_date %>">
                             <label class="form-input-label label" for="dueDate" id="dueDateLabel">Due Date</label>
                         </div>
                         <button class="button form-button" type="submit">
@@ -27,7 +27,7 @@
                             <span>Reset</span>
                         </button>
                         <div class="form-filler"></div>
-                        <a href="/project/managed">
+                        <a href="/dashboard">
                             <button class="button form-button" type="button">
                                 <span>Go Back</span>
                             </button>

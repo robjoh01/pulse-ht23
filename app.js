@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 const routes = require("./routes/routes.js");
 const routesProject = require("./routes/routes_project.js");
 const routesUser = require("./routes/routes_user.js");
-const routesPosts = require("./routes/routes_posts.js");
+const routesUpload = require("./routes/routes_upload.js");
 const routesJSON = require("./routes/routes_json.js");
 
 const { minutesToMilliseconds } = require("./src/utils/conversionUtil.js");
@@ -49,7 +49,7 @@ app.set('json spaces', 4);
 app.use(routes);
 app.use(routesUser);
 app.use(routesProject);
-app.use(routesPosts);
+app.use(routesUpload);
 app.use(routesJSON);
 
 app.use((error, req, res, next) => {

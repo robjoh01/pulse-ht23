@@ -72,13 +72,11 @@ SELECT
     p.description,
     p.creation_date,
     p.modified_date,
-    p.due_date,
     p.start_date,
     p.end_date,
-    p.report_frequency,
     CASE
-        WHEN DATEDIFF(p.due_date, CURDATE()) <= 7 THEN 'high'
-        WHEN DATEDIFF(p.due_date, CURDATE()) <= 30 THEN 'mid'
+        WHEN DATEDIFF(p.end_date, CURDATE()) <= 7 THEN 'high'
+        WHEN DATEDIFF(p.end_date, CURDATE()) <= 30 THEN 'mid'
         ELSE 'low'
     END AS severity
 FROM `project` AS p
@@ -99,14 +97,17 @@ ORDER BY p.creation_date DESC
 
 CREATE VIEW v_assignments AS
 SELECT
-    a.name,
     a.employee_id,
     a.project_id,
     a.creation_date,
     a.report_frequency,
-    a.report_custom_submission_date
+    a.report_custom_submission_date,
+    p.name AS `project_name`,
+    p.start_date AS `project_start_date`,
+    p.end_date AS `project_end_date`
 FROM `assignment` AS a
     JOIN `employee` AS e ON a.employee_id = e.id
+    JOIN `project` AS p ON a.project_id = p.id
 GROUP BY a.employee_id, a.project_id
 ORDER BY a.creation_date DESC
 ;

@@ -6,6 +6,7 @@ DROP PROCEDURE IF EXISTS create_project;
 DROP PROCEDURE IF EXISTS update_project;
 DROP PROCEDURE IF EXISTS archive_project;
 DROP PROCEDURE IF EXISTS delete_archive_project;
+DROP PROCEDURE IF EXISTS assign_to_project;
 
 DELIMITER ;;
 
@@ -92,6 +93,36 @@ BEGIN
     SET rows_affected = ROW_COUNT();
 
     SET success = rows_affected > 0;
+END;;
+
+CREATE PROCEDURE assign_to_project(
+    IN arg_project_id CHAR(36),
+    IN arg_employee_id CHAR(36),
+    IN arg_report_frequency ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
+    IN arg_report_custom_submission_date DATE,
+    OUT success BOOLEAN
+)
+BEGIN
+    -- Check if the assignment already exists
+    DECLARE assignment_exists INT;
+    SELECT COUNT(*) INTO assignment_exists
+    FROM assignment
+    WHERE
+        project_id = arg_project_id AND employee_id = arg_employee_id
+    ;
+    
+    IF assignment_exists > 0 THEN
+        -- Assignment already exists, set success to false
+        SET success = FALSE;
+    ELSE
+        -- Assignment doesn't exist, create a new assignment
+        INSERT INTO assignment (`employee_id`, `project_id`, `creation_date`, `report_frequency`, `report_custom_submission_date`)
+        VALUES (arg_employee_id, arg_project_id, CURRENT_DATE(), arg_report_frequency, arg_report_custom_submission_date)
+        ;
+        
+        -- Set success to true
+        SET success = TRUE;
+    END IF;
 END;;
 
 DELIMITER ;

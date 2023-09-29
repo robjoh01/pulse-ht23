@@ -4,44 +4,55 @@
     <div class="main-layout">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <h1><%= title %></h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat distinctio voluptas est, incidunt deserunt in maiores aut nihil voluptatem rem ut laboriosam nisi repellendus facere nulla quibusdam. Facilis, cupiditate sunt.</p>
-            <form class="form" method="POST" action="/project/assign/posted">
-                <div class="drag-drop-root">
-                    <a href="/media/sample.csv" download>Download .csv sample file</a>
-                    <div class="drag-drop-container">
-                        <label class="drag-drop-label" for="drag-drop-input" id="drag-drop-area">
-                            <i class="drag-drop-icon bi bi-cloud-arrow-up-fill"></i>
-                            <p>Drag and drop or click here to upload .csv file.</p>
-                            <span>Upload .csv file from desktop</span>
-                            <input type="file" accept=".csv" id="drag-drop-input" hidden>
-                        </label>
+            <div class="form-container">
+                <div class="form-root">
+                    <div class="form-header">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <a href="/media/sample.csv" download>Download .csv sample file</a>
                     </div>
-                    <label for="project-select">Choose a project:</label>
-                    <select id="project-select">
-                        <option value="de1a78fd-2d8d-4a41-a70f-6f74515abf16">Pulse</option>
-                        <option value="d631eebc-3eb1-4897-be96-db52a62a4cc2">Tempy</option>
-                        <option value="f100bdf3-95e1-460b-9f00-66e16a9a9935">Hello World</option>
-                    </select>
-                    <br>
-                    <br>
-                    <br>
-                    <div class="flex row">
-                        <button class="button form-button" type="submit">
-                            <span>Confirm</span>
+                    <form id="dropForm" class="form" method="POST" action="/project/assign/upload">
+                        <div class="drop-container">
+                            <label class="drop-label" for="dropInput" id="dropArea">
+                                <i class='drop-icon bx bxs-file'></i>
+                                <p id="dropText" class="drop-text"><b>Choose a file</b> or drag it here</p>
+                                <span class="drop-extension">Supports: CSV</span>
+                                <input type="file" accept=".csv" id="dropInput" hidden>
+                            </label>
+                        </div>
+                        <label for="projectInput">Choose a project:</label>
+                        <select id="projectInput" required>
+                            <!-- <optgroup label="Theropods">
+                                <option value="de1a78fd-2d8d-4a41-a70f-6f74515abf16">Pulse</option>
+                            </optgroup> -->
+                            <% projects.forEach(function(x) { %>
+                            <option value="<%= x.project_id %>"><%= x.name %></option>
+                            <% }); %>
+                        </select>
+                        <label for="reportFreq">Choose a report frequency:</label>
+                        <select id="reportFreq">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="fortnightly">Fortnightly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                        <label for="reportDate">Choose a report date (optional):</label>
+                        <input id="reportDate" type="date">
+                        <div class="form-spacer-x4"></div>
+                        <button id="dropSubmitBtn" class="button form-button" type="submit">
+                            <span>Assign team members</span>
                         </button>
-                        <a href="/project/managed">
+                        <a href="/projects">
                             <button class="button form-button" type="button">
-                                <span>Cancel</span>
+                                <span>Go Back</span>
                             </button>
                         </a>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </main>
     </div>
 
-    <script type="module" src="/js/drag-drop.js"></script>
+    <script type="text/javascript" src="/js/assign.js" defer></script>
 
     <%- include("./../partials/footer.ejs") %>
 </div>

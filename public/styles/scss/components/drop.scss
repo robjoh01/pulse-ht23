@@ -1,0 +1,71 @@
+.drop-container {
+    outline: 2px dashed hsl(245, 30%, 83%);
+    outline-offset: -0.5rem;
+    border-radius: 1rem;
+    transition: all 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000); /* easeInOutExpo */
+    background: hsla(0, 0%, 0%, 0.2);
+
+    &:hover {
+        outline-color: hsl(245, 30%, 93%);
+    }
+
+    &:hover {
+        outline-offset: -0.8rem;
+    }
+
+    &:hover .drop-label {
+        .drop-icon {
+            color: var(--color-fg-300);
+        }
+    }
+}
+
+.drop-label {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 350ms ease-in-out;
+}
+
+.drop-icon {
+    color: var(--color-fg-100);
+    margin-bottom: 1rem;
+    font-size: 4rem;
+}
+
+.drop-text {
+    font-style: normal;
+    font-family: var(--font-poppins);
+    color: var(--color-fg-100);
+    margin: 0;
+}
+
+.drop-extension {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+}
+
+#projectInput {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: transparent;
+    outline: 0;
+    border: 2px solid var(--color-fg-100);
+    transition: all 350ms ease-in-out;
+    accent-color: var(--color-fg-100);
+
+    &:hover {
+        border-color: var(--color-fg-300);
+    }
+
+    optgroup {
+        background: hsl(200, 100%, 50%);
+    }
+
+    option {
+        background: hsl(275, 100%, 25%);
+    }
+}
