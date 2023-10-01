@@ -69,6 +69,32 @@ INSERT INTO `employee` VALUES ('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` char(36) NOT NULL,
+  `text` longtext DEFAULT NULL,
+  PRIMARY KEY (`id`,`user_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `project`
 --
 
@@ -83,7 +109,10 @@ CREATE TABLE `project` (
   `modified_date` date DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `category` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `category` (`category`),
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`category`) REFERENCES `project_category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -93,7 +122,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2023-09-30','2023-10-11','2023-12-20','2023-12-31'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2023-09-30','0000-00-00','2023-10-01','2023-10-01'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2023-09-30','2023-10-11','2023-11-20','2023-12-31'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2023-09-30','0000-00-00','2021-11-15','2023-11-15'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2023-09-30','0000-00-00','2023-11-10','2023-12-31');
+INSERT INTO `project` VALUES ('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-10-01','0000-00-00','2022-10-28','2023-10-28',NULL),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-10-01','0000-00-00','2022-10-28','2023-10-28',NULL),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-10-01','0000-00-00','2022-10-28','2023-10-28',NULL);
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -223,6 +252,29 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `project_category`
+--
+
+DROP TABLE IF EXISTS `project_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `project_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(28) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `project_category`
+--
+
+LOCK TABLES `project_category` WRITE;
+/*!40000 ALTER TABLE `project_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `project_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `project_manager`
 --
 
@@ -254,12 +306,14 @@ DROP TABLE IF EXISTS `report`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` char(36) NOT NULL,
   `project_id` char(36) NOT NULL,
-  `creation_date` date NOT NULL,
+  `creation_date` date DEFAULT NULL,
   `text` longtext DEFAULT NULL,
   `has_been_read` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`employee_id`,`project_id`,`creation_date`),
+  PRIMARY KEY (`id`),
+  KEY `employee_id` (`employee_id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `report_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
   CONSTRAINT `report_ibfk_2` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`)
@@ -303,7 +357,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-30',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','johnnyDoe','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-30',NULL,NULL);
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-01',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','johnnyDoe','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-01',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -613,4 +667,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-30  0:04:21
+-- Dump completed on 2023-10-01 21:30:47

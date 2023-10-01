@@ -324,7 +324,7 @@
     }
 }
 
-.form input,
+.form input:not(input[type="checkbox"]),
 .form select {
     outline: none;
     -webkit-appearance: none;

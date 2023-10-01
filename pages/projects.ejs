@@ -29,12 +29,6 @@ report_frequency: 'fortnightly' -->
                             </td>
                             <th class="primary-th">
                                 <div class="primary-flex primary-row">
-                                    <i class="bi bi-calendar"></i>
-                                    <span>Creation</span>
-                                </div>
-                            </td>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
                                     <i class="bi bi-calendar-x-fill"></i>
                                     <span>Start</span>
                                 </div>
@@ -48,7 +42,7 @@ report_frequency: 'fortnightly' -->
                             <th class="primary-th">
                                 <div class="primary-flex primary-row">
                                     <i class="bi bi-calendar-x-fill"></i>
-                                    <span>Report</span>
+                                    <span>Reporting Date</span>
                                 </div>
                             </td>
                         </tr>
@@ -66,9 +60,6 @@ report_frequency: 'fortnightly' -->
                                 <a href="/project/update/<%= x.project_id %>">
                                     <span><%= x.name %></span>
                                 </a>
-                            </td>
-                            <td class="primary-td" data-cell="creation date">
-                                <span><%= x.creation_date %></span>
                             </td>
                             <td class="primary-td" data-cell="start date">
                                 <span><%= x.start_date %></span>

@@ -25,6 +25,7 @@ router.get("/project/create", async (req, res, next) => {
     let data = {};
 
     data.title = "Create a new project";
+    data.pageName  = "projects";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
@@ -93,6 +94,7 @@ router.get("/project/update/:id", async (req, res, next) => {
     let data = {};
 
     data.title = `Update ${project.name}`;
+    data.pageName  = "projects";
     data.session = appUtil.getSession(req);
     data.user = user;
     data.project = project;
@@ -225,6 +227,7 @@ router.get("/project/assign/", async (req, res, next) => {
     let data = {};
 
     data.title = "Assign team members";
+    data.pageName  = "projects";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.projects = await dbUtil.fetchProjects();

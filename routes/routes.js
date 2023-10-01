@@ -55,6 +55,7 @@ router.get("/calendar", async (req, res, next) => {
     let data = {};
 
     data.title = "Calendar";
+    data.pageName  = "calendar";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
@@ -70,6 +71,7 @@ router.get("/dashboard", async (req, res, next) => {
     let data = {};
 
     data.title = "Dashboard";
+    data.pageName  = "dashboard";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
@@ -94,7 +96,8 @@ router.get("/projects", async (req, res, next) => {
 
     let data = {};
 
-    data.title = "Dashboard";
+    data.title = "Projects";
+    data.pageName  = "projects";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.baseUrl = `${protocol}://${host}:${port}`;
@@ -119,7 +122,8 @@ router.get("/report", async (req, res, next) => {
 
     let data = {};
 
-    data.title = "Reports";
+    data.title = "Report";
+    data.pageName  = "report";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(user.id);
     data.assignments = await dbUtil.fetchAssignmentsForEmployee(user.id);
@@ -133,7 +137,9 @@ router.get("/help", async (req, res, next) => {
     let data = {};
 
     data.title = "Help";
+    data.pageName  = "help";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(user.id);
 
     data.gmail = process.env.GMAIL_URL;
     data.github = process.env.GITHUB_URL;

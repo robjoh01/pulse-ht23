@@ -8,7 +8,7 @@
         </div>
         
         <% if (session.authenticated) { %>
-        <div class="user">
+        <div class="user <%= pageName === 'user' && 'active' %>">
             <a class="user-link" href="/user/profile">
                 <img class="user-img" src="<%= user.image_url %>" alt="Profile Image">
             </a>
@@ -25,14 +25,14 @@
         <ul>
             <% if (session.authenticated) { %>
             <li>
-                <a class="nav-item" href="/dashboard">
+                <a class="nav-item <%= pageName === 'dashboard' && 'active' %>" href="/dashboard">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="nav-item-label">Dashboard</span>
                 </a>
                 <span class="primary-tooltip">Dashboard</span>
             </li>
             <li>
-                <a class="nav-item" href="/calendar">
+                <a class="nav-item <%= pageName === 'calendar' && 'active' %>" href="/calendar">
                     <i class='bx bxs-calendar'></i>
                     <span class="nav-item-label">Calendar</span>
                 </a>
@@ -40,7 +40,7 @@
             </li>
                 <% if (!user.is_employee) { %>
                 <li>
-                    <a class="nav-item" href="/projects">
+                    <a class="nav-item <%= pageName === 'projects' && 'active' %>" href="/projects">
                         <i class='bx bx-bar-chart-square'></i>
                         <span class="nav-item-label">Projects</span>
                     </a>
@@ -48,7 +48,7 @@
                 </li>
                 <% } else { %>
                 <li>
-                    <a class="nav-item" href="/report">
+                    <a class="nav-item <%= pageName === 'report' && 'active' %>" href="/report">
                         <i class='bx bxs-report'></i>
                         <span class="nav-item-label">Report</span>
                     </a>
@@ -64,7 +64,7 @@
                 </li>
             <% } else { %>
             <li>
-                <a class="nav-item" href="/user/login">
+                <a class="nav-item <%= pageName === 'user' && 'active' %>" href="/user/login">
                     <i class='bx bx-log-in'></i>
                     <span class="nav-item-label">Login</span>
                 </a>

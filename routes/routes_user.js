@@ -23,6 +23,7 @@ router.get("/user/register", (req, res, next) => {
     let data = {};
 
     data.title = "Register";
+    data.pageName  = "user-register";
     data.session = appUtil.getSession(req);
 
     res.render("./../pages/user_register.ejs", data);
@@ -50,6 +51,7 @@ router.get("/user/login", (req, res, next) => {
     let data = {};
 
     data.title = "Login";
+    data.pageName  = "user";
     data.session = appUtil.getSession(req);
 
     res.render("./../pages/user_login.ejs", data);
@@ -79,6 +81,7 @@ router.get("/user/profile", async (req, res, next) => {
     let data = {};
 
     data.title = "Profile";
+    data.pageName  = "user";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
@@ -94,6 +97,7 @@ router.get("/user/change_password", (req, res, next) => {
     let data = {};
 
     data.title = "Change Password";
+    data.pageName  = "user";
     data.session = appUtil.getSession(req);
 
     res.render("./../pages/user_change_password.ejs", data);
@@ -108,6 +112,7 @@ router.get("/user/delete", (req, res, next) => {
     let data = {};
 
     data.title = "Delete Account";
+    data.pageName  = "user";
     data.session = appUtil.getSession(req);
 
     res.render("./../pages/user_delete.ejs", data);
