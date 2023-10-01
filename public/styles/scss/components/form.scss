@@ -4,7 +4,6 @@
     flex-flow: column nowrap;
     margin: 0 auto;
     align-items: center;
-    max-width: 400px;
 }
 
 .form-root {
@@ -323,4 +322,50 @@
         background-color: transparent;
         backdrop-filter: blur(16px);
     }
+}
+
+.form input,
+.form select {
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    border: 2px solid var(--color-border-100);
+    transition: all 350ms ease-in-out;
+    accent-color: var(--color-fg-100);
+    box-shadow: 0.3rem 0.3rem 8px 2px hsla(0, 0%, 50%, 0.1);
+
+    &:hover,
+    &:focus {
+        border-color: var(--color-border-300);
+    }
+}
+
+.form select {
+    background-image: url("/img/icons/bxs-down-arrow.svg");
+    background-size: 1rem;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 1rem) center;
+
+    optgroup {
+        background: var(--color-bg-200);
+    }
+
+    option {
+        background: var(--color-bg-300);
+    }
+}
+
+.form input[type="date"] {
+    border-radius: 0.5rem;
+    background: transparent;
+    outline: 0;
+    border: 2px solid var(--color-border-100);
+    transition: all 350ms ease-in-out;
+    accent-color: var(--color-fg-100);
+
+    box-shadow: 0.3rem 0.3rem 8px 2px hsla(0, 0%, 50%, 0.1);
 }

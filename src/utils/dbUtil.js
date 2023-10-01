@@ -253,6 +253,10 @@ let dbUtil = {
             data.image_url = "https://demos.themeselection.com/materio-mui-react-nextjs-admin-template-free/images/avatars/1.png"; // Default image
         }
 
+        data.is_employee = Boolean(data.is_employee);
+        data.creation_date = dateUtil.parseDate(data.creation_date);
+        data.logout_date = dateUtil.parseDate(data.logout_date);
+
         return data;
     },
     fetchUsers: async function() {

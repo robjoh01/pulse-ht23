@@ -93,7 +93,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2023-09-29','2023-10-11','2023-12-20','2023-12-31'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2023-09-29','0000-00-00','2023-10-01','2023-10-01'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2023-09-29','2023-10-11','2023-11-20','2023-12-31'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-09-29','0000-00-00','2022-10-28','2023-10-28'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2023-09-29','0000-00-00','2021-11-15','2023-11-15'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2023-09-29','0000-00-00','2023-11-10','2023-12-31');
+INSERT INTO `project` VALUES ('1650f7ca-9b08-4907-af57-671342a219a2','Project E','Lorem Ipsum','2023-09-30','2023-10-11','2023-12-20','2023-12-31'),('38a3315d-fe13-4692-b001-872d6656689a','Project A','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('445390fb-509e-4e3b-985a-f20df536512c','Project C','Lorem Ipsum','2023-09-30','0000-00-00','2023-10-01','2023-10-01'),('4e658238-d50c-4812-84f2-be58e8be308a','Quirky Quarters','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('6e885bbc-6d26-411e-b978-2962acae4bdd','Sharp Suits','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9','Project F','Lorem Ipsum','2023-09-30','2023-10-11','2023-11-20','2023-12-31'),('ba28b243-6889-4c54-a138-ff72333186a2','Modern Maven','Lorem Ipsum','2023-09-30','0000-00-00','2022-10-28','2023-10-28'),('bf23b742-a36b-4251-84d1-4db5fb30248d','Project B','Lorem Ipsum','2023-09-30','0000-00-00','2021-11-15','2023-11-15'),('d615786c-4610-4558-b2b6-113348aa5dac','Project D','Lorem Ipsum','2023-09-30','0000-00-00','2023-11-10','2023-12-31');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -303,7 +303,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-29',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','johnnyDoe','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-29',NULL,NULL);
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-30',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','johnnyDoe','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-09-30',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -475,7 +475,7 @@ SET character_set_client = utf8;
   1 AS `image_url`,
   1 AS `creation_date`,
   1 AS `logout_date`,
-  1 AS `role` */;
+  1 AS `is_employee` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -599,7 +599,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_users` AS select `u`.`id` AS `id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number`,`u`.`image_url` AS `image_url`,`u`.`creation_date` AS `creation_date`,`u`.`logout_date` AS `logout_date`,case when `e`.`id` is not null then 'Employee' when `pm`.`id` is not null then 'Project Manager' else 'other' end AS `role` from ((`user` `u` left join `employee` `e` on(`u`.`id` = `e`.`id`)) left join `project_manager` `pm` on(`u`.`id` = `pm`.`id`)) group by `u`.`id` order by `u`.`logout_date` desc,`u`.`creation_date` desc */;
+/*!50001 VIEW `v_users` AS select `u`.`id` AS `id`,`u`.`username` AS `username`,`u`.`display_name` AS `display_name`,`u`.`email_address` AS `email_address`,`u`.`phone_number` AS `phone_number`,`u`.`image_url` AS `image_url`,`u`.`creation_date` AS `creation_date`,`u`.`logout_date` AS `logout_date`,case when `e`.`id` is not null then 1 when `pm`.`id` is not null then 0 else -1 end AS `is_employee` from ((`user` `u` left join `employee` `e` on(`u`.`id` = `e`.`id`)) left join `project_manager` `pm` on(`u`.`id` = `pm`.`id`)) group by `u`.`id` order by `u`.`logout_date` desc,`u`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -613,4 +613,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-29 19:03:34
+-- Dump completed on 2023-09-30  0:04:21

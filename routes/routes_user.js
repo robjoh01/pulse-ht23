@@ -39,7 +39,8 @@ router.get("/user/login", (req, res, next) => {
             req,
             process.env.ADMIN_ID,
             process.env.ADMIN_USER,
-            process.env.ADMIN_PASS
+            process.env.ADMIN_PASS,
+            false
         );
 
         res.redirect("/");
@@ -113,12 +114,14 @@ router.get("/user/delete", (req, res, next) => {
 });
 
 router.post("/user/register/posted", async (req, res, next) => {
-    const { f_email, f_username, f_password, f_password_again } = req.body;
+    const { f_email, f_username, f_password, f_password_again, f_employee, f_privacy_policy } = req.body;
 
     if (!f_email ||
         !f_username ||
         !f_password ||
-        !f_password_again) {
+        !f_password_again ||
+        !f_employee ||
+        !f_privacy_policy) {
         new errors.BadCredentialsError(next, "/user/register");
         return;
     }
@@ -147,7 +150,9 @@ router.post("/user/register/posted", async (req, res, next) => {
         return;
     }
 
-    const wasSuccessful = await dbUtil.createUser(id, f_username, f_password, f_email);
+    console.log(f_employee);
+
+    const wasSuccessful = await dbUtil.createUser(id, f_employee, f_username, f_password, f_email);
 
     if (!wasSuccessful) {
         // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
@@ -158,7 +163,7 @@ router.post("/user/register/posted", async (req, res, next) => {
     // TODO: Enable this for production ready
     //emailUtil.sendMailAsServer(f_email, "Welcome to Pulse!", "<h1>Hello, World!</h1>\n<p>Welcome To Jurassic Park</p>\n<a href=\"www.google.com\">Click here</a>");
 
-    appUtil.authenticateUser(req, id, f_username, f_password);
+    appUtil.authenticateUser(req, id, f_username, f_password, f_employee);
 
     res.redirect("/user/profile");
 });

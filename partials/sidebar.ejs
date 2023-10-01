@@ -14,12 +14,23 @@
             </a>
             <div class="user-details">
                 <span class="user-details-name"><%= user.display_name %></span>
-                <span class="user-details-role"><%= user.role %></span>
+                <% if (user.is_employee) { %>
+                <span class="user-details-role">Employee</span>
+                <% } else { %>
+                <span class="user-details-role">Project Manager</span>
+                <% } %>
             </div>
         </div>
         <% } %>
         <ul>
             <% if (session.authenticated) { %>
+            <li>
+                <a class="nav-item" href="/dashboard">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="nav-item-label">Dashboard</span>
+                </a>
+                <span class="primary-tooltip">Dashboard</span>
+            </li>
             <li>
                 <a class="nav-item" href="/calendar">
                     <i class='bx bxs-calendar'></i>
@@ -27,13 +38,13 @@
                 </a>
                 <span class="primary-tooltip">Calendar</span>
             </li>
-                <% if (user.role != "Employee") { %>
+                <% if (!user.is_employee) { %>
                 <li>
-                    <a class="nav-item" href="/dashboard">
-                        <i class='bx bxs-dashboard' ></i>
-                        <span class="nav-item-label">Dashboard</span>
+                    <a class="nav-item" href="/projects">
+                        <i class='bx bx-bar-chart-square'></i>
+                        <span class="nav-item-label">Projects</span>
                     </a>
-                    <span class="primary-tooltip">Dashboard</span>
+                    <span class="primary-tooltip">Projects</span>
                 </li>
                 <% } else { %>
                 <li>
@@ -44,6 +55,13 @@
                     <span class="primary-tooltip">Report</span>
                 </li>
                 <% } %>
+                <li>
+                    <a class="nav-item" href="/user/logout">
+                        <i class="bx bx-log-out"></i>
+                        <span class="nav-item-label">Logout</span>
+                    </a>
+                    <span class="primary-tooltip">Logout</span>
+                </li>
             <% } else { %>
             <li>
                 <a class="nav-item" href="/user/login">
@@ -51,29 +69,6 @@
                     <span class="nav-item-label">Login</span>
                 </a>
                 <span class="primary-tooltip">Login</span>
-            </li>
-            <% } %>
-            <li>
-                <a class="nav-item" href="/about">
-                    <i class='bx bxs-home-alt-2' ></i>
-                    <span class="nav-item-label">About</span>
-                </a>
-                <span class="primary-tooltip">About</span>
-            </li>
-            <li>
-                <a class="nav-item" href="/contact">
-                    <i class='bx bxs-contact' ></i>
-                    <span class="nav-item-label">Contact</span>
-                </a>
-                <span class="primary-tooltip">Contact</span>
-            </li>
-            <% if (session.authenticated) { %>
-            <li>
-                <a class="nav-item" href="/user/logout">
-                    <i class="bx bx-log-out"></i>
-                    <span class="nav-item-label">Logout</span>
-                </a>
-                <span class="primary-tooltip">Logout</span>
             </li>
             <% } %>
         </ul>

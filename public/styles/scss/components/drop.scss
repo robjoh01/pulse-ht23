@@ -48,24 +48,3 @@
     font-size: 0.8rem;
 }
 
-#projectInput {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    background: transparent;
-    outline: 0;
-    border: 2px solid var(--color-fg-100);
-    transition: all 350ms ease-in-out;
-    accent-color: var(--color-fg-100);
-
-    &:hover {
-        border-color: var(--color-fg-300);
-    }
-
-    optgroup {
-        background: hsl(200, 100%, 50%);
-    }
-
-    option {
-        background: hsl(275, 100%, 25%);
-    }
-}

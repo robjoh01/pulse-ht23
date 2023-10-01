@@ -22,10 +22,10 @@ SELECT
     u.creation_date,
     u.logout_date,
     CASE
-        WHEN e.id IS NOT NULL THEN 'Employee'
-        WHEN pm.id IS NOT NULL THEN 'Project Manager'
-        ELSE 'other' -- Modify as needed for additional cases
-    END AS `role`
+        WHEN e.id IS NOT NULL THEN 1
+        WHEN pm.id IS NOT NULL THEN 0
+        ELSE -1
+    END AS `is_employee`
 FROM user AS u
     LEFT JOIN employee AS e ON u.id = e.id
     LEFT JOIN project_manager AS pm ON u.id = pm.id

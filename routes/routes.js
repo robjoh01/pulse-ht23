@@ -43,13 +43,7 @@ router.get("/", async (req, res, next) => {
         return;
     }
 
-    const user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
-
-    if (user.role === "Employee") {
-        res.redirect("/report");
-    } else {
-        res.redirect("/dashboard");
-    }
+    res.redirect("/dashboard");
 });
 
 router.get("/calendar", async (req, res, next) => {
@@ -75,10 +69,21 @@ router.get("/dashboard", async (req, res, next) => {
 
     let data = {};
 
+    data.title = "Dashboard";
+    data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
-    if (data.user.role === "Employee") {
-        new errors.AccessNotPermittedError(next, "/user/profile");
+    res.render("./../pages/dashboard.ejs", data);
+});
+
+router.get("/projects", async (req, res, next) => {
+    if (!appUtil.isUserAuthenticated(req)) {
+        new errors.UserNotLoggedInError(next, "/user/login");
+        return;
+    }
+
+    if (appUtil.isUserAnEmployee(req)) {
+        new errors.AccessNotPermittedError(next, "/dashboard");
         return;
     }
 
@@ -87,13 +92,16 @@ router.get("/dashboard", async (req, res, next) => {
     const url = req.originalUrl;
     const port = process.env.PORT || PORT;
 
+    let data = {};
+
     data.title = "Dashboard";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.baseUrl = `${protocol}://${host}:${port}`;
     data.fullUrl = `${protocol}://${host}:${port}${url}`;
     data.projects = await dbUtil.fetchProjects();
 
-    res.render("./../pages/dashboard.ejs", data);
+    res.render("./../pages/projects.ejs", data);
 });
 
 router.get("/report", async (req, res, next) => {
@@ -102,9 +110,14 @@ router.get("/report", async (req, res, next) => {
         return;
     }
 
-    let data = {};
+    if (!appUtil.isUserAnEmployee(req)) {
+        new errors.AccessNotPermittedError(next, "/dashboard");
+        return;
+    }
 
     const user = appUtil.getSessionUser(req);
+
+    let data = {};
 
     data.title = "Reports";
     data.session = appUtil.getSession(req);
@@ -114,36 +127,6 @@ router.get("/report", async (req, res, next) => {
     // TODO: Make report page
 
     res.render("./../pages/report.ejs", data);
-});
-
-router.get("/about", async (req, res, next) => {
-    let data = {};
-
-    data.title = "About";
-    data.session = appUtil.getSession(req);
-
-    if (appUtil.isUserAuthenticated(req)) {
-        data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
-    }
-
-    res.render("./../pages/about.ejs", data);
-});
-
-router.get("/contact", async (req, res, next) => {
-    let data = {};
-
-    data.title = "Contact";
-    data.session = appUtil.getSession(req);
-
-    if (appUtil.isUserAuthenticated(req)) {
-        data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
-    }
-
-    data.gmail = process.env.GMAIL_URL;
-    data.github = process.env.GITHUB_URL;
-    data.phone = process.env.PHONE_URL;
-
-    res.render("./../pages/contact.ejs", data);
 });
 
 router.get("/help", async (req, res, next) => {

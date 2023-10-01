@@ -1,3 +1,5 @@
+@use "./../utils" as *;
+
 .footer {
     background-color: var(--color-footer-bg);
     backdrop-filter: blur(16px);
@@ -9,13 +11,14 @@
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
 
     .contact-links {
         display: flex;
         flex-flow: row nowrap;
         gap: 2rem;
         list-style: none;
+        margin: 0;
+        padding: 0;
 
         a {
             position: relative;
@@ -31,9 +34,27 @@
             }
         }
     }
-}
 
-.copyright {
-    font-size: 14px;
-    letter-spacing: 1.5px;
+    .copyright {
+        font-size: 14px;
+        letter-spacing: 1.5px;
+    }
+
+    @include breakpoint(medium) {
+        justify-content: space-between;
+    }
+
+    @include breakpoint-down(small) {
+        flex-flow: column nowrap;
+        justify-content: center;
+        gap: 1rem;
+
+        .contact-links {
+            justify-content: center;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+        }
+    }
 }
