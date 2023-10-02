@@ -34,6 +34,7 @@ $ touch .env
 PORT=<number>
 SALT_ROUNDS=<number>
 COOKIE_SECRET=<string> (guid)
+ENABLE_EMAIL_SUPPORT=<boolean>
 GMAIL_NAME=<string>
 GMAIL_USER=<string>
 GMAIL_PASS=<string>

@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `employee`;
 DROP TABLE IF EXISTS `project_manager`;
 
-DROP TABLE IF EXISTS `project_category`;
 DROP TABLE IF EXISTS `project`;
+DROP TABLE IF EXISTS `project_category`;
 DROP TABLE IF EXISTS `project_archive`;
 
 DROP TABLE IF EXISTS `assignment`;
@@ -47,14 +47,6 @@ CREATE TABLE `project_manager`
     FOREIGN KEY (`id`) REFERENCES `user`(`id`)
 );
 
-CREATE TABLE `project_category`
-(
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `category` VARCHAR(28),
-
-    PRIMARY KEY (`id`)
-);
-
 CREATE TABLE `project`
 (
     `id` CHAR(36) NOT NULL,
@@ -64,10 +56,17 @@ CREATE TABLE `project`
     `modified_date` DATE,
     `start_date` DATE,
     `end_date` DATE,
-    `category` INT,
 
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`category`) REFERENCES project_category(`id`)
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `project_category`
+(
+    `project_id` CHAR(36) NOT NULL,
+    `category` VARCHAR(28),
+
+    PRIMARY KEY (`project_id`),
+    FOREIGN KEY (`project_id`) REFERENCES project(`id`)
 );
 
 CREATE TABLE `project_archive`

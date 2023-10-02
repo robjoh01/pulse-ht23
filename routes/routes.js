@@ -68,22 +68,6 @@ router.get("/dashboard", async (req, res, next) => {
         return;
     }
 
-    let data = {};
-
-    data.title = "Dashboard";
-    data.pageName  = "dashboard";
-    data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
-
-    res.render("./../pages/dashboard.ejs", data);
-});
-
-router.get("/projects", async (req, res, next) => {
-    if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/user/login");
-        return;
-    }
-
     if (appUtil.isUserAnEmployee(req)) {
         new errors.AccessNotPermittedError(next, "/dashboard");
         return;
@@ -96,15 +80,15 @@ router.get("/projects", async (req, res, next) => {
 
     let data = {};
 
-    data.title = "Projects";
-    data.pageName  = "projects";
+    data.title = "Dashboard";
+    data.pageName  = "dashboard";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.baseUrl = `${protocol}://${host}:${port}`;
     data.fullUrl = `${protocol}://${host}:${port}${url}`;
-    data.projects = await dbUtil.fetchProjects();
+    data.projects = (req.query?.q) ? await dbUtil.fetchProjectsWithFilter(req.query.q) : await dbUtil.fetchProjects();
 
-    res.render("./../pages/projects.ejs", data);
+    res.render("./../pages/dashboard_employee.ejs", data);
 });
 
 router.get("/report", async (req, res, next) => {

@@ -301,7 +301,25 @@ let dbUtil = {
             x.modified_date = dateUtil.parseDate(x.modified_date);
             x.start_date = dateUtil.parseDate(x.start_date);
             x.end_date = dateUtil.parseDate(x.end_date);
-            x.report_custom_submission_date = dateUtil.parseDate(x.report_custom_submission_date);
+        });
+
+        return data;
+    },
+    fetchProjectsWithFilter: async function(query) {
+        const db = await this.connectDatabase();
+        const sql = `CALL fetch_projects_with_filter(?, ?);`;
+
+        const [rows] = await db.query(sql, [query, `%${query}%`]);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDate(x.creation_date);
+            x.modified_date = dateUtil.parseDate(x.modified_date);
+            x.start_date = dateUtil.parseDate(x.start_date);
+            x.end_date = dateUtil.parseDate(x.end_date);
         });
 
         return data;

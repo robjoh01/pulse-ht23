@@ -21,7 +21,11 @@ const sendFile = async() => {
         body: formData
     });
 
+    // TODO: Use toastify-js instead!
+
     const json = await res.json();
+
+    dropText.textContent = "Team members were successfully uploaded to the database.";
 
     console.log(json);
 };
@@ -30,4 +34,6 @@ dropForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     sendFile();
+
+    dropText.textContent = "Uploading...";
 });

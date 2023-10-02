@@ -16,15 +16,25 @@ report_frequency: 'fortnightly' -->
         <main class="main extend">
             <div class="projects-container">
                 <article class="article projects-content">
-                    <form class="form-body projects-form-searchbar">
-                        <div class="form-input">
-                            <input id="searchbarInput" class="form-text-input" type="text" placeholder="Search through the table (id, name or dates)">
-                        </div>
-                    </form>
+                    <search class="projects-searchbar">
+                        <form class="form-body projects-searchbar-form">
+                            <label class="projects-searchbar-label" for="searchbarInput">
+                                <div class="form-input">
+                                    <input id="searchbarInput" class="projects-searchbar-input form-search-input" type="search" placeholder="Search for a specific project (id, name or dates)" name="q" required autocomplete="off" autocapitalize="off">
+                                </div>
+                            </label>
+                            <button class="projects-searchbar-button button" type="submit">Search</button>
+                            <a class="form-button-link" href="?">
+                                <button class="projects-searchbar-button button" type="button">
+                                    <span>Clear query</span>
+                                </button>
+                            </a>
+                        </form>
+                    </search>
                     <table class="primary-table projects-table">
                         <thead class="primary-thead">
                             <tr class="primary-tr">
-                                <th class="primary-th" colspan="1">
+                                <th class="primary-th">
                                     <span></span>
                                 </td>
                                 <th class="primary-th">
@@ -40,12 +50,6 @@ report_frequency: 'fortnightly' -->
                                     <div class="primary-flex primary-row">
                                         <i class="bi bi-calendar-x-fill"></i>
                                         <span>End</span>
-                                    </div>
-                                </td>
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class="bi bi-calendar-x-fill"></i>
-                                        <span>Reporting Date</span>
                                     </div>
                                 </td>
                             </tr>
@@ -70,35 +74,26 @@ report_frequency: 'fortnightly' -->
                                 <td class="primary-td" data-cell="end date">
                                     <span><%= x.end_date %></span>
                                 </td>
-                                <% if (x.report_frequency) { %>
-                                <td class="primary-td" data-cell="report frequency">
-                                    <span><%= x.report_frequency %></span>
-                                </td>
-                                <% } else { %>
-                                <td class="primary-td" data-cell="report date">
-                                    <span><%= x.report_custom_submission_date %></span>
-                                </td>
-                                <% } %>
                             </tr>
                             <% }); %>
                         </tbody>
                     </table>
+                    <div class="primary-flex col">
+                        <a href="/project/create">
+                            <button class="button">
+                                <span>Create new project</span>
+                            </button>
+                        </a>
+                        <a href="/project/assign">
+                            <button class="button">
+                                <span>Assign team members</span>
+                            </button>
+                        </a>
+                    </div>
                 </article>
-                <div class="primary-flex col">
-                    <a href="/project/create">
-                        <button class="button">
-                            <span>Create new project</span>
-                        </button>
-                    </a>
-                    <a href="/project/assign">
-                        <button class="button">
-                            <span>Assign team members</span>
-                        </button>
-                    </a>
-                </div>
             </div>
         </main>
     </div>
 
-    <%- include("./../partials/footer.ejs") %>
+    <%- include("./../partials/footer.ejs") %>'
 </div>

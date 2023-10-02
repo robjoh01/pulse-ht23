@@ -74,12 +74,9 @@ SELECT
     p.modified_date,
     p.start_date,
     p.end_date,
-    CASE
-        WHEN DATEDIFF(p.end_date, CURDATE()) <= 7 THEN 'high'
-        WHEN DATEDIFF(p.end_date, CURDATE()) <= 30 THEN 'mid'
-        ELSE 'low'
-    END AS severity
+    GROUP_CONCAT(pc.category SEPARATOR ', ') AS `categories`
 FROM `project` AS p
+    LEFT JOIN `project_category` AS pc ON p.id = pc.project_id
 GROUP BY p.id
 ORDER BY p.modified_date DESC, p.creation_date DESC
 ;

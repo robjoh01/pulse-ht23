@@ -16,6 +16,35 @@ const errors = require("./../src/errors/errors.js");
 // Make instances
 const router = express.Router();
 
+router.get("/projects", async (req, res, next) => {
+    if (!appUtil.isUserAuthenticated(req)) {
+        new errors.UserNotLoggedInError(next, "/user/login");
+        return;
+    }
+
+    if (appUtil.isUserAnEmployee(req)) {
+        new errors.AccessNotPermittedError(next, "/dashboard");
+        return;
+    }
+
+    const protocol = req.protocol;
+    const host = req.hostname;
+    const url = req.originalUrl;
+    const port = process.env.PORT || PORT;
+
+    let data = {};
+
+    data.title = "Projects";
+    data.pageName  = "projects";
+    data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.baseUrl = `${protocol}://${host}:${port}`;
+    data.fullUrl = `${protocol}://${host}:${port}${url}`;
+    data.projects = (req.query?.q) ? await dbUtil.fetchProjectsWithFilter(req.query.q) : await dbUtil.fetchProjects();
+
+    res.render("./../pages/projects.ejs", data);
+});
+
 router.get("/project/create", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");

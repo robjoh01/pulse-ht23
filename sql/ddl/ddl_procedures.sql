@@ -13,6 +13,7 @@ DROP PROCEDURE IF EXISTS fetch_project_managers;
 
 DROP PROCEDURE IF EXISTS fetch_project;
 DROP PROCEDURE IF EXISTS fetch_projects;
+DROP PROCEDURE IF EXISTS fetch_projects_with_filter;
 
 DROP PROCEDURE IF EXISTS fetch_project_archive;
 DROP PROCEDURE IF EXISTS fetch_project_archives;
@@ -103,6 +104,22 @@ BEGIN
     SELECT
         *
     FROM v_projects
+    ;
+END;;
+
+CREATE PROCEDURE fetch_projects_with_filter(
+    arg_query CHAR(36),
+    arg_query_alt MEDIUMTEXT
+)
+BEGIN
+    SELECT
+        *
+    FROM v_projects
+    WHERE
+        `project_id` = arg_query
+        OR `name` LIKE arg_query_alt
+        OR `start_date` LIKE arg_query_alt
+        OR `end_date` LIKE arg_query_alt
     ;
 END;;
 

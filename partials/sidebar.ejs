@@ -10,7 +10,7 @@
         <% if (session.authenticated) { %>
         <div class="user <%= pageName === 'user' && 'active' %>">
             <a class="user-link" href="/user/profile">
-                <img class="user-img" src="<%= user.image_url %>" alt="Profile Image">
+                <img class="user-img" src="<%= user.image_url %>" alt="Profile Image" fetchPriority="high">
             </a>
             <div class="user-details">
                 <span class="user-details-name"><%= user.display_name %></span>

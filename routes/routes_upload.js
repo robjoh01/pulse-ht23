@@ -37,7 +37,7 @@ router.post("/project/assign/upload", fileUpload({ limits: { fileSize: 10 * 1000
 
     const csvRow = await csv().fromString(csvData);
 
-    for (const x of csvRow) {
+    await csvRow.forEach(async (x) => {
         const doesUserExist = await dbUtil.doesUserExists(null, x.employee_id);
         let wasSuccessful = true;
 
@@ -62,7 +62,7 @@ router.post("/project/assign/upload", fileUpload({ limits: { fileSize: 10 * 1000
         if (!wasSuccessful) {
             throw new errors.UnkownError(next, "/project/assign");
         }
-    }
+    });
 
     res.redirect("/dashboard");
 });

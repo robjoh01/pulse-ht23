@@ -75,37 +75,6 @@
 }
 
 .primary-table {
-    .primary-th {
-        &:nth-child(1) {
-            width: 10%;
-        }
-
-        &:nth-child(2) {
-            width: 30%;
-        }
-        &:nth-child(3) {
-            width: 20%;
-        }
-
-        &:nth-child(4) {
-            width: 20%;
-        }
-
-        &:nth-child(5) {
-            width: 20%;
-        }
-
-        &:nth-child(6) {
-            width: 20%;
-        }
-
-        &:nth-child(7) {
-            width: 5%;
-        }
-    }
-}
-
-.primary-table {
     @include breakpoint-down(small) {
         th {
             display: none;

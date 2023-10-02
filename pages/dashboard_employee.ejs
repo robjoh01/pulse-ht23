@@ -1,0 +1,45 @@
+<%- include("./../partials/header.ejs") %>
+
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main extend">
+
+        <div class="dashboard-grid">
+            <div class="dashboard-grid-1">
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="400" class="dashboard-stats-value"></span>
+                    <span data-value="meals delivered" class="dashboard-stats-text"></span>
+                </div>
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="340" class="dashboard-stats-value"></span>
+                    <span data-value="happy customers" class="dashboard-stats-text"></span>
+                </div>
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="225" class="dashboard-stats-value"></span>
+                    <span data-value="items" class="dashboard-stats-text"></span>
+                </div>
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="280" class="dashboard-stats-value"></span>
+                    <span data-value="stars" class="dashboard-stats-text"></span>
+                </div>
+            </div>
+            <div class="dashboard-grid-2" id="circleProgress">
+                <circle-progress value="50" max="100" text-format="percent"></circle-progress>
+            </div>
+            <div class="dashboard-grid-3">
+                
+            </div>
+        </div>
+
+        </main>
+    </div>
+
+    <%- include("./../partials/footer.ejs") %>
+
+    <script text="text/javascript" src="/js/dashboard.js" defer></script>
+</div>

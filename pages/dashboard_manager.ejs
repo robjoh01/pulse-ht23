@@ -1,0 +1,106 @@
+<%- include("./../partials/header.ejs") %>
+
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main extend">
+
+        <div class="dashboard-grid">
+            <div class="dashboard-grid-1">
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="400" class="dashboard-stats-value"></span>
+                    <span data-value="meals delivered" class="dashboard-stats-text"></span>
+                </div>
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="340" class="dashboard-stats-value"></span>
+                    <span data-value="happy customers" class="dashboard-stats-text"></span>
+                </div>
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="225" class="dashboard-stats-value"></span>
+                    <span data-value="items" class="dashboard-stats-text"></span>
+                </div>
+                <div class="dashboard-stats">
+                    <i class='dashboard-stats-icon bx bxs-star'></i>
+                    <span data-value="280" class="dashboard-stats-value"></span>
+                    <span data-value="stars" class="dashboard-stats-text"></span>
+                </div>
+            </div>
+            <div class="dashboard-grid-2" id="circleProgress">
+                <circle-progress value="50" max="100" text-format="percent"></circle-progress>
+            </div>
+            <div class="dashboard-grid-3">
+                <search class="projects-searchbar">
+                    <form class="form-body projects-searchbar-form">
+                        <label class="projects-searchbar-label" for="searchbarInput">
+                            <div class="form-input">
+                                <input id="searchbarInput" class="projects-searchbar-input form-search-input" type="search" placeholder="Search through the table (id, name or dates)" name="q" required autocomplete="off" autocapitalize="off">
+                            </div>
+                        </label>
+                        <button class="projects-searchbar-button button" type="submit">Search</button>
+                        <a class="form-button-link" href="?">
+                            <button class="projects-searchbar-button button" type="button">
+                                <span>Clear query</span>
+                            </button>
+                        </a>
+                    </form>
+                </search>
+                <table class="primary-table projects-table">
+                    <thead class="primary-thead">
+                        <tr class="primary-tr">
+                            <th class="primary-th">
+                                <span></span>
+                            </td>
+                            <th class="primary-th">
+                                <span>Name</span>
+                            </td>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar-x-fill"></i>
+                                    <span>Start</span>
+                                </div>
+                            </td>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar-x-fill"></i>
+                                    <span>End</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody class="primary-tbody">
+                        <% projects.forEach(function(x) { %>
+                        <tr class="primary-tr">
+                            <!-- <td class="primary-td color-tab <%= x.severity %>"></td> -->
+                            <td class="primary-td" data-cell="link">
+                                <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
+                                    <i class="bi bi-link-45deg"></i>
+                                </button>
+                            </td>
+                            <td class="primary-td" data-cell="name">
+                                <a href="/project/update/<%= x.project_id %>">
+                                    <span><%= x.name %></span>
+                                </a>
+                            </td>
+                            <td class="primary-td" data-cell="start date">
+                                <span><%= x.start_date %></span>
+                            </td>
+                            <td class="primary-td" data-cell="end date">
+                                <span><%= x.end_date %></span>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        </main>
+    </div>
+
+    <%- include("./../partials/footer.ejs") %>
+
+    <script text="text/javascript" src="/js/dashboard.js" defer></script>
+</div>
