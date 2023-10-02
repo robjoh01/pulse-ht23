@@ -1,0 +1,52 @@
+@use "./../utils" as * ;
+
+.profile-container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-content: unset;
+}
+
+.profile-form-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3rem;
+    align-items: center;
+
+    .profile-image-details-container {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 1rem;
+    }
+
+    .profile-image-details {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 1rem;
+    }
+
+    .profile-image-label {
+        // align-self: center;
+        // justify-self: left;
+    }
+
+    #profileImg {
+        width: rem(128);
+        height: rem(128);
+        border-radius: 50%;
+
+        img {
+            object-fit: contain;
+        }
+    }
+}
+
+.profile-form-body {
+
+}
+
+.profile-form-body-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+

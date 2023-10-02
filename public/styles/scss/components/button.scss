@@ -23,24 +23,32 @@ button {
 }
 
 .button {
-    width: 100%;
-    background-color: var(--color-form-button-bg);
+    cursor: pointer;
     border: none;
     outline: none;
+    padding: 1rem 2rem;
+    background: transparent;
+    backdrop-filter: blur(16px);
+    border: 2px solid var(--color-border-100);
     border-radius: 2.5rem;
-    padding: 4px 1rem;
-    box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.1);
-    cursor: pointer;
-    transition: all 250ms ease-in-out 50ms;
+    box-shadow: 0 0 1rem hsla(0, 0%, 0%, 0.1);
+    transition: all 250ms ease-in-out;
 
     span {
-        color: var(--color-fg-alt-100);
-        font-size: 1rem;
+        color: var(--color-fg-100);
+        font-size: 1em;
         font-weight: 600;
+        transition: all 250ms ease-in-out;
     }
 
-    &:hover span {
-        color: var(--color-fg-alt-300);
+    &:hover,
+    &:focus,
+    &:focus-within {
+        border-color: var(--color-border-300);
+
+        span {
+            color: var(--color-fg-300);
+        }
     }
 }
 

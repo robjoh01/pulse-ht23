@@ -2,18 +2,14 @@
 
 .body-layout {
     position: relative;
-    min-height: 100vh;
-    min-height: 100dvh;
     display: grid;
     grid-template-rows: 1fr auto;
-    // grid-template-rows: auto 1fr auto; (FOR HEADER)
 }
 
 .main-layout {
+    min-height: 100vh;
+    min-height: 100dvh;
     position: relative;
-    // min-height: 100vh;
-    // min-height: 100dvh;
-    height: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
 
@@ -30,11 +26,7 @@
 
 .main {
     position: relative;
-    // max-width: 800px;
-    max-width: min(800px);
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin: 4rem auto;
+    padding: 4rem;
 
     &.extend {
         min-width: 80%;
@@ -48,10 +40,10 @@
 }
 
 .article {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 1rem;
-    margin: 2rem auto;
+    // display: flex;
+    // flex-flow: column nowrap;
+    // gap: 1rem;
+    // margin: 2rem auto;
 }
 
 .section {

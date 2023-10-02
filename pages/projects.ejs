@@ -14,84 +14,88 @@ report_frequency: 'fortnightly' -->
     <div class="main-layout">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main extend">
-            <article class="article">
-                <form class="form-search">
-                    <input type="text" placeholder="Search through the table">
-                </form>
-                <table class="primary-table">
-                    <thead class="primary-thead">
-                        <tr class="primary-tr">
-                            <th class="primary-th" colspan="1">
-                                <span></span>
-                            </td>
-                            <th class="primary-th">
-                                <span>Name</span>
-                            </td>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class="bi bi-calendar-x-fill"></i>
-                                    <span>Start</span>
-                                </div>
-                            </td>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class="bi bi-calendar-x-fill"></i>
-                                    <span>End</span>
-                                </div>
-                            </td>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class="bi bi-calendar-x-fill"></i>
-                                    <span>Reporting Date</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody class="primary-tbody">
-                        <% projects.forEach(function(x) { %>
-                        <tr class="primary-tr">
-                            <!-- <td class="primary-td color-tab <%= x.severity %>"></td> -->
-                            <td class="primary-td" data-cell="link">
-                                <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
-                                    <i class="bi bi-link-45deg"></i>
-                                </button>
-                            </td>
-                            <td class="primary-td" data-cell="name">
-                                <a href="/project/update/<%= x.project_id %>">
-                                    <span><%= x.name %></span>
-                                </a>
-                            </td>
-                            <td class="primary-td" data-cell="start date">
-                                <span><%= x.start_date %></span>
-                            </td>
-                            <td class="primary-td" data-cell="end date">
-                                <span><%= x.end_date %></span>
-                            </td>
-                            <% if (x.report_frequency) { %>
-                            <td class="primary-td" data-cell="report frequency">
-                                <span><%= x.report_frequency %></span>
-                            </td>
-                            <% } else { %>
-                            <td class="primary-td" data-cell="report date">
-                                <span><%= x.report_custom_submission_date %></span>
-                            </td>
-                            <% } %>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-            </article>
-            <div class="primary-flex col">
-                <a href="/project/create">
-                    <button class="button">
-                        <span>Create new project</span>
-                    </button>
-                </a>
-                <a href="/project/assign">
-                    <button class="button">
-                        <span>Assign team members</span>
-                    </button>
-                </a>
+            <div class="projects-container">
+                <article class="article projects-content">
+                    <form class="form-body projects-form-searchbar">
+                        <div class="form-input">
+                            <input id="searchbarInput" class="form-text-input" type="text" placeholder="Search through the table (id, name or dates)">
+                        </div>
+                    </form>
+                    <table class="primary-table projects-table">
+                        <thead class="primary-thead">
+                            <tr class="primary-tr">
+                                <th class="primary-th" colspan="1">
+                                    <span></span>
+                                </td>
+                                <th class="primary-th">
+                                    <span>Name</span>
+                                </td>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class="bi bi-calendar-x-fill"></i>
+                                        <span>Start</span>
+                                    </div>
+                                </td>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class="bi bi-calendar-x-fill"></i>
+                                        <span>End</span>
+                                    </div>
+                                </td>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class="bi bi-calendar-x-fill"></i>
+                                        <span>Reporting Date</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody class="primary-tbody">
+                            <% projects.forEach(function(x) { %>
+                            <tr class="primary-tr">
+                                <!-- <td class="primary-td color-tab <%= x.severity %>"></td> -->
+                                <td class="primary-td" data-cell="link">
+                                    <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
+                                        <i class="bi bi-link-45deg"></i>
+                                    </button>
+                                </td>
+                                <td class="primary-td" data-cell="name">
+                                    <a href="/project/update/<%= x.project_id %>">
+                                        <span><%= x.name %></span>
+                                    </a>
+                                </td>
+                                <td class="primary-td" data-cell="start date">
+                                    <span><%= x.start_date %></span>
+                                </td>
+                                <td class="primary-td" data-cell="end date">
+                                    <span><%= x.end_date %></span>
+                                </td>
+                                <% if (x.report_frequency) { %>
+                                <td class="primary-td" data-cell="report frequency">
+                                    <span><%= x.report_frequency %></span>
+                                </td>
+                                <% } else { %>
+                                <td class="primary-td" data-cell="report date">
+                                    <span><%= x.report_custom_submission_date %></span>
+                                </td>
+                                <% } %>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </article>
+                <div class="primary-flex col">
+                    <a href="/project/create">
+                        <button class="button">
+                            <span>Create new project</span>
+                        </button>
+                    </a>
+                    <a href="/project/assign">
+                        <button class="button">
+                            <span>Assign team members</span>
+                        </button>
+                    </a>
+                </div>
             </div>
         </main>
     </div>
