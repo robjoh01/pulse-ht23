@@ -14,7 +14,7 @@ let appUtil = {
         return req.session.user;
     },
     isUserAnEmployee: function(req) {
-        return req.session.isEmployee;
+        return req.session.user.isEmployee;
     },
     /**
     * Checks if the user is logged in. If not, sign in page will be redirected. Otherwise, continue back on the page.
@@ -39,14 +39,12 @@ let appUtil = {
     * Authenticate and set up a global access to the user. Stores inside a cookie session (server-side).
     * @return {void}
     */
-    authenticateUser: function(req, id, username, password, isEmployee) {
+    authenticateUser: function(req, id, isEmployee) {
         req.session.authenticated = true;
-        req.session.isEmployee = isEmployee;
 
         req.session.user = {
             id,
-            username,
-            password
+            isEmployee
         };
     },
     /**

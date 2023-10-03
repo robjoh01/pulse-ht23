@@ -68,53 +68,37 @@ router.get("/dashboard", async (req, res, next) => {
         return;
     }
 
-    if (appUtil.isUserAnEmployee(req)) {
-        new errors.AccessNotPermittedError(next, "/dashboard");
-        return;
-    }
-
-    const protocol = req.protocol;
-    const host = req.hostname;
-    const url = req.originalUrl;
-    const port = process.env.PORT || PORT;
+    const user = appUtil.getSessionUser(req);
 
     let data = {};
 
     data.title = "Dashboard";
     data.pageName  = "dashboard";
     data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.user = await dbUtil.fetchUser(user.id);
+
+    const protocol = req.protocol;
+    const host = req.hostname;
+    const url = req.originalUrl;
+    const port = process.env.PORT || PORT;
+
     data.baseUrl = `${protocol}://${host}:${port}`;
     data.fullUrl = `${protocol}://${host}:${port}${url}`;
-    data.projects = (req.query?.q) ? await dbUtil.fetchProjectsWithFilter(req.query.q) : await dbUtil.fetchProjects();
 
-    res.render("./../pages/dashboard_employee.ejs", data);
-});
+    if (appUtil.isUserAnEmployee(req)) {
+        data.assignments = await dbUtil.fetchAssignmentsForEmployee(user.id);
+        data.reports = await dbUtil.fetchReportsForEmployee(user.id);
 
-router.get("/report", async (req, res, next) => {
-    if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/user/login");
-        return;
+        const totalCount = data.assignments.length + data.reports.length;
+        data.progress = (totalCount > 0) ? ((1 - (data.assignments.length / totalCount)) * 100) : 0;
+
+        res.render("./../pages/dashboard_employee.ejs", data);
+    } else {
+        data.projects = (req.query?.q) ? await dbUtil.fetchProjectsWithFilter(req.query.q) : await dbUtil.fetchProjects();
+        data.reports = await dbUtil.fetchReports();
+
+        res.render("./../pages/dashboard_manager.ejs", data);
     }
-
-    if (!appUtil.isUserAnEmployee(req)) {
-        new errors.AccessNotPermittedError(next, "/dashboard");
-        return;
-    }
-
-    const user = appUtil.getSessionUser(req);
-
-    let data = {};
-
-    data.title = "Report";
-    data.pageName  = "report";
-    data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(user.id);
-    data.assignments = await dbUtil.fetchAssignmentsForEmployee(user.id);
-
-    // TODO: Make report page
-
-    res.render("./../pages/report.ejs", data);
 });
 
 router.get("/help", async (req, res, next) => {

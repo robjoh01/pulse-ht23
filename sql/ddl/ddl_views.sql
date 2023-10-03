@@ -10,6 +10,7 @@ DROP VIEW IF EXISTS v_projects;
 DROP VIEW IF EXISTS v_project_archives;
 DROP VIEW IF EXISTS v_assignments;
 DROP VIEW IF EXISTS v_reports;
+DROP VIEW IF EXISTS v_report_history;
 
 CREATE VIEW v_users AS
 SELECT
@@ -97,11 +98,25 @@ SELECT
     a.employee_id,
     a.project_id,
     a.creation_date,
-    a.report_frequency,
-    a.report_custom_submission_date,
     p.name AS `project_name`,
     p.start_date AS `project_start_date`,
-    p.end_date AS `project_end_date`
+    p.end_date AS `project_end_date`,
+    CASE 
+        WHEN p.report_deadline IS NOT NULL THEN 
+            p.report_deadline
+        ELSE
+            CASE 
+                WHEN p.report_frequency = 'daily' THEN 
+                    DATE_ADD(p.start_date, INTERVAL 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                WHEN p.report_frequency = 'weekly' THEN 
+                    DATE_ADD(DATE_ADD(p.start_date, INTERVAL 1 WEEK), INTERVAL -DAYOFWEEK(DATE_ADD(p.start_date, INTERVAL 1 WEEK)) + 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                WHEN p.report_frequency = 'fortnightly' THEN 
+                    DATE_ADD(DATE_ADD(p.start_date, INTERVAL 2 WEEK), INTERVAL -DAYOFWEEK(DATE_ADD(p.start_date, INTERVAL 2 WEEK)) + 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                WHEN p.report_frequency = 'monthly' THEN 
+                    DATE_ADD(LAST_DAY(DATE_ADD(p.start_date, INTERVAL 1 MONTH)), INTERVAL -DAYOFMONTH(LAST_DAY(DATE_ADD(p.start_date, INTERVAL 1 MONTH))) + 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                ELSE NULL
+            END
+    END AS `deadline`
 FROM `assignment` AS a
     JOIN `employee` AS e ON a.employee_id = e.id
     JOIN `project` AS p ON a.project_id = p.id
@@ -111,13 +126,33 @@ ORDER BY a.creation_date DESC
 
 CREATE VIEW v_reports AS
 SELECT
+    r.id,
     r.employee_id,
+    u.display_name AS `employee_name`,
+    p.name AS `project_name`,
     r.project_id,
     r.creation_date,
     r.text,
-    r.has_been_read
+    r.status
 FROM `report` AS r
+    JOIN `project` AS p ON r.project_id = p.id
     JOIN `employee` AS e ON r.employee_id = e.id
-GROUP BY r.employee_id, r.project_id
-ORDER BY r.has_been_read DESC, r.creation_date DESC
+    JOIN `user` AS u ON e.id = u.id
+GROUP BY r.id
+ORDER BY r.creation_date DESC
+;
+
+CREATE VIEW v_report_history AS
+SELECT
+    rc.id,
+    rc.creation_date,
+    rc.report_id,
+    rc.comment,
+    rc.status
+FROM
+    `report_comment` AS rc
+JOIN
+    `report` AS r ON rc.report_id = r.id
+GROUP BY rc.id
+ORDER BY rc.creation_date DESC
 ;

@@ -10,7 +10,10 @@
         <% if (session.authenticated) { %>
         <div class="user <%= pageName === 'user' && 'active' %>">
             <a class="user-link" href="/user/profile">
-                <img class="user-img" src="<%= user.image_url %>" alt="Profile Image" fetchPriority="high">
+                <picture>
+                    <source srcset="<%= user.image_url %>">
+                    <img class="user-img" src="/img/avatar.png" alt="Profile Image" fetchPriority="high">
+                </picture>
             </a>
             <div class="user-details">
                 <span class="user-details-name"><%= user.display_name %></span>
@@ -38,30 +41,13 @@
                 </a>
                 <span class="primary-tooltip">Calendar</span>
             </li>
-                <% if (!user.is_employee) { %>
-                <li>
-                    <a class="nav-item <%= pageName === 'projects' && 'active' %>" href="/projects">
-                        <i class='bx bx-bar-chart-square'></i>
-                        <span class="nav-item-label">Projects</span>
-                    </a>
-                    <span class="primary-tooltip">Projects</span>
-                </li>
-                <% } else { %>
-                <li>
-                    <a class="nav-item <%= pageName === 'report' && 'active' %>" href="/report">
-                        <i class='bx bxs-report'></i>
-                        <span class="nav-item-label">Report</span>
-                    </a>
-                    <span class="primary-tooltip">Report</span>
-                </li>
-                <% } %>
-                <li>
-                    <a class="nav-item" href="/user/logout">
-                        <i class="bx bx-log-out"></i>
-                        <span class="nav-item-label">Logout</span>
-                    </a>
-                    <span class="primary-tooltip">Logout</span>
-                </li>
+            <li>
+                <a class="nav-item" href="/user/logout">
+                    <i class="bx bx-log-out"></i>
+                    <span class="nav-item-label">Logout</span>
+                </a>
+                <span class="primary-tooltip">Logout</span>
+            </li>
             <% } else { %>
             <li>
                 <a class="nav-item <%= pageName === 'user' && 'active' %>" href="/user/login">

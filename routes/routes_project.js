@@ -6,44 +6,14 @@ const express = require("express");
 // Import libraries
 const dbUtil = require("../src/utils/dbUtil.js");
 const appUtil = require("../src/utils/appUtil.js");
-const conversionUtil = require("../src/utils/conversionUtil.js");
-const emailUtil = require("../src/utils/emailUtil.js");
 const profanityUtil = require("./../src/utils/profanityUtil.js");
 
 // Import errors
 const errors = require("./../src/errors/errors.js");
+const hashUtil = require('../src/utils/hashUtil.js');
 
 // Make instances
 const router = express.Router();
-
-router.get("/projects", async (req, res, next) => {
-    if (!appUtil.isUserAuthenticated(req)) {
-        new errors.UserNotLoggedInError(next, "/user/login");
-        return;
-    }
-
-    if (appUtil.isUserAnEmployee(req)) {
-        new errors.AccessNotPermittedError(next, "/dashboard");
-        return;
-    }
-
-    const protocol = req.protocol;
-    const host = req.hostname;
-    const url = req.originalUrl;
-    const port = process.env.PORT || PORT;
-
-    let data = {};
-
-    data.title = "Projects";
-    data.pageName  = "projects";
-    data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
-    data.baseUrl = `${protocol}://${host}:${port}`;
-    data.fullUrl = `${protocol}://${host}:${port}${url}`;
-    data.projects = (req.query?.q) ? await dbUtil.fetchProjectsWithFilter(req.query.q) : await dbUtil.fetchProjects();
-
-    res.render("./../pages/projects.ejs", data);
-});
 
 router.get("/project/create", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
@@ -54,7 +24,7 @@ router.get("/project/create", async (req, res, next) => {
     let data = {};
 
     data.title = "Create a new project";
-    data.pageName  = "projects";
+    data.pageName  = "project";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
@@ -67,7 +37,7 @@ router.post("/project/create/posted", async (req, res, next) => {
         return;
     }
 
-    const { f_name, f_description, f_due_date } = req.body;
+    const { f_name, f_description, f_start_date, f_end_date, f_report_freq, f_report_deadline } = req.body;
 
     if (!f_name) {
         new errors.BadCredentialsError(next, "/project/create");
@@ -88,15 +58,33 @@ router.post("/project/create/posted", async (req, res, next) => {
 
     const user = appUtil.getSessionUser(req);
 
-    let id = await dbUtil.createProject(user.id, f_name, f_description, f_due_date);
+    const projectId = hashUtil.generateGuid();
 
-    if (!id) {
-        // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
-        res.redirect("/project/create");
+    let reportFreq = f_report_freq;
+    let reportDeadline = null;
+
+    if (f_report_deadline) {
+        reportFreq = null;
+        reportDeadline = f_report_deadline;
+    }
+
+    const wasSuccessful = await dbUtil.createProject(
+        projectId,
+        user.id,
+        f_name,
+        f_description,
+        f_start_date,
+        f_end_date,
+        reportFreq,
+        reportDeadline
+    );
+
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/project/create");
         return;
     }
 
-    res.redirect("/projects");
+    res.redirect("/dashboard");
 });
 
 router.get("/project/update/:id", async (req, res, next) => {
@@ -109,23 +97,24 @@ router.get("/project/update/:id", async (req, res, next) => {
     const project = await dbUtil.fetchProject(projectId);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/projects");
+        new errors.ProjectNotFoundError(next, "/dashboard");
         return;
     }
 
     const user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
     if (user.role === "Employee") {
-        new errors.AccessNotPermittedError(next, "/projects");
+        new errors.AccessNotPermittedError(next, "/dashboard");
         return;
     }
 
     let data = {};
 
     data.title = `Update ${project.name}`;
-    data.pageName  = "projects";
+    data.pageName  = "project";
     data.session = appUtil.getSession(req);
     data.user = user;
+    data.project_id = projectId;
     data.project = project;
 
     res.render("./../pages/project_update.ejs", data);
@@ -147,27 +136,26 @@ router.post("/project/update/posted", async (req, res, next) => {
     const project = await dbUtil.fetchProject(f_id);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/projects");
+        new errors.ProjectNotFoundError(next, "/dashboard");
         return;
     }
 
-    let isValid = await dbUtil.updateProject(
+    const wasSuccessful = await dbUtil.updateProject(
         f_id,
         f_name,
         f_description,
         f_due_date
     );
 
-    if (!isValid) {
-        // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
-    } else {
-        // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/project/update");
+        return;
     }
 
     res.redirect(`/project/update/${f_id}`);
 });
 
-router.get("/project/delete/:id", async (req, res, next) => {
+router.get("/project/archive/:id", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -179,15 +167,17 @@ router.get("/project/delete/:id", async (req, res, next) => {
 
     const project = await dbUtil.fetchProject(id);
 
-    data.title = `Delete ${project.name}`;
+    data.title = `Archive ${project.name}`;
+    data.pageName = "project";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.project_id = id;
     data.project = project;
 
-    res.render("./../pages/project_delete.ejs", data);
+    res.render("./../pages/project_archive.ejs", data);
 });
 
-router.post("/project/delete/posted", async (req, res, next) => {
+router.post("/project/archive/posted", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -198,19 +188,18 @@ router.post("/project/delete/posted", async (req, res, next) => {
     const project = await dbUtil.fetchProject(f_id);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/projects");
+        new errors.ProjectNotFoundError(next, "/dashboard");
         return;
     }
 
-    let isValid = await dbUtil.deleteProject(f_id);
+    const wasSuccessful = await dbUtil.archiveProject(f_id);
 
-    if (!isValid) {
-        // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
-    } else {
-        // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/project/archive");
+        return;
     }
 
-    res.redirect("/projects");
+    res.redirect("/dashboard");
 });
 
 router.get("/project/view/:id", async (req, res, next) => {
@@ -223,22 +212,24 @@ router.get("/project/view/:id", async (req, res, next) => {
     const project = await dbUtil.fetchProject(id);
 
     if (!project) {
-        new errors.ProjectNotFoundError(next, "/projects");
+        new errors.ProjectNotFoundError(next, "/dashboard");
         return;
     }
 
     const user = appUtil.getSessionUser(req);
-    const assignment = await dbUtil.fetchAssignmentsWithFilter(id, user.id);
+    const assignment = await dbUtil.fetchAssignmentsForEmployee(user.id);
 
     if (!assignment) {
-        new errors.AccessNotPermittedError(next, "/projects");
+        new errors.AccessNotPermittedError(next, "/dashboard");
         return;
     }
 
     let data = {};
+
     data.title = `Viewing ${project.name}`;
+    data.pageName = "project";
     data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.user = await dbUtil.fetchUser(user.id);
     data.project = project;
     data.assignment = assignment;
 
@@ -256,7 +247,7 @@ router.get("/project/assign/", async (req, res, next) => {
     let data = {};
 
     data.title = "Assign team members";
-    data.pageName  = "projects";
+    data.pageName  = "project";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.projects = await dbUtil.fetchProjects();

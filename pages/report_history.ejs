@@ -1,0 +1,58 @@
+<%- include("./../partials/header.ejs") %>
+
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main">
+            <div class="primary-flex primary-col">
+                <table class="primary-table">
+                    <caption>Comment history</caption>
+                    <thead class="primary-thead">
+                        <tr class="primary-tr">
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar-x-fill"></i>
+                                    <span>Date Sent</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bxs-receipt'></i>
+                                    <span>Status</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bxs-message-dots' ></i>
+                                    <span>Comment</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="primary-tbody">
+                        <% history.forEach(function(x) { %>
+                        <tr class="primary-tr">
+                            <td class="primary-td" data-cell="project-name">
+                                <span><%= x.creation_date %></span>
+                            </td>
+                            <td class="primary-td" data-cell="employee-name">
+                                <span><%= x.status %></span>
+                            </td>
+                            <td class="primary-td" data-cell="creation-date">
+                                <span><%= x.comment %></span>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                <a class="form-button-link" href="/dashboard">
+                    <button class="button" type="button">
+                        <span>Go Back</span>
+                    </button>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <%- include("./../partials/footer.ejs") %>
+</div>

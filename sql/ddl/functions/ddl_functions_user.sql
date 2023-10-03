@@ -3,6 +3,7 @@
 --
 
 DROP FUNCTION IF EXISTS does_user_exist;
+DROP FUNCTION IF EXISTS is_user_employee;
 
 DELIMITER ;;
 
@@ -21,6 +22,22 @@ BEGIN
     ) INTO user_exists;
 
     RETURN user_exists;
+END;;
+
+CREATE FUNCTION is_user_employee(
+    arg_id CHAR(36)
+)
+RETURNS BOOLEAN
+BEGIN
+    DECLARE employee_exists BOOLEAN;
+
+    SELECT EXISTS(
+        SELECT 1 
+        FROM `employee` 
+        WHERE `id` = arg_id
+    ) INTO employee_exists;
+
+    RETURN employee_exists;
 END;;
 
 DELIMITER ;

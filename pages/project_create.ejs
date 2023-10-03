@@ -6,28 +6,54 @@
         <main class="main">
             <div class="form-container">
                 <form class="form-body" method="POST" action="/project/create/posted">
-                    <div class="form-input">
-                        <label class="form-input-label" for="name" id="nameLabel">
-                            <span>Name</span>
-                            <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" required placeholder="Enter a project name">
+                    <label class="form-input-label" for="name" id="nameLabel">
+                        <span>Project Name</span>
+                        <div class="form-input">
+                            <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" autocomplete="on" required placeholder="Enter a project name">
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="name" id="nameLabel">
+                        <span>Project Description</span>
+                        <div class="form-input">
+                            <textarea class="form-textarea-input" aria-invalid="false" id="description" name="f_description" rows="5" cols="33"></textarea>
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="startDate" id="startDateLabel">
+                        <span>Start Date</span>
+                        <div class="form-input">
+                            <input class="form-text-input" type="date" aria-invalid="false" id="startDate" name="f_start_date">
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="endDate" id="endDateLabel">
+                        <span>End Date</span>
+                        <div class="form-input">
+                            <input class="form-text-input" type="date" aria-invalid="false" id="endDate" name="f_end_date">
+                        </div>
+                    </label>
+                    <div class="form-input-container flex-end">
+                        <label class="form-input-label" for="reportFreq">
+                            <span>Choose a report frequency:</span>
+                            <div class="form-input">
+                                <select name="f_report_freq" id="reportFreq" class="form-select-input">
+                                    <option value="" selected>None</option>
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="fortnightly">Fortnightly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
                         </label>
-                    </div>
-                    <div class="form-input">
-                        <label class="form-input-label label" for="description" id="descriptionLabel">
-                            <span>Description</span>
-                            <textarea class="form-input-textarea" aria-invalid="false" id="description" name="f_description" rows="5" cols="33"></textarea>
-                        </label>
-                    </div>
-                    <div class="form-input">
-                        <label class="form-input-label label" for="dueDate" id="dueDateLabel">
-                            <span>Due Date</span>
-                            <input class="form-text-input" type="date" aria-invalid="false" id="dueDate" name="f_due_date">
+                        <label class="form-input-label" for="reportDeadlineInput" id="reportDeadlineLabel">
+                            <span>Report Deadline</span>
+                            <div class="form-input">
+                                <input class="form-text-input" type="datetime-local" aria-invalid="false" id="reportDeadlineInput" name="f_report_deadline">
+                            </div>
                         </label>
                     </div>
                     <button class="button" type="submit">
                         <span>Create project</span>
                     </button>
-                    <a class="form-button-link" href="/projects">
+                    <a class="form-button-link" href="/dashboard">
                         <button class="button" type="button">
                             <span>Go Back</span>
                         </button>
@@ -36,6 +62,8 @@
             </div>
         </main>
     </div>
+
+    <script type="text/javascript" src="/js/project.js" defer></script>
 
     <%- include("./../partials/footer.ejs") %>
 </div>

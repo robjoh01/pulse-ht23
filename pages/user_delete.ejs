@@ -5,37 +5,42 @@
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
             <div class="form-container">
-                <div class="form-root">
-                    <div class="form-header">
-                        <h1>Are you sure you want to delete your account?</h1>
-                        <p>This action will permanently remove all your data from our system.</p>
-                    </div>
-                    <form class="form" method="POST" action="/user/delete/posted">
-                        <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
-                        <div class="form-input">
-                            <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" required placeholder="Enter your password">
-                            <!-- <label class="form-input-label label" for="password" id="password-label">Password</label> -->
-                            <button class="form-password-button" type="button" id="passwordToggle" aria-label="Toggle password visibility">
-                                <i id="passwordIcon" class="bi bi-eye-slash-fill"></i>
-                            </button>
-                        </div>
-                        <div class="form-input">
-                            <input class="form-text-input" type="password" aria-invalid="false" id="password-again" name="f_password_again" required placeholder="Enter your password (again)">
-                            <!-- <label class="form-input-label label" for="password-again" id="password-again-label">Password (again)</label> -->
-                        </div>
-                        <button class="button form-button" type="submit">
-                            <span>Accept</span>
-                        </button>
-                        <a href="/user/profile">
-                            <button class="button form-button" type="button">
-                                <span>Cancel</span>
-                            </button>
-                        </a>
-                    </form>
+                <div class="form-header">
+                    <h1>Are you sure you want to delete your account?</h1>
+                    <p>This action will permanently remove all your data from our system.</p>
                 </div>
+                <form class="form-body" method="POST" action="/user/delete/posted">
+                    <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
+                    <label class="form-input-label" for="password" id="passwordLabel">
+                        <span>Password</span>
+                        <div class="form-input">
+                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
+                            <button class="form-input-icon" id="passwordBtn" type="button">
+                                <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
+                                <i id="passwordShown" class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="passwordAgainInput" id="passwordAgainLabel">
+                        <span>Password</span>
+                        <div class="form-input">
+                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordAgainInput" name="f_password_again" required placeholder="Enter your password (again)" autocorrect="false" autocomplete="true" autocapitalize="none">
+                        </div>
+                    </label>
+                    <button class="button form-button" type="submit">
+                        <span>Accept</span>
+                    </button>
+                    <a href="/user/profile">
+                        <button class="button form-button" type="button">
+                            <span>Cancel</span>
+                        </button>
+                    </a>
+                </form>
             </div>
         </main>
     </div>
+
+    <script type="text/javascript" src="/js/password.js" defer></script>
 
     <%- include("./../partials/footer.ejs") %>
 </div>

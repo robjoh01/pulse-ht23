@@ -1,0 +1,28 @@
+<%- include("./../partials/header.ejs") %>
+
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>Are you sure you want to archive the project?</h1>
+                    <!-- <p>This action will permanently remove all of '<%= project.name %>' data from our system.</p> -->
+                </div>
+                <form class="form-body" method="POST" action="/project/archive/posted">
+                    <input name="f_id" required hidden value="<%= project_id %>">
+                    <button class="button" type="submit">
+                        <span>Accept</span>
+                    </button>
+                    <a class="form-button-link" href="/dashboard">
+                        <button class="button" type="button">
+                            <span>Cancel</span>
+                        </button>
+                    </a>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <%- include("./../partials/footer.ejs") %>
+</div>

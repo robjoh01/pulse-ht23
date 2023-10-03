@@ -11,7 +11,8 @@ const ProfanityDetectedError = require("./profanityDetectedError.js");
 const ProjectAlreadyExistsError = require("./projectAlreadyExistsError.js");
 const AccessNotPermittedError = require("./accessNotPermittedError.js");
 const ProjectNotFoundError = require("./projectNotFoundError.js");
-const UnkownError = require("./unkownError.js");
+const ReportNotFoundError = require("./reportNotFoundError.js");
+const UnknownError = require("./unknownError.js");
 
 module.exports = { 
     PasswordNotMatchError,
@@ -23,5 +24,6 @@ module.exports = {
     ProjectAlreadyExistsError,
     AccessNotPermittedError,
     ProjectNotFoundError,
-    UnkownError,
+    ReportNotFoundError,
+    UnknownError,
 };

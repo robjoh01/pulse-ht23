@@ -26,15 +26,11 @@ let dbUtil = {
 
         return Boolean(res[0][Object.keys(res[0])[0]]);
     },
-    createProject: async function(id, name, description = null, dueDate = null) {
+    createProject: async function(id, managerId, name, description = null, startDate, endDate, reportFrequency, reportDeadline) {
         const db = await this.connectDatabase();
-        const query = `CALL create_project(?, ?, ?, ?, @success); SELECT @success as success;`;
+        const query = `CALL create_project(?, ?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;`;
 
-        if (!dueDate) {
-            dueDate = null;
-        }
-
-        let res = await db.query(query, [id, name, description, dueDate]);
+        let res = await db.query(query, [id, managerId, name, description, startDate, endDate, reportFrequency, reportDeadline]);
 
         db.end();
 
@@ -85,6 +81,20 @@ let dbUtil = {
         return Boolean(res[1][0].success);
     },
 
+    isEmployee: async function(id) {
+        const db = await this.connectDatabase();
+
+        if (!id) {
+            return false;
+        }
+
+        let sql = `SELECT is_user_employee(?);`;
+        let res = await db.query(sql, [id]);
+
+        db.end();
+
+        return Boolean(res[0][Object.keys(res[0])[0]]);
+    },
     /**
     * Checks if the user exists in the database.
     * @return {Boolean} A value either {true} or {false}.
@@ -133,9 +143,15 @@ let dbUtil = {
     },
     updateUser: async function(id, newPassword = null, newDisplayName = null, newEmailAddress = null, newPhoneNumber = null, newImageURL = null) {
         const db = await this.connectDatabase();
+    
+        let hashedPassword = null;
+
+        if (newPassword) {
+            hashedPassword = await hashUtil.hash(newPassword);
+        }
 
         let sql = `CALL update_user(?, ?, ?, ?, ?, ?, @success); SELECT @success as success;`;
-        let res = await db.query(sql, [id, newPassword, newDisplayName, newEmailAddress, newPhoneNumber, newImageURL]);
+        let res = await db.query(sql, [id, hashedPassword, newDisplayName, newEmailAddress, newPhoneNumber, newImageURL]);
 
         db.end();
 
@@ -188,6 +204,38 @@ let dbUtil = {
 
         return id;
     },
+    loginUserWithId: async function(id, password) {
+        const doesUserExist = await this.doesUserExists(null, id); // Check if user is exists
+
+        if (!doesUserExist) {
+            return false;
+        }
+
+        if (!id) {
+            return false;
+        }
+
+        const db = await this.connectDatabase();
+
+        let sql = `SELECT get_user_password(?);`;
+        let res = await db.query(sql, [id]);
+
+        db.end();
+
+        const hashedPassword = res[0][Object.keys(res[0])[0]]; // Get user's password
+
+        if (!hashedPassword) {
+            return false;
+        }
+
+        const isValid = await hashUtil.compare(password, hashedPassword); // Compare the hash and raw password
+
+        if (!isValid) {
+            return false;
+        }
+
+        return id;
+    },
     logoutUser: async function(id) {
         const db = await this.connectDatabase();
 
@@ -195,6 +243,29 @@ let dbUtil = {
         await db.query(sql, [id]);
 
         db.end();
+    },
+
+    createReport: async function(employeeId, projectId, text) {
+        const db = await this.connectDatabase();
+
+        const sql = 'CALL create_report(?, ?, ?, @success); SELECT @success as success;';
+
+        let res = await db.query(sql, [employeeId, projectId, text]);
+
+        db.end();
+
+        return Boolean(res[1][0].success);
+    },
+    reviewReport: async function(managerId, reportId, comment, markedAsRead) {
+        const db = await this.connectDatabase();
+
+        const sql = 'CALL review_report(?, ?, ?, ?, @success); SELECT @success as success;';
+
+        let res = await db.query(sql, [managerId, reportId, comment, markedAsRead]);
+
+        db.end();
+
+        return Boolean(res[1][0].success);
     },
 
     fetchEmployee: async function(id) {
@@ -206,7 +277,9 @@ let dbUtil = {
 
         db.end();
 
-        return {...res[0][0]};
+        const data = {...res[0][0]};
+
+        return data;
     },
     fetchEmployees: async function() {
         const db = await this.connectDatabase();
@@ -216,7 +289,9 @@ let dbUtil = {
 
         db.end();
 
-        return JSON.parse(JSON.stringify(rows));
+        const data = JSON.parse(JSON.stringify(rows));
+
+        return data;
     },
     fetchProjectManager: async function(id) {
         const db = await this.connectDatabase();
@@ -227,7 +302,9 @@ let dbUtil = {
 
         db.end();
 
-        return {...res[0][0]};
+        const data = {...res[0][0]};
+
+        return data;
     },
     fetchProjectManagers: async function() {
         const db = await this.connectDatabase();
@@ -237,7 +314,9 @@ let dbUtil = {
 
         db.end();
 
-        return JSON.parse(JSON.stringify(rows));
+        const data = JSON.parse(JSON.stringify(rows));
+
+        return data;
     },
     fetchUser: async function(id) {
         const db = await this.connectDatabase();
@@ -248,10 +327,6 @@ let dbUtil = {
         db.end();
 
         const data = {...res[0][0]};
-
-        if (!data.image_url) {
-            data.image_url = "https://demos.themeselection.com/materio-mui-react-nextjs-admin-template-free/images/avatars/1.png"; // Default image
-        }
 
         data.is_employee = Boolean(data.is_employee);
         data.creation_date = dateUtil.parseDate(data.creation_date);
@@ -267,7 +342,15 @@ let dbUtil = {
 
         db.end();
 
-        return JSON.parse(JSON.stringify(rows));
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.is_employee = Boolean(x.is_employee);
+            x.creation_date = dateUtil.parseDate(x.creation_date);
+            x.logout_date = dateUtil.parseDate(x.logout_date);
+        });
+
+        return data;
     },
     fetchProject: async function(id) {
         const db = await this.connectDatabase();
@@ -305,6 +388,36 @@ let dbUtil = {
 
         return data;
     },
+    fetchArchiveProject: async function(id) {
+        const db = await this.connectDatabase();
+        const sql = `CALL fetch_project_archive(?);`;
+
+        let res = await db.query(sql, [id]);
+
+        db.end();
+
+        const data = {...res[0][0]};
+
+        data.creation_date = dateUtil.parseDate(data.creation_date);
+
+        return data;
+    },
+    fetchArchiveProjects: async function() {
+        const db = await this.connectDatabase();
+        const sql = `CALL fetch_project_archives();`;
+
+        const [rows] = await db.query(sql);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDate(x.creation_date);
+        });
+
+        return data;
+    },
     fetchProjectsWithFilter: async function(query) {
         const db = await this.connectDatabase();
         const sql = `CALL fetch_projects_with_filter(?, ?);`;
@@ -332,7 +445,14 @@ let dbUtil = {
 
         db.end();
 
-        return {...res[0][0]};
+        const data = {...res[0][0]};
+
+        data.creation_date = dateUtil.parseDate(data.creation_date);
+        data.project_start_date = dateUtil.parseDate(data.project_start_date);
+        data.project_end_date = dateUtil.parseDate(data.project_end_date);
+        data.deadline = dateUtil.parseDate(data.deadline);
+
+        return data;
     },
     fetchAssignments: async function() {
         const db = await this.connectDatabase();
@@ -342,9 +462,18 @@ let dbUtil = {
 
         db.end();
 
-        return JSON.parse(JSON.stringify(rows));
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDate(x.creation_date);
+            x.project_start_date = dateUtil.parseDate(x.project_start_date);
+            x.project_end_date = dateUtil.parseDate(x.project_end_date);
+            x.deadline = dateUtil.parseDate(x.deadline);
+        });
+
+        return data;
     },
-    fetchAssignmentsForEmployee: async function(employeeId = null) {
+    fetchAssignmentsForEmployee: async function(employeeId) {
         const db = await this.connectDatabase();
         const sql = `CALL fetch_assignments_for_employee(?);`;
 
@@ -358,20 +487,40 @@ let dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.report_custom_submission_date = dateUtil.parseDate(x.report_custom_submission_date);
+            x.deadline = dateUtil.parseDate(x.deadline);
         });
 
         return data;
     },
-    fetchReport: async function(projectId, employeeId) {
+    fetchReport: async function(id) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_report(?, ?);`;
+        const sql = `CALL fetch_report(?);`;
 
-        let res = await db.query(sql, [projectId, employeeId]);
+        let res = await db.query(sql, [id]);
 
         db.end();
 
-        return {...res[0][0]};
+        const data = {...res[0][0]};
+
+        data.creation_date = dateUtil.parseDate(data.creation_date);
+
+        return data;
+    },
+    fetchReportHistory: async function(id) {
+        const db = await this.connectDatabase();
+        const sql = `CALL fetch_report_history(?);`;
+
+        const [rows] = await db.query(sql, [id]);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDate(x.creation_date);
+        });
+
+        return data;
     },
     fetchReports: async function() {
         const db = await this.connectDatabase();
@@ -381,7 +530,29 @@ let dbUtil = {
 
         db.end();
 
-        return JSON.parse(JSON.stringify(rows));
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDate(x.creation_date);
+        });
+
+        return data;
+    },
+    fetchReportsForEmployee: async function(employeeId) {
+        const db = await this.connectDatabase();
+        const sql = `CALL fetch_reports_for_employee(?);`;
+
+        const [rows] =  await db.query(sql, [employeeId]);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDate(x.creation_date);
+        });
+
+        return data;
     },
 };
 

@@ -9,6 +9,15 @@
     -moz-box-shadow: 0.8rem 1.2rem 8px 0 hsla(0, 0%, 0%, 0.2);
     border: 2px solid hsla(0, 0%, 0%, 0.5);
 
+    caption {
+        caption-side: top;
+        padding: 0.5rem 1rem;
+        background-color: var(--color-bg-alt-300);
+        color: var(--color-fg-alt-300);
+        border-radius: 1rem 1rem 0 0;
+        font-weight: 900;
+    }
+
     .primary-th,
     .primary-td {
         padding: 0.5rem;

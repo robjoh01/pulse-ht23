@@ -88,14 +88,17 @@
     --color-table-row-dark: hsl(0, 0%, 26%);
     --color-table-row-odd-dark: hsl(0, 0%, 21%);
 
-    --color-green-light: hsl(120, 73%, 63%);
-    --color-green-dark: hsl(120, 73%, 63%);
+    --color-green-light: hsl(120, 63%, 63%);
+    --color-green-dark: hsl(120, 45%, 33%);
 
     --color-orange-light: hsl(39, 63%, 53%);
     --color-orange-dark: hsl(39, 73%, 45%);
 
     --color-red-light: hsl(0, 63%, 53%);
-    --color-red-dark: hsl(0, 73%, 45%);
+    --color-red-dark: hsl(0, 45%, 55%);
+
+    --color-blue-light: hsl(205, 63%, 53%);
+    --color-blue-dark: hsl(205, 63%, 53%);
 }
 
 @mixin light-theme-colors {
@@ -148,6 +151,7 @@
     --color-green: var(--color-green-light);
     --color-orange: var(--color-orange-light);
     --color-red: var(--color-red-light);
+    --color-blue: var(--color-blue-light);
 }
 
 @mixin dark-theme-colors {
@@ -200,6 +204,7 @@
     --color-green: var(--color-green-dark);
     --color-orange: var(--color-orange-dark);
     --color-red: var(--color-red-dark);
+    --color-blue: var(--color-blue-dark);
 }
 
 :root, [data-theme="default"] {

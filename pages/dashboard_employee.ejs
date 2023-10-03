@@ -29,10 +29,100 @@
                 </div>
             </div>
             <div class="dashboard-grid-2" id="circleProgress">
-                <circle-progress value="50" max="100" text-format="percent"></circle-progress>
+                <circle-progress value="<%= progress %>" max="100" text-format="percent"></circle-progress>
             </div>
-            <div class="dashboard-grid-3">
-                
+            <div class="dashboard-grid-3 dashboard-grid-report">
+                <table class="primary-table assignment-table">
+                    <caption>Upcoming Reports</caption>
+                    <thead class="primary-thead">
+                        <tr class="primary-tr">
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bx-text' ></i>
+                                    <span>Name</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bx-calendar-x' ></i>
+                                    <span>Deadline</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="primary-tbody">
+                        <% assignments.forEach(function(x) { %>
+                        <tr class="primary-tr">
+                            <td class="primary-td" data-cell="project-name">
+                                <a href="/employee/report/<%= x.project_id %>">
+                                    <span><%= x.project_name %></span>
+                                </a>
+                            </td>
+                            <td class="primary-td" data-cell="deadline">
+                                <span><%= x.deadline %></span>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                <table class="primary-table report-table">
+                    <caption>Sent Reports</caption>
+                    <thead class="primary-thead">
+                        <tr class="primary-tr">
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bxs-id-card'></i>
+                                    <span>Project ID</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bx-text' ></i>
+                                    <span>Project Name</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bx-text' ></i>
+                                    <span>Text</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bxs-calendar-check' ></i>
+                                    <span>Date sent</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class='bx bxs-receipt'></i>
+                                    <span>Status</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="primary-tbody">
+                        <% reports.forEach(function(x) { %>
+                        <tr class="primary-tr">
+                            <td class="primary-td" data-cell="project-id">
+                                <span><%= x.project_id %></span>
+                            </td>
+                            <td class="primary-td" data-cell="project-name">
+                                <span><%= x.project_name %></span>
+                            </td>
+                            <td class="primary-td" data-cell="report-text">
+                                <span><%= x.text %></span>
+                            </td>
+                            <td class="primary-td" data-cell="report-creation-date">
+                                <span><%= x.creation_date %></span>
+                            </td>
+                            <td class="primary-td" data-cell="report-status">
+                                <span><%= x.status %></span>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
             </div>
         </div>
 

@@ -50,22 +50,27 @@ CREATE TABLE `project_manager`
 CREATE TABLE `project`
 (
     `id` CHAR(36) NOT NULL,
+    `project_manager_id` CHAR(36) NOT NULL,
     `name` VARCHAR(32),
     `description` VARCHAR(96),
     `creation_date` DATE DEFAULT CURRENT_DATE(),
     `modified_date` DATE,
     `start_date` DATE,
     `end_date` DATE,
+    `report_frequency` ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
+    `report_deadline` DATETIME,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`project_manager_id`) REFERENCES project_manager(`id`)
 );
 
 CREATE TABLE `project_category`
 (
+    `id` INT NOT NULL AUTO_INCREMENT,
     `project_id` CHAR(36) NOT NULL,
     `category` VARCHAR(28),
 
-    PRIMARY KEY (`project_id`),
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`project_id`) REFERENCES project(`id`)
 );
 
@@ -84,8 +89,6 @@ CREATE TABLE `assignment`
     `employee_id` CHAR(36) NOT NULL,
     `project_id` CHAR(36) NOT NULL,
     `creation_date` DATE,
-    `report_frequency` ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
-    `report_custom_submission_date` DATE,
 
     PRIMARY KEY (`employee_id`, `project_id`),
     FOREIGN KEY (`employee_id`) REFERENCES employee(`id`),
@@ -99,11 +102,25 @@ CREATE TABLE `report`
     `project_id` CHAR(36) NOT NULL,
     `creation_date` DATE,
     `text` LONGTEXT,
-    `has_been_read` BOOLEAN,
+    `status` TINYTEXT,
 
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`employee_id`) REFERENCES employee(`id`),
-    FOREIGN KEY (`project_id`) REFERENCES project(`id`),
-    PRIMARY KEY (`id`)
+    FOREIGN KEY (`project_id`) REFERENCES project(`id`)
+);
+
+CREATE TABLE `report_comment`
+(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `project_manager_id` CHAR(36) NOT NULL,
+    `creation_date` DATETIME,
+    `report_id` INT NOT NUll,
+    `comment` LONGTEXT,
+    `status` TINYTEXT,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`project_manager_id`) REFERENCES project_manager(`id`),
+    FOREIGN KEY (`report_id`) REFERENCES report(`id`)
 );
 
 CREATE TABLE `notification`

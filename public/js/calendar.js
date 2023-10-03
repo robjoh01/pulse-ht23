@@ -12,6 +12,56 @@ const options = {
         enableDblClick: true,
         enableClick: true,
     },
+    timezone: {
+        zones: [
+            {
+                timezoneName: 'Asia/Seoul',
+                displayLabel: 'UTC+09',
+                tooltip: 'Seoul',
+            },
+            {
+                timezoneName: 'Europe/London',
+                displayLabel: 'UTC+00',
+                tooltip: 'London',
+            },
+        ],
+    },
+    // NOTE: Not every theme is not included. For more info, check the theme docs.
+    theme: {
+        week: {
+            dayName: {
+                borderLeft: 'none',
+                borderTop: '1px dotted red',
+                borderBottom: '1px dotted red',
+                backgroundColor: 'rgba(81, 92, 230, 0.05)',
+            },
+            dayGrid: {
+                backgroundColor: 'rgba(81, 92, 230, 0.05)',
+            },
+            dayGridLeft: {
+                borderRight: 'none',
+                backgroundColor: 'rgba(81, 92, 230, 0.05)',
+                width: '144px',
+            },
+            timeGridLeft: {
+                borderRight: 'none',
+                backgroundColor: 'rgba(81, 92, 230, 0.05)',
+                width: '144px',
+            },
+            timeGridLeftAdditionalTimezone: {
+                backgroundColor: '#e5e5e5',
+            },
+            timeGridHalfHourLine: {
+                borderBottom: '1px dotted #e5e5e5',
+            },
+            nowIndicatorPast: {
+                border: '1px dashed red',
+            },
+            futureTime: {
+                color: 'red',
+            },
+        },
+    },
 };
 
 const container = document.getElementById('calendar');

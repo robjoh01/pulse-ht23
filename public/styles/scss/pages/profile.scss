@@ -30,13 +30,15 @@
     }
 
     #profileImg {
+        object-fit: contain;
         width: rem(128);
         height: rem(128);
-        border-radius: 50%;
-
-        img {
-            object-fit: contain;
-        }
+        border-radius: 1rem;
+        background-color: var(--color-bg-300);
+        border: 2px solid var(--color-border-300);
+        box-shadow: 0 0 1rem 0.2rem var(--color-border-200) inset;
+        -webkit-box-shadow: 0 0 1rem 0.2rem var(--color-border-200) inset;
+        -moz-box-shadow: 0 0 1rem 0.2rem var(--color-border-200) inset;
     }
 }
 

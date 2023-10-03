@@ -4,3 +4,47 @@
     height: 100%;
     z-index: -1;
 }
+
+.toastui-calendar-layout {
+    background-color: var(--color-bg-300) !important;
+
+    span {
+        color: inherit !important;
+        font-family: var(--font-martian-mono) !important;
+    }
+
+    .toastui-calendar-weekday-grid-date-decorator {
+        background-color: var(--color-blue) !important;
+    }
+
+    .toastui-calendar-day-names {
+        .toastui-calendar-day-name-item {
+            color: var(--color-fg-100) !important;
+
+            .toastui-calendar-holiday-sun {
+                color: var(--color-red) !important;
+            }
+
+            span {
+                font-weight: 900 !important;
+            }
+        }
+    }
+
+    .toastui-calendar-weekday-event {
+        color: var(--color-fg-alt-300) !important;
+        background-color: var(--color-green) !important;
+    }
+
+    .toastui-calendar-weekday-grid {
+        border-color: var(--color-border-alt-300)  !important;
+    }
+
+    .toastui-calendar-daygrid-cell+.toastui-calendar-daygrid-cell {
+        border-color: var(--color-border-alt-300)  !important;
+    }
+
+    .toastui-calendar-grid-cell-date {
+        color: var(--color-fg-100) !important;
+    }
+}

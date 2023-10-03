@@ -11,6 +11,8 @@ DROP TRIGGER IF EXISTS user_before_delete;
 DROP TRIGGER IF EXISTS project_before_delete;
 DROP TRIGGER IF EXISTS archive_project_before_delete;
 
+DROP TRIGGER IF EXISTS report_after_insert;
+
 DELIMITER ;;
 
 CREATE TRIGGER user_before_insert
@@ -77,6 +79,17 @@ FOR EACH ROW
 BEGIN
     -- Ensure that when a project_archive is deleted, their assignments are appropriately handled
     DELETE FROM report WHERE `project_id` = OLD.id;
+END;;
+
+CREATE TRIGGER report_after_insert
+AFTER INSERT ON `report`
+FOR EACH ROW
+BEGIN
+    -- Check if the report is related to an assignment
+    IF (SELECT COUNT(*) FROM `assignment` WHERE employee_id = NEW.employee_id AND project_id = NEW.project_id) > 0 THEN
+        -- Remove the assignment
+        DELETE FROM `assignment` WHERE employee_id = NEW.employee_id AND project_id = NEW.project_id;
+    END IF;
 END;;
 
 DELIMITER ;

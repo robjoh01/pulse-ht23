@@ -24,7 +24,7 @@
                             <div class="form-input">
                                 <select id="projectInput" required class="form-select-input">
                                     <!-- <optgroup label="Theropods">
-                                        <option value="de1a78fd-2d8d-4a41-a70f-6f74515abf16">Pulse</option>
+                                        <option value="">Pulse</option>
                                     </optgroup> -->
                                     <% projects.forEach(function(x) { %>
                                     <option value="<%= x.project_id %>"><%= x.name %></option>
@@ -35,7 +35,8 @@
                         <label class="form-input-label" for="reportFreq">
                             <span>Choose a report frequency:</span>
                             <div class="form-input">
-                                <select id="reportFreq" class="form-select-input">
+                                <select name="f_report_freq" id="reportFreq" class="form-select-input">
+                                    <option value="" selected>None</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
                                     <option value="fortnightly">Fortnightly</option>
@@ -53,7 +54,7 @@
                     <button id="dropSubmitBtn" class="button form" type="submit">
                         <span>Assign team members</span>
                     </button>
-                    <a class="form-button-link href="/projects">
+                    <a class="form-button-link" href="/dashboard">
                         <button class="button" type="button">
                             <span>Go Back</span>
                         </button>

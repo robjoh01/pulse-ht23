@@ -8,8 +8,9 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 
 const routes = require("./routes/routes.js");
-const routesProject = require("./routes/routes_project.js");
 const routesUser = require("./routes/routes_user.js");
+const routesProject = require("./routes/routes_project.js");
+const routesReport = require("./routes/routes_report.js");
 const routesUpload = require("./routes/routes_upload.js");
 const routesJSON = require("./routes/routes_json.js");
 
@@ -49,6 +50,7 @@ app.set('json spaces', 4);
 app.use(routes);
 app.use(routesUser);
 app.use(routesProject);
+app.use(routesReport);
 app.use(routesUpload);
 app.use(routesJSON);
 

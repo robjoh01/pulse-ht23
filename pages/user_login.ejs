@@ -6,7 +6,7 @@
         <main class="main">
             <div class="form-container">
                 <div class="form-header">
-                    <!-- <img class="header-hero" alt="Pulse Project"> -->
+                    <img class="header-hero" alt="Pulse Project">
                     <h2>Welcome to Pulse 👋🏻</h2>
                     <p>Please sign-in to your account and start the adventure</p>
                 </div>
@@ -14,14 +14,14 @@
                     <label class="form-input-label" for="username" id="username-label">
                         <span>Username</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required placeholder="Enter your username" autocorrect="off" autocapitalize="none">
+                            <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required placeholder="Enter your username" autocorrect="on" autocomplete="on" autocapitalize="none">
                             <i class="form-input-icon bi bi-person-fill"></i>
                         </div>
                     </label>
-                    <label class="form-input-label" for="password" id="passwordLabel">
+                    <label class="form-input-label" for="passwordInput" id="passwordLabel">
                         <span>Password</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
+                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
                             <button class="form-input-icon" id="passwordBtn" type="button">
                                 <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
                                 <i id="passwordShown" class="bi bi-eye"></i>
@@ -29,7 +29,7 @@
                         </div>
                     </label>
                     <div class="form-input-container flex-end">
-                        <label class="form-input-label form-input-label-none-full form-row" for="password" id="passwordLabel">
+                        <label class="form-input-label form-input-label-none-full form-row" for="rememberInput" id="rememberLabel">
                             <span>Remember me</span>
                             <div class="form-input">
                                 <input class="form-check-input" type="checkbox" aria-invalid="false" id="rememberInput" name="f_remember">

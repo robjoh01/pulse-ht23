@@ -9,7 +9,7 @@ const upload = multer({ dest: "uploads/" });
 const dbUtil = require("../src/utils/dbUtil.js");
 const appUtil = require("../src/utils/appUtil.js");
 const conversionUtil = require("../src/utils/conversionUtil.js");
-const emailUtil = require("../src/utils/emailUtil.js");
+const { emailUtil, welcomeMessage } = require("../src/utils/emailUtil.js");
 const profanityUtil = require("./../src/utils/profanityUtil.js");
 const hashUtil = require('../src/utils/hashUtil.js');
 
@@ -23,7 +23,7 @@ router.get("/user/register", (req, res, next) => {
     let data = {};
 
     data.title = "Register";
-    data.pageName  = "user-register";
+    data.pageName  = "user";
     data.session = appUtil.getSession(req);
 
     res.render("./../pages/user_register.ejs", data);
@@ -39,8 +39,6 @@ router.get("/user/login", (req, res, next) => {
         appUtil.authenticateUser(
             req,
             process.env.ADMIN_ID,
-            process.env.ADMIN_USER,
-            process.env.ADMIN_PASS,
             false
         );
 
@@ -65,6 +63,13 @@ router.get("/user/logout", async (req, res, next) => {
 
     const user = appUtil.getSessionUser(req);
 
+    const wasSuccessful = true;
+
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/user/profile");
+        return;
+    }
+
     await dbUtil.logoutUser(user.id);
 
     req.session.destroy();
@@ -78,17 +83,20 @@ router.get("/user/profile", async (req, res, next) => {
         return;
     }
 
+    const user = appUtil.getSessionUser(req);
+
     let data = {};
 
     data.title = "Profile";
     data.pageName  = "user";
     data.session = appUtil.getSession(req);
-    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.user_id = user.id;
+    data.user = await dbUtil.fetchUser(user.id);
 
     res.render("./../pages/user_profile.ejs", data);
 });
 
-router.get("/user/change_password", (req, res, next) => {
+router.get("/user/change_password", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -99,11 +107,12 @@ router.get("/user/change_password", (req, res, next) => {
     data.title = "Change Password";
     data.pageName  = "user";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
     res.render("./../pages/user_change_password.ejs", data);
 });
 
-router.get("/user/delete", (req, res, next) => {
+router.get("/user/delete", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -114,18 +123,19 @@ router.get("/user/delete", (req, res, next) => {
     data.title = "Delete Account";
     data.pageName  = "user";
     data.session = appUtil.getSession(req);
+    data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
     res.render("./../pages/user_delete.ejs", data);
 });
 
 router.post("/user/register/posted", async (req, res, next) => {
-    const { f_email, f_username, f_password, f_password_again, f_employee, f_privacy_policy } = req.body;
+    const { f_email, f_username, f_password, f_password_again, f_role, f_privacy_policy } = req.body;
 
     if (!f_email ||
         !f_username ||
         !f_password ||
         !f_password_again ||
-        !f_employee ||
+        !f_role ||
         !f_privacy_policy) {
         new errors.BadCredentialsError(next, "/user/register");
         return;
@@ -151,24 +161,21 @@ router.post("/user/register/posted", async (req, res, next) => {
     const id = hashUtil.generateGuid();
 
     if (!id) {
-        new errors.UnkownError(next, "/user/register");
+        new errors.UnknownError(next, "/user/register");
         return;
     }
-
-    console.log(f_employee);
-
-    const wasSuccessful = await dbUtil.createUser(id, f_employee, f_username, f_password, f_email);
+    
+    const isEmployee = Boolean(f_role);
+    const wasSuccessful = await dbUtil.createUser(id, isEmployee, f_username, f_password, f_email);
 
     if (!wasSuccessful) {
-        // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
-        res.redirect("/user/register");
+        new errors.UnknownError(next, "/user/register");
         return;
     }
 
-    // TODO: Enable this for production ready
-    //emailUtil.sendMailAsServer(f_email, "Welcome to Pulse!", "<h1>Hello, World!</h1>\n<p>Welcome To Jurassic Park</p>\n<a href=\"www.google.com\">Click here</a>");
+    // emailUtil.trySendMailAsUser(f_email, "Welcome to Pulse!", "");
 
-    appUtil.authenticateUser(req, id, f_username, f_password, f_employee);
+    appUtil.authenticateUser(req, id, isEmployee);
 
     res.redirect("/user/profile");
 });
@@ -193,7 +200,9 @@ router.post("/user/login/posted", async (req, res, next) => {
         return;
     }
 
-    appUtil.authenticateUser(req, id, f_username, f_password);
+    const isEmployee = await dbUtil.isEmployee(id);
+
+    appUtil.authenticateUser(req, id, isEmployee);
 
     if (f_remember) {
         req.session.cookie.maxAge = conversionUtil.daysToMilliseconds(31);
@@ -207,26 +216,28 @@ router.post("/user/profile/posted", async (req, res) => {
         return;
     }
 
+    const user = appUtil.getSessionUser(req);
+
     const { f_display_name, f_email, f_phone_number, f_image_url } = req.body;
 
-    let isValid = await dbUtil.updateUser(
-        appUtil.getSessionUser(req),
+    const wasSuccessful = await dbUtil.updateUser(
+        user.id,
+        null,
         f_display_name,
         f_email,
         f_phone_number,
         f_image_url
     );
 
-    if (!isValid) {
-        // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
-    } else {
-        // req.flash("error", "The account couldn't be updated for an unknown reason. Please try again in a few seconds.");
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/user/profile");
+        return;
     }
 
     res.redirect("/user/profile");
 });
 
-router.post("/user/change_password/posted", async (req, res) => {
+router.post("/user/change_password/posted", async (req, res, next) => {
     if (!appUtil.hasUserLoggedIn(req, res)) {
         return;
     }
@@ -245,9 +256,14 @@ router.post("/user/change_password/posted", async (req, res) => {
         return;
     }
 
-    await dbUtil.updateUserPassword(user.id, f_new_password);
+    const user = appUtil.getSessionUser(req);
 
-    req.session.user.password = f_new_password; // Update password in the session.
+    const wasSuccessful = await dbUtil.updateUser(user.id, f_new_password);
+
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/user/profile");
+        return;
+    }
 
     res.redirect("/user/profile");
 });
@@ -272,17 +288,16 @@ router.post("/user/delete/posted", async (req, res, next) => {
 
     const user = appUtil.getSessionUser(req);
 
-    const id = await dbUtil.loginUser(user.username, f_password);
+    const id = await dbUtil.loginUserWithId(user.id, f_password);
 
     if (!id) {
         new errors.UserNotFoundError(next, "/user/delete");
         return;
     }
 
-    let wasSuccessful = await dbUtil.deleteUser(user);
+    let wasSuccessful = await dbUtil.deleteUser(user.id);
 
     if (!wasSuccessful) {
-        // req.flash("error", "The account couldn't be created for an unknown reason. Please try again in a few seconds.");
         res.redirect("/user/profile");
         return;
     }

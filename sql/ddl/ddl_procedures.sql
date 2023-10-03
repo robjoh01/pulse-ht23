@@ -23,7 +23,9 @@ DROP PROCEDURE IF EXISTS fetch_assignments;
 DROP PROCEDURE IF EXISTS fetch_assignments_for_employee;
 
 DROP PROCEDURE IF EXISTS fetch_report;
+DROP PROCEDURE IF EXISTS fetch_report_history;
 DROP PROCEDURE IF EXISTS fetch_reports;
+DROP PROCEDURE IF EXISTS fetch_reports_for_employee;
 
 DELIMITER ;;
 
@@ -178,18 +180,27 @@ BEGIN
 END;;
 
 CREATE PROCEDURE fetch_report(
-    arg_project_id CHAR(36),
-    arg_employee_id CHAR(36)
+    arg_id INT
 )
 BEGIN
     SELECT
         *
     FROM v_reports
     WHERE
-        `project_id` = arg_project_id
-        AND `employee_id` = arg_employee_id
+        `id` = arg_id
     ;
 END;;
+
+CREATE PROCEDURE fetch_report_history(
+    IN arg_id INT
+)
+BEGIN
+    SELECT
+        *
+    FROM v_report_history
+    WHERE
+        report_id = arg_id;
+END;
 
 CREATE PROCEDURE fetch_reports()
 BEGIN
@@ -199,7 +210,20 @@ BEGIN
     ;
 END;;
 
+CREATE PROCEDURE fetch_reports_for_employee(
+    arg_employee_id CHAR(36)
+)
+BEGIN
+    SELECT
+        *
+    FROM v_reports
+    WHERE
+        `employee_id` = arg_employee_id
+    ;
+END;;
+
 DELIMITER ;
 
 source ./ddl/procedures/ddl_procedures_user.sql
 source ./ddl/procedures/ddl_procedures_project.sql
+source ./ddl/procedures/ddl_procedures_report.sql

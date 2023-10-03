@@ -12,9 +12,13 @@ DELIMITER ;;
 
 CREATE PROCEDURE create_project(
     IN arg_id CHAR(36),
+    IN arg_project_manager_id CHAR(36),
     IN arg_name VARCHAR(32),
     IN arg_description VARCHAR(96),
-    IN arg_due_date DATE,
+    IN arg_start_date DATE,
+    IN arg_end_date DATE,
+    IN arg_report_frequency ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
+    IN arg_report_deadline DATETIME,
     OUT success BOOLEAN
 )
 BEGIN
@@ -32,8 +36,28 @@ BEGIN
         SET success = FALSE;
     ELSE
         -- Insert the new project with the provided details
-        INSERT INTO `project` (`id`, `name`, `description`, `due_date`)
-        VALUES (arg_id, arg_name, arg_description, arg_due_date);
+        INSERT INTO `project` (
+            `id`,
+            `project_manager_id`,
+            `name`,
+            `description`,
+            `creation_date`,
+            `start_date`,
+            `end_date`,
+            `report_frequency`,
+            `report_deadline`
+        )
+        VALUES (
+            arg_id,
+            arg_project_manager_id,
+            arg_name,
+            arg_description,
+            CURRENT_DATE(),
+            arg_start_date,
+            arg_end_date,
+            arg_report_frequency,
+            arg_report_deadline
+        );
 
         SET success = TRUE;
     END IF;

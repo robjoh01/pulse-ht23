@@ -12,10 +12,12 @@
     padding-top: 2rem;
     padding-bottom: 4rem;
     border-radius: 2rem;
-    border: 2px solid var(--color-border-100);
+    border: 2px solid var(--color-border-200);
     box-shadow: 1rem 1rem 1.5rem 0 hsla(0, 0%, 0%, 0.2);
 
     @include breakpoint(medium) {
+        min-width: 600px;
+        min-height: 600px;
         max-width: 600px;
     }
 
@@ -115,27 +117,60 @@
         font-size: 1.2rem;
         transition: all 150ms ease-in-out;
 
-        .form-text-input {
+        .form-text-input,
+        .form-textarea-input {
             width: 100%;
             -webkit-appearance: none;
             appearance: none;
             background: transparent;
             backdrop-filter: blur(16px);
             padding-right: 3rem;
+            font-size: 1rem;
         }
 
         input,
-        select {
+        select,
+        textarea {
             padding: 0.5rem 1rem;
             outline: 0;
             border: 0;
             border-radius: 1rem;
             color: var(--color-fg-100);
-            outline: 2px solid var(--color-border-100);
+            outline: 2px solid var(--color-border-200);
 
-            &:focus-within {
+            &:not(:read-only):focus-within {
                 outline-color: var(--color-border-300);
                 color: var(--color-fg-300);
+            }
+
+            &:not(input[type='checkbox']):read-only {
+                cursor: not-allowed;
+            }
+
+            &:disabled {
+                color: var(--color-fg-alt-100);
+                outline: 2px solid var(--color-border-100);
+            }
+        }
+
+        textarea {
+            resize: none;
+
+            &::-webkit-scrollbar {
+                width: 1rem;
+            }
+
+            &::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color:  var(--color-bg-alt-200);
+                border-radius: 1rem;
             }
         }
 

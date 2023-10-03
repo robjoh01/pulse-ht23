@@ -72,7 +72,7 @@ FIELDS
 LINES
     TERMINATED BY '\n'
 IGNORE 1 LINES
-    (`id`, `name`, `description`, `creation_date`, `modified_date`, `start_date`, `end_date`)
+    (`project_manager_id`, `id`, `name`, `description`, `creation_date`, `modified_date`, `start_date`, `end_date`, `report_frequency`, `report_deadline`)
 ;
 
 --
@@ -102,5 +102,5 @@ FIELDS
 LINES
     TERMINATED BY '\n'
 IGNORE 1 LINES
-    (`employee_id`, `project_id`, `creation_date`, `text`, `has_been_read`)
+    (`employee_id`, `project_id`, `creation_date`, `text`, `status`)
 ;

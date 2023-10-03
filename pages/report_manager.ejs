@@ -1,0 +1,57 @@
+<%- include("./../partials/header.ejs") %>
+
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><%= title %></h2>
+                </div>
+                <form class="form-body" method="POST" action="/manager/report/posted">
+                    <input name="f_id" required hidden value="<%= report_id %>">
+                    <label class="form-input-label" for="projectName" id="projectNameLabel">
+                        <span>Project's Name</span>
+                        <div class="form-input">
+                            <input class="form-text-input" type="text" aria-invalid="false" id="projectName" readonly value="<%= report.project_name %>">
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="employeeName" id="employeeNameLabel">
+                        <span>Submitted By</span>
+                        <div class="form-input">
+                            <input class="form-text-input" type="text" aria-invalid="false" id="employeeName" readonly value="<%= report.employee_name %>">
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="date" id="dateLabel">
+                        <span>Sent At</span>
+                        <div class="form-input">
+                            <input class="form-text-input" type="datetime" aria-invalid="false" id="date" readonly value="<%= report.creation_date %>">
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="comment" id="commentLabel">
+                        <span>Comment:</span>
+                        <div class="form-input">
+                            <textarea class="form-textarea-input" aria-invalid="false" id="comment" name="f_comment" rows="10" cols="33"></textarea>
+                        </div>
+                    </label>
+                    <label class="form-input-label form-row" for="read" id="readLabel">
+                        <span>Mark as read</span>
+                        <div class="form-input">
+                            <input class="form-check-input" type="checkbox" id="read" name="f_read">
+                        </div>
+                    </label>
+                    <button class="button" type="submit">
+                        <span>Send</span>
+                    </button>
+                    <a class="form-button-link" href="/dashboard">
+                        <button class="button" type="button">
+                            <span>Go Back</span>
+                        </button>
+                    </a>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <%- include("./../partials/footer.ejs") %>
+</div>

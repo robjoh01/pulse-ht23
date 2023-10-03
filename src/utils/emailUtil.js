@@ -27,7 +27,11 @@ const gmailTransporter = nodeMailer.createTransport({
 // TODO: Add try and catch statements?
 
 let emailUtil = {
-    sendMailAsUser: async function(username, email, subject, html, attachments = []) {
+    trySendMailAsUser: async function(username, email, subject, html, attachments = []) {
+        if (!process.env.ENABLE_EMAIL_SUPPORT) {
+            return;
+        }
+
         const res = await gmailTransporter.sendMail({
             from: `${username} <${email}>`,
             to: process.env.GMAIL_USER,
@@ -40,7 +44,11 @@ let emailUtil = {
         console.log(res.accepted);
         console.log(res.rejected);
     },
-    sendMailAsServer: async function(emails, subject, html, attachments = []) {
+    trySendMailAsServer: async function(emails, subject, html, attachments = []) {
+        if (!process.env.ENABLE_EMAIL_SUPPORT) {
+            return;
+        }
+
         const res = await gmailTransporter.sendMail({
             from: `${process.env.GMAIL_NAME} <noreply.${process.env.GMAIL_USER}>`,
             to: emails,
@@ -55,4 +63,9 @@ let emailUtil = {
     },
 };
 
-module.exports = emailUtil;
+const welcomeMessage = 
+`<h1></h1>
+<p>Welcome To Jurassic Park</p>
+<a href="www.google.com">Click here</a>`;
+
+module.exports = { emailUtil, welcomeMessage };

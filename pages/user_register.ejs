@@ -5,52 +5,67 @@
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
             <div class="form-container">
-                <div class="form-root">
-                    <div class="form-header"></div>
-                    <form class="form" method="POST" action="/user/register/posted">
+                <div class="form-header"></div>
+                <form class="form-body" method="POST" action="/user/register/posted">
+                    <label class="form-input-label" for="usernameInput" id="usernameLabel">
+                        <span>Username</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required placeholder="Enter your username" autocorrect="off" autocapitalize="none">
-                            <!-- <label class="form-input-label label" for="username" id="username-label">Username</label> -->
-                            <i class="bi bi-person-fill"></i>
+                            <input class="form-text-input" type="text" aria-invalid="false" id="usernameInput" name="f_username" required placeholder="Enter your username" autocorrect="true" autocomplete="true" autocapitalize="none">
+                            <i class="form-input-icon bi bi-person-fill"></i>
                         </div>
+                    </label>
+                    <label class="form-input-label" for="emailInput" id="emailLabel">
+                        <span>Email</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="email" aria-invalid="false" id="email" name="f_email" required placeholder="Enter your email">
-                            <!-- <label class="form-input-label label" for="email" id="email-label">Email</label>
-                            <i class="bi bi-postcard-fill"></i> -->
+                            <input class="form-text-input form-email-input" type="email" aria-invalid="false" id="emailInput" name="f_email" required placeholder="Enter your email" autocorrect="true" autocomplete="true" autocapitalize="none">
+                            <i class="form-input-icon bi bi-postcard-fill"></i>
                         </div>
+                    </label>
+                    <label class="form-input-label" for="passwordInput" id="passwordLabel">
+                        <span>Password</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="password" aria-invalid="false" id="password" name="f_password" required placeholder="Enter your password">
-                            <!-- <label class="form-input-label label" for="password" id="password-label">Password</label> -->
-                            <button class="form-password-button" type="button" id="passwordToggle" aria-label="Toggle password visibility">
-                                <i id="passwordIcon" class="bi bi-eye-slash-fill"></i>
+                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
+                            <button class="form-input-icon" id="passwordBtn" type="button">
+                                <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
+                                <i id="passwordShown" class="bi bi-eye"></i>
                             </button>
                         </div>
+                    </label>
+                    <label class="form-input-label" for="passwordInputAgain" id="passwordAgainLabel">
+                        <span>Password (again)</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="password" aria-invalid="false" id="password-again" name="f_password_again" required placeholder="Enter your password (again)">
-                            <!-- <label class="form-input-label label" for="password-again" id="password-again-label">Password (again)</label> -->
+                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInputAgain" name="f_password_again" required placeholder="Enter your password (again)">
                         </div>
-                        <div class="form-spacer-x4"></div>
-                        <label class="form-input-label" for="employee">
-                            <input class="form-checkbox-input" id="employee" type="checkbox" name="f_employee" required>
-                            <span>Employee</span>
-                        </label>
-                        <label class="form-input-label" for="privacy">
-                            <input class="form-checkbox-input" id="privacy" type="checkbox" name="f_privacy_policy" required>
+                    </label>
+                    <label class="form-input-label" for="role">
+                        <span>Choose a role:</span>
+                        <div class="form-input">
+                            <select name="f_role" id="role" class="form-select-input">
+                                <option value="true">Employee</option>
+                                <option value="false">Project Manager</option>
+                            </select>
+                        </div>
+                    </label>
+                    <div class="form-input-container flex-end">
+                        <label class="form-input-label form-input-label-none-full form-row" for="privacy">
                             <span>I agree to <a href="#">privacy policy & terms</a></span>
+                            <div class="form-input">
+                                <input class="form-checkbox-input" id="privacy" type="checkbox" name="f_privacy_policy" required>
+                            </div>
                         </label>
-                        <button class="button form-button" type="submit">
-                            <span>Sign up</span>
-                        </button>
-                        <div class="form-link">
-                            <p>Already have an account? <strong><a href="/user/login">Sign in instead</a></strong></p>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <button class="button" type="submit">
+                        <span>Sign up</span>
+                    </button>
+                    <div class="form-link">
+                        <p>Already have an account? <strong><a href="/user/login">Sign in instead</a></strong></p>
+                    </div>
+                </form>
             </div>
         </main>
     </div>
 
-    <script type="text/javascript" src="/js/form.js" defer></script>
+    <script type="text/javascript" src="/js/password.js" defer></script>
 
     <%- include("./../partials/footer.ejs") %>
 </div>

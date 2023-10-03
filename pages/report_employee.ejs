@@ -1,0 +1,38 @@
+<%- include("./../partials/header.ejs") %>
+
+<div class="body-layout">
+    <div class="main-layout">
+        <%- include("./../partials/sidebar.ejs") %>
+        <main class="main">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><%= title %></h2>
+                </div>
+                <form class="form-body" method="POST" action="/employee/report/posted">
+                    <input name="f_id" required hidden value="<%= project_id %>">
+                    <label class="form-input-label" for="text" id="textLabel">
+                        <span>Report text:</span>
+                        <div class="form-input">
+                            <textarea class="form-textarea-input" aria-invalid="false" id="text" name="f_text" rows="10" cols="33" required></textarea>
+                        </div>
+                    </label>
+                    <div class="primary-flex primary-row">
+                        <button class="button" type="submit">
+                            <span>Send</span>
+                        </button>
+                        <button class="button" type="reset">
+                            <span>Cancel</span>
+                        </button>
+                    </div>
+                    <a class="form-button-link" href="/dashboard">
+                        <button class="button" type="button">
+                            <span>Go Back</span>
+                        </button>
+                    </a>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <%- include("./../partials/footer.ejs") %>
+</div>
