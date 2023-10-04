@@ -31,21 +31,29 @@ $ touch .env
 ```
 
 ```
+# Application Config
 PORT=<number>
 SALT_ROUNDS=<number>
-COOKIE_SECRET=<string> (guid)
-ENABLE_EMAIL_SUPPORT=<boolean>
-GMAIL_NAME=<string>
-GMAIL_USER=<string>
-GMAIL_PASS=<string>
+COOKIE_SECRET=<string>
+CONFIG_MODE=<dev|dist>
+
+# Development Config
+FORCE_AS_ADMIN=<boolean>
+ADMIN_ID=<guid>
+
+# Email config
+ENABLE_EMAIL=<boolean>
+EMAIL_HOST=<string>
+EMAIL_PORT=<number>
+EMAIL_DISPLAY_NAME=<string>
+EMAIL_USER=<string>
+EMAIL_PASS=<string>
+
+# URL Links
 PHONE_URL=<string>
 GITHUB_URL=<string>
 GMAIL_URL=<string>
-FORCE_AS_ADMIN=<boolean>
-ADMIN_ID=<string> (guid)
-ADMIN_USER=<string>
-ADMIN_PASS=<string>
-CONFIG_MODE=<string> (dev|dist)
+
 ```
 
 Also create `pulse.json` file (at `config/db/pulse.json`):
