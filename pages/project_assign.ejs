@@ -6,11 +6,13 @@
         <main class="main">
             <div class="form-container drop-container">
                 <div class="form-header drop-header">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <h2>Assign team members 💾</h2>
+                    <q>Streamline your team management process by effortlessly uploading a .CSV file.</q>
+                    <p>Assign team members to projects with tailored reporting frequencies or handpick specific deadline dates for seamless project coordination and progress tracking.</p>
                     <a href="/media/sample.csv" download>Download .csv sample file</a>
                 </div>
                 <form id="dropForm" class="form-body drop-body" method="POST" action="/project/assign/upload">
-                    <div class="drop-body-container">
+                    <div id="dropArea" class="drop-body-container">
                         <label class="drop-label" for="dropInput" id="dropArea">
                             <i class='drop-icon bx bxs-file'></i>
                             <p id="dropText" class="drop-text"><b>Choose a file</b> or drag it here</p>
@@ -18,24 +20,24 @@
                             <input type="file" accept=".csv" id="dropInput" hidden>
                         </label>
                     </div>
+                    <label class="form-input-label" for="projectInput">
+                        <span>Choose a project:</span>
+                        <div class="form-input">
+                            <select id="projectInput" required class="form-select-input">
+                                <!-- <optgroup label="Theropods">
+                                    <option value="">Pulse</option>
+                                </optgroup> -->
+                                <% projects.forEach(function(x) { %>
+                                <option value="<%= x.project_id %>"><%= x.name %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </label>
                     <div class="drop-body-details-container">
-                        <label for="projectInput">
-                            <span>Choose a project:</span>
-                            <div class="form-input">
-                                <select id="projectInput" required class="form-select-input">
-                                    <!-- <optgroup label="Theropods">
-                                        <option value="">Pulse</option>
-                                    </optgroup> -->
-                                    <% projects.forEach(function(x) { %>
-                                    <option value="<%= x.project_id %>"><%= x.name %></option>
-                                    <% }); %>
-                                </select>
-                            </div>
-                        </label>
-                        <label class="form-input-label" for="reportFreq">
+                        <label class="form-input-label" for="reportFreqInput">
                             <span>Choose a report frequency:</span>
                             <div class="form-input">
-                                <select name="f_report_freq" id="reportFreq" class="form-select-input">
+                                <select name="f_report_freq" id="reportFreqInput" class="form-select-input">
                                     <option value="" selected>None</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
@@ -44,10 +46,10 @@
                                 </select>
                             </div>
                         </label>
-                        <label for="reportDate" class="form-input-label">
-                            <span>Choose a report date (optional):</span>
+                        <label class="form-input-label" for="reportDeadlineInput">
+                            <span>Choose a report deadline date:</span>
                             <div class="form-input">
-                                <input id="reportDate" type="date" class="form-date-input">
+                                <input id="reportDeadlineInput" type="datetime-local" class="form-date-input">
                             </div>
                         </label>
                     </div>
@@ -65,6 +67,7 @@
     </div>
 
     <script type="text/javascript" src="/js/assign.js" defer></script>
+    <script type="text/javascript" src="/js/project.js" defer></script>
 
     <%- include("./../partials/footer.ejs") %>
 </div>

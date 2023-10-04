@@ -1,12 +1,33 @@
 "use strict";
 
-function showSnackBar(message, time = 3000) {
+const messageQueue = [];
+let isSnackbarVisible = false;
+
+function showSnackBar(message) {
+    messageQueue.push(message);
+
+    if (!isSnackbarVisible) {
+        displayNextMessage();
+    }
+}
+
+function displayNextMessage() {
     const sb = document.getElementById("snackbar");
+    if (messageQueue.length > 0) {
+        const message = messageQueue.shift();
+        sb.textContent = message;
+        sb.className = "show";
 
-    sb.textContent = message;
+        isSnackbarVisible = true;
 
-    //this is where the class name will be added & removed to activate the css
-    sb.className = "show";
+        setTimeout(() => {
+            sb.className = sb.className.replace("show", "");
+            isSnackbarVisible = false;
 
-    setTimeout(() => { sb.className = sb.className.replace("show", ""); }, time);
+            // Display the next message after a short delay
+            setTimeout(() => {
+                displayNextMessage();
+            }, 200);
+        }, 3000);
+    }
 }

@@ -43,3 +43,4 @@ DELIMITER ;
 
 source ./ddl/functions/ddl_functions_user.sql
 source ./ddl/functions/ddl_functions_project.sql
+source ./ddl/functions/ddl_functions_report.sql

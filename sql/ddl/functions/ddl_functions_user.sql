@@ -2,12 +2,12 @@
 -- Create functions for user related tables
 --
 
-DROP FUNCTION IF EXISTS does_user_exist;
+DROP FUNCTION IF EXISTS does_user_exists;
 DROP FUNCTION IF EXISTS is_user_employee;
 
 DELIMITER ;;
 
-CREATE FUNCTION does_user_exist(
+CREATE FUNCTION does_user_exists(
     arg_username VARCHAR(16),
     arg_id CHAR(36)
 )

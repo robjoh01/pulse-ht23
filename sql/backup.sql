@@ -123,7 +123,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES ('4e658238-d50c-4812-84f2-be58e8be308a','2e889992-6993-42c2-9366-cf9249a1e61b','Quirky Quarters','Lorem Ipsum','2023-10-04','0000-00-00','2030-05-15','2060-01-15','monthly',NULL),('6e885bbc-6d26-411e-b978-2962acae4bdd','2e889992-6993-42c2-9366-cf9249a1e61b','Sharp Suits','Lorem Ipsum','2023-10-04','0000-00-00','2022-10-28','2023-10-28','daily',NULL),('ba28b243-6889-4c54-a138-ff72333186a2','2e889992-6993-42c2-9366-cf9249a1e61b','Modern Maven','Lorem Ipsum','2023-10-04','0000-00-00','2023-10-29','2023-12-31','','2023-12-31 12:00:00');
+INSERT INTO `project` VALUES ('4e658238-d50c-4812-84f2-be58e8be308a','2e889992-6993-42c2-9366-cf9249a1e61b','Quirky Quarters','Lorem Ipsum','2023-10-05','0000-00-00','2030-05-15','2060-01-15','monthly',NULL),('6e885bbc-6d26-411e-b978-2962acae4bdd','2e889992-6993-42c2-9366-cf9249a1e61b','Sharp Suits','Lorem Ipsum','2023-10-05','0000-00-00','2022-10-28','2023-10-28','daily',NULL),('ba28b243-6889-4c54-a138-ff72333186a2','2e889992-6993-42c2-9366-cf9249a1e61b','Modern Maven','Lorem Ipsum','2023-10-05','0000-00-00','2023-10-29','2023-12-31','','2023-12-31 12:00:00');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -239,12 +239,12 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`dbadm`@`%`*/ /*!50003 TRIGGER archive_project_before_delete
-BEFORE DELETE ON project_archive
+/*!50003 CREATE*/ /*!50017 DEFINER=`dbadm`@`%`*/ /*!50003 TRIGGER project_archive_before_delete
+BEFORE DELETE ON `project_archive`
 FOR EACH ROW
 BEGIN
     
-    DELETE FROM report WHERE `project_id` = OLD.id;
+    DELETE FROM `report` WHERE `project_id` = OLD.id;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -357,6 +357,27 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`dbadm`@`%`*/ /*!50003 TRIGGER report_before_delete
+BEFORE DELETE ON `report`
+FOR EACH ROW
+BEGIN
+    
+    DELETE FROM `report_comment` WHERE `report_id` = OLD.id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `report_comment`
@@ -417,7 +438,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-04',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','john','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-04',NULL,NULL);
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-05',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','john','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-05',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -763,4 +784,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-04  1:26:50
+-- Dump completed on 2023-10-05  1:19:14

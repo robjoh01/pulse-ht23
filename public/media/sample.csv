@@ -1,3 +1,4 @@
-employee_id,username,display_name,email_address, phone_number
-"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef"
-"a2759f08-c2b4-45f2-add4-0f4a3821a064",mrrobin,"Robin Johannesson", "robinjohannesson@example.com","555-XXXX"
+employee_id,username,display_name,email_address,phone_number,image_url
+"2e889992-6993-42c2-9366-cf9249a1e61b"
+"a2759f08-c2b4-45f2-add4-0f4a3821a064",jane46,"Jane Doe","janedoe@example.com","555-XXXX",""
+"1c4aab17-f4df-41d0-8935-d0385d8d3096",john54,"John Doe","johndoe@example.com","555-XXXX",""

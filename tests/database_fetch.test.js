@@ -53,6 +53,24 @@ test("Fetch projects", async () => {
     expect(res.length).not.toBeLessThan(0);
 });
 
+test("Fetch projects with filter", async () => {
+    const res = await dbUtil.fetchProjectsWithFilter("Quarters");
+
+    expect(res.length).not.toBeLessThan(0);
+});
+
+test("Fetch archive project", async () => {
+    const res = await dbUtil.fetchArchiveProject();
+
+    expect(res).not.toEqual(false);
+});
+
+test("Fetch archive projects", async () => {
+    const res = await dbUtil.fetchArchiveProjects();
+
+    expect(res.length).not.toBeLessThan(0);
+});
+
 test("Fetch assignment", async () => {
     const res = await dbUtil.fetchAssignment("4e658238-d50c-4812-84f2-be58e8be308a", "c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef");
 
@@ -65,8 +83,14 @@ test("Fetch assignments", async () => {
     expect(res.length).not.toBeLessThan(0);
 });
 
+test("Fetch assignments for an employee", async () => {
+    const res = await dbUtil.fetchAssignmentsForEmployee("c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef");
+
+    expect(res.length).not.toBeLessThan(0);
+});
+
 test("Fetch report", async () => {
-    const res = await dbUtil.fetchReport("8f973318-dfb8-4ee9-9cc2-ef01ca0a26c9", "c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef");
+    const res = await dbUtil.fetchReport("1");
 
     expect(res).not.toEqual(false);
 });
@@ -77,3 +101,14 @@ test("Fetch reports", async () => {
     expect(res.length).not.toBeLessThan(0);
 });
 
+test("Fetch report history", async () => {
+    const res = await dbUtil.fetchReportHistory("1");
+
+    expect(res.length).not.toBeLessThan(0);
+});
+
+test("Fetch reports for an employee", async () => {
+    const res = await dbUtil.fetchReportsForEmployee("c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef");
+
+    expect(res.length).not.toBeLessThan(0);
+});

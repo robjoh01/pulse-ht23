@@ -7,7 +7,7 @@
     --color-fg-alt-200-light: hsl(0, 0%, 83%);
     --color-fg-alt-300-light: hsl(0, 0%, 97%);
 
-    --color-fg-100-dark: hsl(0, 0%, 63%);
+    --color-fg-100-dark: hsl(0, 0%, 75%);
     --color-fg-200-dark: hsl(0, 0%, 83%);
     --color-fg-300-dark: hsl(0, 0%, 93%);
 
@@ -37,17 +37,17 @@
     --color-sidebar-border-light: hsla(0, 0%, 0%, 0.2);
     --color-sidebar-border-dark: hsla(0, 0%, 63%, 0.2);
 
-    --color-link-100-light: hsl(210, 100%, 63%);
-    --color-link-200-light: hsl(210, 100%, 46%);
-    --color-link-300-light: hsl(210, 100%, 26%);
+    --color-link-100-light: hsl(280, 75%, 19%);
+    --color-link-200-light: hsl(280, 75%, 13%);
+    --color-link-300-light: hsl(280, 75%, 5%);
 
-    --color-link-100-dark: hsl(210, 100%, 63%);
-    --color-link-200-dark: hsl(210, 100%, 73%);
+    --color-link-100-dark: hsl(210, 100%, 75%);
+    --color-link-200-dark: hsl(210, 100%, 63%);
     --color-link-300-dark: hsl(210, 100%, 93%);
 
-    --color-border-100-light: hsla(0, 0%, 63%, 0.2);
-    --color-border-200-light: hsla(0, 0%, 26%, 0.4);
-    --color-border-300-light: hsla(0, 0%, 13%, 0.6);
+    --color-border-100-light: hsla(200, 10%, 63%, 0.2);
+    --color-border-200-light: hsla(200, 10%, 26%, 0.6);
+    --color-border-300-light: hsla(200, 10%, 13%, 0.8);
 
     --color-border-100-dark: hsla(0, 0%, 63%, 0.2);
     --color-border-200-dark: hsla(0, 0%, 83%, 0.4);
@@ -62,10 +62,10 @@
     --color-header-border-dark: hsl(0, 0%, 11%);
     --color-header-border-light: hsl(0, 0%, 63%);
 
-    --color-footer-bg-light: hsla(300, 20%, 63%, 0.2);
-    --color-footer-bg-dark: hsla(260, 20%, 19%, 0.2);
+    --color-footer-bg-light: hsla(300, 5%, 83%, 1);
+    --color-footer-bg-dark: hsla(260, 20%, 3%, 1);
 
-    --color-footer-border-light: hsl(0, 0%, 63%);
+    --color-footer-border-light: hsl(0, 0%, 43%);
     --color-footer-border-dark: hsl(0, 0%, 26%);
 
     --color-form-button-bg-light: hsl(0, 0%, 13%);
@@ -80,13 +80,21 @@
     --color-form-input-border-dark: hsla(0, 0%, 63%, 0.2);
     --color-form-input-focus-border-dark: hsla(0, 0%, 93%, 0.5);
 
-    --color-table-header-light: hsl(0, 0%, 73%);
-    --color-table-row-light: hsl(0, 0%, 83%);
-    --color-table-row-odd-light: hsl(0, 0%, 88%);
+    --color-table-header-light: hsl(160, 23%, 93%);
+    --color-table-row-light: hsl(300, 50%, 83%);
+    --color-table-row-odd-light: hsl(300, 25%, 83%);
 
-    --color-table-header-dark: hsl(0, 0%, 13%);
-    --color-table-row-dark: hsl(0, 0%, 26%);
-    --color-table-row-odd-dark: hsl(0, 0%, 21%);
+    --color-table-header-dark: hsl(0, 0%, 19%);
+    --color-table-row-dark: hsl(0, 0%, 13%);
+    --color-table-row-odd-dark: hsl(0, 0%, 9%);
+
+    --color-drop-bg-light: hsla(0, 0%, 63%, 0.25);
+    --color-drop-outline-100-light: hsl(245, 30%, 26%);
+    --color-drop-outline-200-light: hsl(245, 30%, 13%);
+
+    --color-drop-bg-dark: hsla(0, 0%, 0%, 0.2);
+    --color-drop-outline-100-dark: hsl(245, 30%, 83%);
+    --color-drop-outline-200-dark: hsl(245, 30%, 93%);
 
     --color-green-light: hsl(120, 63%, 63%);
     --color-green-dark: hsl(120, 45%, 33%);
@@ -97,8 +105,8 @@
     --color-red-light: hsl(0, 63%, 53%);
     --color-red-dark: hsl(0, 45%, 55%);
 
-    --color-blue-light: hsl(205, 63%, 53%);
-    --color-blue-dark: hsl(205, 63%, 53%);
+    --color-blue-light: hsl(205, 63%, 63%);
+    --color-blue-dark: hsl(205, 63%, 63%);
 }
 
 @mixin light-theme-colors {
@@ -147,6 +155,10 @@
     --color-table-header: var(--color-table-header-light);
     --color-table-row: var(--color-table-row-light);
     --color-table-row-odd: var(--color-table-row-odd-light);
+
+    --color-drop-bg: var(--color-drop-bg-light);
+    --color-drop-outline-100: var(--color-drop-outline-100-light);
+    --color-drop-outline-200: var(--color-drop-outline-200-light);
 
     --color-green: var(--color-green-light);
     --color-orange: var(--color-orange-light);
@@ -200,6 +212,10 @@
     --color-table-header: var(--color-table-header-dark);
     --color-table-row: var(--color-table-row-dark);
     --color-table-row-odd: var(--color-table-row-odd-dark);
+
+    --color-drop-bg: var(--color-drop-bg-dark);
+    --color-drop-outline-100: var(--color-drop-outline-100-dark);
+    --color-drop-outline-200: var(--color-drop-outline-200-dark);
 
     --color-green: var(--color-green-dark);
     --color-orange: var(--color-orange-dark);

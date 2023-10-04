@@ -6,11 +6,8 @@ const express = require("express");
 // Import libraries
 const dbUtil = require("./../src/utils/dbUtil.js");
 const appUtil = require("./../src/utils/appUtil.js");
-const conversionUtil = require("./../src/utils/conversionUtil.js");
-const emailUtil = require("./../src/utils/emailUtil.js");
-
-// Import errors
 const errors = require("./../src/errors/errors.js");
+const emails = require("./../src/emails/emails.js");
 
 // Make instances
 const router = express.Router();

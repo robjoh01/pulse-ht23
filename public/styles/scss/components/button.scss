@@ -30,9 +30,9 @@ button {
     padding: 1rem 2rem;
     background: transparent;
     backdrop-filter: blur(16px);
-    border: 2px solid var(--color-border-100);
+    border: 2px solid var(--color-border-200);
     border-radius: 2.5rem;
-    box-shadow: 0 0 1rem hsla(0, 0%, 0%, 0.1);
+    box-shadow: 0.2rem 0.2rem 16px 4px hsla(0, 0%, 0%, 0.2);
     transition: all 250ms ease-in-out;
 
     span {

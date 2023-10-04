@@ -47,7 +47,10 @@
 .main {
     position: relative;
     padding: 2rem;
-    margin: 0 auto;
+    // margin: 0 auto;
+    // left: -3rem;
+    display: grid;
+    place-content: center;
 
     &.extend {
         margin: unset;

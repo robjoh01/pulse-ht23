@@ -1,11 +1,11 @@
 "use strict";
 
-const reportFreq = document.getElementById("reportFreq");
-const reportDeadlineInput = document.getElementById("reportDeadlineInput");
+var reportFreqInput = document.getElementById("reportFreqInput");
+var reportDeadlineInput = document.getElementById("reportDeadlineInput");
 
 // Function to handle the change in report frequency selection
 function handleReportFrequencyChange() {
-    const selectedValue = reportFreq.value;
+    const selectedValue = reportFreqInput.value;
 
     // Check if the selected report frequency is not "None"
     if (selectedValue !== "") {
@@ -19,7 +19,7 @@ function handleReportFrequencyChange() {
 }
 
 // Add an event listener to reportFreq to handle changes in report frequency selection
-reportFreq.addEventListener("change", handleReportFrequencyChange);
+reportFreqInput.addEventListener("change", handleReportFrequencyChange);
 
 // Initially call the function to set the initial state based on the default value
 handleReportFrequencyChange();

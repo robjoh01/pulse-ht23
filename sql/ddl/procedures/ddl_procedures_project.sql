@@ -67,7 +67,10 @@ CREATE PROCEDURE update_project (
     IN arg_id CHAR(36),
     IN arg_name VARCHAR(32),
     IN arg_description VARCHAR(96),
-    IN arg_due_date DATE,
+    IN arg_start_date DATE,
+    IN arg_end_date DATE,
+    IN arg_report_frequency ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
+    IN arg_report_deadline DATETIME,
     OUT success BOOLEAN
 )
 BEGIN
@@ -77,7 +80,11 @@ BEGIN
     SET
         `name` = arg_name,
         `description` = arg_description,
-        `due_date` = arg_due_date
+        `modified_date` = CURRENT_DATE(),
+        `start_date` = arg_start_date,
+        `end_date` = arg_end_date,
+        `report_frequency` = arg_report_frequency,
+        `report_deadline` = arg_report_deadline
     WHERE
         `id` = arg_id;
 
@@ -120,10 +127,8 @@ BEGIN
 END;;
 
 CREATE PROCEDURE assign_to_project(
-    IN arg_project_id CHAR(36),
     IN arg_employee_id CHAR(36),
-    IN arg_report_frequency ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
-    IN arg_report_custom_submission_date DATE,
+    IN arg_project_id CHAR(36),
     OUT success BOOLEAN
 )
 BEGIN
@@ -134,14 +139,14 @@ BEGIN
     WHERE
         project_id = arg_project_id AND employee_id = arg_employee_id
     ;
-    
+
     IF assignment_exists > 0 THEN
         -- Assignment already exists, set success to false
         SET success = FALSE;
     ELSE
         -- Assignment doesn't exist, create a new assignment
-        INSERT INTO assignment (`employee_id`, `project_id`, `creation_date`, `report_frequency`, `report_custom_submission_date`)
-        VALUES (arg_employee_id, arg_project_id, CURRENT_DATE(), arg_report_frequency, arg_report_custom_submission_date)
+        INSERT INTO assignment (`employee_id`, `project_id`, `creation_date`)
+            VALUES (arg_employee_id, arg_project_id, CURRENT_DATE())
         ;
         
         -- Set success to true

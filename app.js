@@ -3,6 +3,7 @@
 // $ npx expose-wsl@latest # Expose server to Windows
 
 // Import dependencies
+const ejs = require("ejs");
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");

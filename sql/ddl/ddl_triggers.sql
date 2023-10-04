@@ -9,8 +9,9 @@ DROP TRIGGER IF EXISTS project_before_update;
 
 DROP TRIGGER IF EXISTS user_before_delete;
 DROP TRIGGER IF EXISTS project_before_delete;
-DROP TRIGGER IF EXISTS archive_project_before_delete;
+DROP TRIGGER IF EXISTS project_archive_before_delete;
 
+DROP TRIGGER IF EXISTS report_before_delete;
 DROP TRIGGER IF EXISTS report_after_insert;
 
 DELIMITER ;;
@@ -73,12 +74,20 @@ BEGIN
     SET FOREIGN_KEY_CHECKS = 1;
 END;;
 
-CREATE TRIGGER archive_project_before_delete
-BEFORE DELETE ON project_archive
+CREATE TRIGGER project_archive_before_delete
+BEFORE DELETE ON `project_archive`
 FOR EACH ROW
 BEGIN
     -- Ensure that when a project_archive is deleted, their assignments are appropriately handled
-    DELETE FROM report WHERE `project_id` = OLD.id;
+    DELETE FROM `report` WHERE `project_id` = OLD.id;
+END;;
+
+CREATE TRIGGER report_before_delete
+BEFORE DELETE ON `report`
+FOR EACH ROW
+BEGIN
+    -- Delete related comments from report_comment
+    DELETE FROM `report_comment` WHERE `report_id` = OLD.id;
 END;;
 
 CREATE TRIGGER report_after_insert

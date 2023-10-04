@@ -19,7 +19,7 @@ let dbUtil = {
     doesProjectExists: async function(name = null, id = null) {
         const db = await this.connectDatabase();
 
-        let sql = `SELECT does_project_exist(?, ?);`;
+        let sql = `SELECT does_project_exists(?, ?);`;
         let res = await db.query(sql, [name, id]);
 
         db.end();
@@ -36,15 +36,11 @@ let dbUtil = {
 
         return Boolean(res[1][0].success);
     },
-    updateProject: async function(id, name = null, description = null, dueDate = null) {
+    updateProject: async function(id, name = null, description = null, startDate = null, endDate = null, reportFrequency = null, reportDeadline = null) {
         const db = await this.connectDatabase();
-        const query = `CALL update_project(?, ?, ?, ?, @success); SELECT @success as success;`;
+        const query = `CALL update_project(?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;`;
 
-        if (!dueDate) {
-            dueDate = null;
-        }
-
-        let res = await db.query(query, [id, name, description, dueDate]);
+        let res = await db.query(query, [id, name, description, startDate, endDate, reportFrequency, reportDeadline]);
 
         db.end();
 
@@ -70,11 +66,23 @@ let dbUtil = {
 
         return Boolean(res[1][0].success);
     },
-    assignToProject: async function(projectId, employeeId, reportFreq, reportDate) {
-        const db = await this.connectDatabase();
-        const query = `CALL assign_to_project(?, ?, ?, ?, @success); SELECT @success as success;`;
+    assignToProject: async function(employeeId, projectId) {
+        const doesUserExists = await this.doesUserExists(null, employeeId);
 
-        let res = await db.query(query, [projectId, employeeId, reportFreq, reportDate]);
+        if (!doesUserExists) {
+            return false;
+        }
+
+        const doesProjectExists = await this.doesProjectExists(null, projectId);
+
+        if (!doesProjectExists) {
+            return false;
+        }
+
+        const db = await this.connectDatabase();
+        const query = `CALL assign_to_project(?, ?, @success); SELECT @success as success;`;
+
+        let res = await db.query(query, [employeeId, projectId]);
 
         db.end();
 
@@ -82,11 +90,11 @@ let dbUtil = {
     },
 
     isEmployee: async function(id) {
-        const db = await this.connectDatabase();
-
         if (!id) {
             return false;
         }
+
+        const db = await this.connectDatabase();
 
         let sql = `SELECT is_user_employee(?);`;
         let res = await db.query(sql, [id]);
@@ -100,13 +108,13 @@ let dbUtil = {
     * @return {Boolean} A value either {true} or {false}.
     */
     doesUserExists: async function(username = null, id = null) {
-        const db = await this.connectDatabase();
-
         if (!username && !id) {
             return false;
         }
 
-        let sql = `SELECT does_user_exist(?, ?);`;
+        const db = await this.connectDatabase();
+
+        let sql = `SELECT does_user_exists(?, ?);`;
         let res = await db.query(sql, [username, id]);
 
         db.end();
@@ -114,6 +122,16 @@ let dbUtil = {
         return Boolean(res[0][Object.keys(res[0])[0]]);
     },
     doesUserHavePermission: async function(id, password) {
+        if (!id || !password) {
+            return false;
+        }
+
+        const doesUserExist = await this.doesUserExists(null, id); // Check if user is exists
+
+        if (!doesUserExist) {
+            return false;
+        }
+
         const db = await this.connectDatabase();
 
         let sql = `SELECT get_user_password(?);`;
@@ -122,10 +140,6 @@ let dbUtil = {
         db.end();
 
         const hashedPassword = res[0][Object.keys(res[0])[0]];
-
-        if (!hashedPassword) {
-            return false;
-        }
 
         return await hashUtil.compare(password, hashedPassword);
     },
@@ -181,53 +195,12 @@ let dbUtil = {
 
         const id = res[0][Object.keys(res[0])[0]]; // Get user's id
 
-        if (!id) {
-            return false;
-        }
-
         sql = `SELECT get_user_password(?);`;
         res = await db.query(sql, [id]);
 
         db.end();
 
         const hashedPassword = res[0][Object.keys(res[0])[0]]; // Get user's password
-
-        if (!hashedPassword) {
-            return false;
-        }
-
-        const isValid = await hashUtil.compare(password, hashedPassword); // Compare the hash and raw password
-
-        if (!isValid) {
-            return false;
-        }
-
-        return id;
-    },
-    loginUserWithId: async function(id, password) {
-        const doesUserExist = await this.doesUserExists(null, id); // Check if user is exists
-
-        if (!doesUserExist) {
-            return false;
-        }
-
-        if (!id) {
-            return false;
-        }
-
-        const db = await this.connectDatabase();
-
-        let sql = `SELECT get_user_password(?);`;
-        let res = await db.query(sql, [id]);
-
-        db.end();
-
-        const hashedPassword = res[0][Object.keys(res[0])[0]]; // Get user's password
-
-        if (!hashedPassword) {
-            return false;
-        }
-
         const isValid = await hashUtil.compare(password, hashedPassword); // Compare the hash and raw password
 
         if (!isValid) {
@@ -243,20 +216,63 @@ let dbUtil = {
         await db.query(sql, [id]);
 
         db.end();
+
+        return true;
     },
 
-    createReport: async function(employeeId, projectId, text) {
+    doesReportExists: async function(id) {
+        if (!id) {
+            return false;
+        }
+
         const db = await this.connectDatabase();
 
-        const sql = 'CALL create_report(?, ?, ?, @success); SELECT @success as success;';
+        let sql = `SELECT does_report_exists(?);`;
+        let res = await db.query(sql, [id]);
+
+        db.end();
+
+        return Boolean(res[0][Object.keys(res[0])[0]]);
+    },
+    createReport: async function(employeeId, projectId, text) {
+        const doesUserExists = await this.doesUserExists(null, employeeId);
+
+        if (!doesUserExists) {
+            return false;
+        }
+
+        const db = await this.connectDatabase();
+
+        const sql = 'CALL create_report(?, ?, ?, @success, @report_id); SELECT @success as success, @report_id as report_id;';
 
         let res = await db.query(sql, [employeeId, projectId, text]);
 
         db.end();
 
-        return Boolean(res[1][0].success);
+        const success = Boolean(res[1][0].success);
+        const reportId = success ? parseInt(res[1][0].report_id) : null;
+
+        return { success, reportId };
     },
     reviewReport: async function(managerId, reportId, comment, markedAsRead) {
+        const doesUserExists = await this.doesUserExists(null, managerId);
+
+        if (!doesUserExists) {
+            return false;
+        }
+
+        const isEmployee = await this.isEmployee(managerId);
+
+        if (isEmployee) {
+            return false;
+        }
+
+        const doesReportExists = await this.doesReportExists(reportId);
+
+        if (!doesReportExists) {
+            return false;
+        }
+
         const db = await this.connectDatabase();
 
         const sql = 'CALL review_report(?, ?, ?, ?, @success); SELECT @success as success;';

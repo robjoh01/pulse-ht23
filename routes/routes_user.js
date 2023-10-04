@@ -9,12 +9,10 @@ const upload = multer({ dest: "uploads/" });
 const dbUtil = require("../src/utils/dbUtil.js");
 const appUtil = require("../src/utils/appUtil.js");
 const conversionUtil = require("../src/utils/conversionUtil.js");
-const { emailUtil, welcomeMessage } = require("../src/utils/emailUtil.js");
 const profanityUtil = require("./../src/utils/profanityUtil.js");
 const hashUtil = require('../src/utils/hashUtil.js');
-
-// Import errors
 const errors = require("../src/errors/errors.js");
+const emails = require("./../src/emails/emails.js");
 
 // Make instances
 const router = express.Router();
@@ -108,8 +106,29 @@ router.get("/user/change_password", async (req, res, next) => {
     data.pageName  = "user";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
+    data.password = req.session.context;
 
     res.render("./../pages/user_change_password.ejs", data);
+});
+
+router.get("/user/change_password/:id/:password", async (req, res, next) => {
+    const id = req.params.id;
+    const password = req.params.password;
+
+    const isValid = await dbUtil.doesUserHavePermission(id, password);
+
+    if (!isValid) {
+        new errors.UserNotLoggedInError(next, "/user/login");
+        return;
+    }
+
+    const isEmployee = await dbUtil.isEmployee(id);
+
+    appUtil.authenticateUser(req, id, isEmployee);
+
+    req.session.context = password;
+
+    res.redirect("/user/change_password");
 });
 
 router.get("/user/delete", async (req, res, next) => {
@@ -173,9 +192,10 @@ router.post("/user/register/posted", async (req, res, next) => {
         return;
     }
 
-    // emailUtil.trySendMailAsUser(f_email, "Welcome to Pulse!", "");
-
     appUtil.authenticateUser(req, id, isEmployee);
+
+    const mail = new emails.WelcomeEmail();
+    mail.send(f_email);
 
     res.redirect("/user/profile");
 });
@@ -265,6 +285,10 @@ router.post("/user/change_password/posted", async (req, res, next) => {
         return;
     }
 
+    const userData = await dbUtil.fetchUser(user.id);
+    const mail = new emails.PasswordEmail(req, user.id, f_new_password, userData.display_name);
+    mail.send(userData.email_address);
+
     res.redirect("/user/profile");
 });
 
@@ -288,7 +312,7 @@ router.post("/user/delete/posted", async (req, res, next) => {
 
     const user = appUtil.getSessionUser(req);
 
-    const id = await dbUtil.loginUserWithId(user.id, f_password);
+    const id = await dbUtil.doesUserHavePermission(user.id, f_password);
 
     if (!id) {
         new errors.UserNotFoundError(next, "/user/delete");

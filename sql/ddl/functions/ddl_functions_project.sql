@@ -2,11 +2,11 @@
 -- Create functions for project related tables
 --
 
-DROP FUNCTION IF EXISTS does_project_exist;
+DROP FUNCTION IF EXISTS does_project_exists;
 
 DELIMITER ;;
 
-CREATE FUNCTION does_project_exist(
+CREATE FUNCTION does_project_exists(
     arg_name VARCHAR(32),
     arg_id CHAR(36)
 )

@@ -15,7 +15,9 @@
                                     <input id="searchbarInput" class="projects-searchbar-input form-search-input" type="search" placeholder="Search for a specific project (id, name or dates)" name="q" required autocomplete="off" autocapitalize="off">
                                 </div>
                             </label>
-                            <button class="projects-searchbar-button button" type="submit">Search</button>
+                            <button class="projects-searchbar-button button" type="submit">
+                                <span>Search</span>
+                            </button>
                             <a class="form-button-link" href="?">
                                 <button class="projects-searchbar-button button" type="button">
                                     <span>Clear query</span>
@@ -28,10 +30,10 @@
                         <thead class="primary-thead">
                             <tr class="primary-tr">
                                 <th class="primary-th">
-                                    <span></span>
-                                </th>
-                                <th class="primary-th">
-                                    <span>Name</span>
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bx-text'></i>
+                                        <span>Name</span>
+                                    </div>
                                 </th>
                                 <th class="primary-th">
                                     <div class="primary-flex primary-row">
@@ -51,15 +53,15 @@
                             <% projects.forEach(function(x) { %>
                             <tr class="primary-tr">
                                 <!-- <td class="primary-td color-tab <%= x.severity %>"></td> -->
-                                <td class="primary-td" data-cell="link">
-                                    <button class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
-                                        <i class="bi bi-link-45deg"></i>
-                                    </button>
-                                </td>
                                 <td class="primary-td" data-cell="name">
-                                    <a href="/project/update/<%= x.project_id %>">
-                                        <span><%= x.name %></span>
-                                    </a>
+                                    <div class="primary-flex primary-row">
+                                        <button aria-label="Copy project as a shareable link" class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
+                                            <i class="bi bi-link-45deg"></i>
+                                        </button>
+                                        <a href="/project/update/<%= x.project_id %>">
+                                            <span><%= x.name %></span>
+                                        </a>
+                                    </div>
                                 </td>
                                 <td class="primary-td" data-cell="start date">
                                     <span><%= x.start_date %></span>

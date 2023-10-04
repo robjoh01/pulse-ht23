@@ -7,16 +7,33 @@
 }
 
 .drop-header {
+    display: flex;
+    flex-flow: column nowrap;
+    // gap: 0.5rem;
 
+    h2 {
+        margin-bottom: 0;
+    }
+
+    q {
+        margin-bottom: 1rem;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    a {
+        margin-bottom: 1rem;
+    }
 }
 
 .drop-body {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
     .drop-body-details-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        align-items: end;
+        gap: 1.5rem;
     }
 
     .drop-body-container {
@@ -25,14 +42,14 @@
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
-        outline: 2px dashed hsl(245, 30%, 83%);
+        outline: 2px dashed var(--color-drop-outline-100);
         outline-offset: -0.5rem;
         border-radius: 1rem;
         transition: all 250ms cubic-bezier(1.000, 0.000, 0.000, 1.000); /* easeInOutExpo */
-        background: hsla(0, 0%, 0%, 0.2);
+        background: var(--color-drop-bg);
 
         &:hover {
-            outline-color: hsl(245, 30%, 93%);
+            outline-color: var(--color-drop-outline-200);
         }
 
         &:hover {

@@ -8,63 +8,90 @@ const csv = require("csvtojson");
 // Import libraries
 const dbUtil = require("./../src/utils/dbUtil.js");
 const appUtil = require("./../src/utils/appUtil.js");
-
-// Import errors
 const errors = require("./../src/errors/errors.js");
+const emails = require("./../src/emails/emails.js");
 
 // Make instances
 const router = express.Router();
 
 router.post("/project/assign/upload", fileUpload({ limits: { fileSize: 10 * 1000 } }), async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
-        throw new errors.UserNotLoggedInError(next, "/user/login");
+        res.json({ wasUploaded: false });
+        return;
     }
 
-    const { projectId, reportFreq, reportDate } = req.body;
+    let { data, projectId, reportFreq, reportDeadline } = req.body;
 
-    if (!projectId || !reportFreq && !reportDate) {
-        throw new errors.BadCredentialsError(next, "/project/assign");
+    if (!data || !projectId || !reportFreq && !reportDeadline) {
+        res.json({ wasUploaded: false });
+        return;
     }
 
     const doesProjectExists = await dbUtil.doesProjectExists(null, projectId);
 
     if (!doesProjectExists) {
-        throw new errors.ProjectNotFoundError(next, "/project/assign");
+        res.json({ wasUploaded: false });
+        return;
     }
 
-    const files = Object.values(req.files);
-    const csvData = files[0].data.toString('utf8');
+    if (reportFreq) {
+        reportDeadline = null;
+    }
 
-    const csvRow = await csv().fromString(csvData);
+    const errs = [];
+    const rows = await csv().fromString(data);
 
-    await csvRow.forEach(async (x) => {
-        const doesUserExist = await dbUtil.doesUserExists(null, x.employee_id);
-        let wasSuccessful = true;
+    // await Promise.all(rows.map(async (x) => {
 
-        if (!doesUserExist) {
-            wasSuccessful = await dbUtil.createUser(x.employee_id, true, x.username, "password", x.email_address);
+    // }));
 
-            if (!wasSuccessful) {
-                throw new errors.UnkownError(next, "/project/assign");
+    for (const x of rows) {
+        try {
+            const doesUserExists = await dbUtil.doesUserExists(null, x.employee_id);
+
+            if (!doesUserExists) {
+                const wasCreated = await dbUtil.createUser(x.employee_id, true, x.username, "password", x.email_address);
+
+                if (!wasCreated) {
+                    new errors.UnknownError(next);
+                    return;
+                }
+
+                const wasUpdated = await dbUtil.updateUser(x.employee_id, null, null, null, x.phone_number, x.image_url);
+
+                if (!wasUpdated) {
+                    new errors.UnknownError(next);
+                    return;
+                }
+
+                const mail = new emails.RegistrationEmail(req, x.display_name);
+                await mail.send(x.email_address);
             }
 
-            wasSuccessful = await dbUtil.updateUser(x.employee_id, null, x.display_name, null, x.phone_number, null);
+            const isEmployee = await dbUtil.isEmployee(x.employee_id);
+
+            if (!isEmployee) {
+                new errors.UnknownError(next);
+                return;
+            }
+
+            const wasSuccessful = await dbUtil.assignToProject(x.employee_id, projectId);
 
             if (!wasSuccessful) {
-                throw new errors.UnkownError(next, "/project/assign");
+                new errors.UnknownError(next);
+                return;
             }
+        } catch (err) {
+            console.log(err);
+            errs.push(err.message);
         }
+    }
 
-        // TODO: Fix the integration with reportFreq and reportDate
-
-        wasSuccessful = await dbUtil.assignToProject(projectId, x.employee_id, reportFreq, null);
-
-        if (!wasSuccessful) {
-            throw new errors.UnkownError(next, "/project/assign");
-        }
-    });
-
-    res.redirect("/dashboard");
+    if (errors.length > 0) {
+        res.json({ wasUploaded: false, errors });
+    } else {
+        res.json({ wasUploaded: true, redirect: "/dashboard" });
+    }
 });
 
 module.exports = router;

@@ -4,6 +4,22 @@
 const errors = require("./../errors/errors.js");
 
 let appUtil = {
+    getBaseURL: function(req) {
+        const protocol = req.protocol;
+        const host = req.hostname;
+        const url = req.originalUrl;
+        const port = process.env.PORT || PORT;
+
+        return `${protocol}://${host}:${port}`;
+    },
+    getFullURL: function(req) {
+        const protocol = req.protocol;
+        const host = req.hostname;
+        const url = req.originalUrl;
+        const port = process.env.PORT || PORT;
+
+        return `${protocol}://${host}:${port}${url}`;
+    },
     getSession: function(req) {
         return req.session;
     },

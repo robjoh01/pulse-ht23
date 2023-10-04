@@ -11,7 +11,8 @@ CREATE PROCEDURE create_report(
     IN arg_employee_id CHAR(36),
     IN arg_project_id CHAR(36),
     IN arg_text LONGTEXT,
-    OUT success BOOLEAN
+    OUT success BOOLEAN,
+    OUT report_id INT
 )
 BEGIN
     DECLARE projectExists INT DEFAULT 0;
@@ -27,6 +28,10 @@ BEGIN
     IF projectExists = 1 AND employeeExists = 1 THEN
         INSERT INTO `report` (`employee_id`, `project_id`, `creation_date`, `text`, `status`)
         VALUES (arg_employee_id, arg_project_id, CURRENT_DATE(), arg_text, 'pending');
+
+        -- Get the last inserted report ID
+        SET report_id = LAST_INSERT_ID();
+
         SET success = TRUE;
     ELSE
         SET success = FALSE;

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
+    <title>Welcome to Pulse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 100%;
+            box-sizing: border-box;
+        }
+
+        *, *::before, *::after {
+            box-sizing: inherit;
+        }
+
+        img, embed, object, video {
+            max-width: 100%;
+        }
+
+        pre {
+            white-space: pre-wrap;
+        }
+
+        body {
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        em {
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        p {
+            font-family: 'Mukta', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .content {
+            margin-bottom: 2rem;
+        }
+
+        code {
+            background-color: hsl(0, 0%, 93%);
+            border-radius: 3px;
+            font-family: 'Ubuntu Mono', monospace;
+            padding: 0 3px;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>Welcome to <em>Pulse</em></h1>
+        </header>
+        <section>
+            <article class="content">
+                <p>
+                    <em>Hello</em> <span><%= name %></span>,
+                </p>
+                <p>
+                    You have been successfully registered with Pulse Project Management by your project manager. <em>Welcome to our project management platform!</em>
+                </p>
+                <p>
+                    With Pulse Project Management, you will have access to a user-friendly interface to collaborate on projects, report progress, and stay organized. Your project manager will guide you on your assigned projects and reporting requirements.
+                </p>
+            </article>
+            <article class="content">
+                <p>
+                    <strong>Important:</strong> For security reasons, we strongly recommend that you change your password to a secure and unique one. You have been assigned a default password, which is <code>password</code>.
+                </p>
+                <p>
+                    To change your password, <a href="<%= link %>">click here</a>.
+                </p>
+            </article>
+            <article class="content">
+                <p>
+                    If you have any questions or need assistance, feel free to reach out to your project manager or our support team. We're here to help you succeed in managing your projects effectively.
+                </p>
+            </article>
+            <article class="content">
+                <p>
+                    Best regards,<br>
+                    The Pulse Project Management Team
+                </p>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

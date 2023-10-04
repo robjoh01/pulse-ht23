@@ -1,16 +1,16 @@
 @use "./../utils" as *;
 
 .form-container {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 1rem;
+    // display: flex;
+    // flex-flow: column nowrap;
+    // gap: 1rem;
     align-items: center;
     justify-content: center;
     background: transparent;
     backdrop-filter: blur(16px);
-    padding: 0 2rem;
-    padding-top: 2rem;
-    padding-bottom: 4rem;
+    padding: 2rem;
+    // padding-top: 2rem;
+    // padding-bottom: 4rem;
     border-radius: 2rem;
     border: 2px solid var(--color-border-200);
     box-shadow: 1rem 1rem 1.5rem 0 hsla(0, 0%, 0%, 0.2);
@@ -18,7 +18,7 @@
     @include breakpoint(medium) {
         min-width: 600px;
         min-height: 600px;
-        max-width: 600px;
+        max-width: 800px;
     }
 
     @include breakpoint-down(small) {
@@ -93,6 +93,14 @@
         &.flex-end {
             justify-content: space-between;
         }
+
+        &.flex-align-end {
+            align-items: end;
+        }
+
+        &.flex-gap {
+            gap: 1.5rem;
+        }
     }
 
     .form-input-label {
@@ -122,15 +130,34 @@
             width: 100%;
             -webkit-appearance: none;
             appearance: none;
-            background: transparent;
-            backdrop-filter: blur(16px);
+            // background: transparent;
+            // backdrop-filter: blur(16px);
             padding-right: 3rem;
             font-size: 1rem;
+        }
+
+        .form-date-input {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            // background: transparent;
+            // backdrop-filter: blur(16px);
+            font-size: 1rem;
+        }
+
+        input:not(input[type='checkbox']):read-only {
+            cursor: not-allowed;
+        }
+
+        select {
+            width: 100%;
         }
 
         input,
         select,
         textarea {
+            background-color: var(--color-bg-200);
+            backdrop-filter: blur(16px);
             padding: 0.5rem 1rem;
             outline: 0;
             border: 0;
@@ -143,8 +170,8 @@
                 color: var(--color-fg-300);
             }
 
-            &:not(input[type='checkbox']):read-only {
-                cursor: not-allowed;
+            &[type="checkbox"] {
+                background-color: var(--color-blue);
             }
 
             &:disabled {

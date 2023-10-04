@@ -1,39 +1,84 @@
 "use strict";
 
+const dropArea = document.getElementById("dropArea");
 const dropForm = document.getElementById("dropForm");
 const dropText = document.getElementById("dropText");
 const dropInput = document.getElementById("dropInput");
-const projectInput = document.getElementById("projectInput");
-const reportFreq = document.getElementById("reportFreq");
-const reportDate = document.getElementById("reportDate");
 
-const sendFile = async() => {
-    const file = dropInput.files[0];
+var projectInput = document.getElementById("projectInput");
+var reportFreqInput = document.getElementById("reportFreqInput");
+var reportDeadlineInput = document.getElementById("reportDeadlineInput");
+
+resetDropForm();
+
+let fileText = null;
+
+dropArea.addEventListener("dragover", (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    // Style the drag-and-drop as a "copy file" operation.
+    event.dataTransfer.dropEffect = 'copy';
+});
+
+dropArea.addEventListener("drop", (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    onFileSelected(event.dataTransfer.files[0]);
+});
+
+dropInput.addEventListener("change", (e) => {
+    const files = e.target.files;
+
+    if (files.length <= 0) {
+        return;
+    }
+
+    onFileSelected(files[0]);
+});
+
+async function onFileSelected(file) {
+    dropText.textContent = "File Selected";
+
+    showSnackBar("File selected");
+
+    fileText = await file.text();
+}
+
+function resetDropForm() {
+    dropForm.reset();
+    dropText.textContent = "Choose a file or drag it here";
+}
+
+dropForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
     const formData = new FormData();
-
-    formData.append(file.name, file);
+    formData.append("data", fileText);
     formData.append("projectId", projectInput.value);
-    formData.append("reportFreq", reportFreq.value);
-    formData.append("reportDate", reportDate.value);
+    formData.append("reportFreq", reportFreqInput.value);
+    formData.append("reportDeadline", reportDeadlineInput.value);
 
     const res = await fetch("/project/assign/upload", {
         method: "POST",
         body: formData
     });
 
-    // TODO: Use toastify-js instead!
+    if (!res) {
+        return;
+    }
+
+    showSnackBar("Processing the data");
 
     const json = await res.json();
 
-    dropText.textContent = "Team members were successfully uploaded to the database.";
-
     console.log(json);
-};
 
-dropForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    sendFile();
-
-    dropText.textContent = "Uploading...";
+    if (json.wasUploaded) {
+        showSnackBar("Data was uploaded");
+        resetDropForm();
+    } else {
+        
+    }
 });
