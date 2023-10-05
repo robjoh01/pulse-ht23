@@ -104,19 +104,16 @@ SELECT
     CASE 
         WHEN p.report_deadline IS NOT NULL THEN 
             p.report_deadline
-        ELSE
-            CASE 
-                WHEN p.report_frequency = 'daily' THEN 
-                    DATE_ADD(p.start_date, INTERVAL 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
-                WHEN p.report_frequency = 'weekly' THEN 
-                    DATE_ADD(DATE_ADD(p.start_date, INTERVAL 1 WEEK), INTERVAL -DAYOFWEEK(DATE_ADD(p.start_date, INTERVAL 1 WEEK)) + 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
-                WHEN p.report_frequency = 'fortnightly' THEN 
-                    DATE_ADD(DATE_ADD(p.start_date, INTERVAL 2 WEEK), INTERVAL -DAYOFWEEK(DATE_ADD(p.start_date, INTERVAL 2 WEEK)) + 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
-                WHEN p.report_frequency = 'monthly' THEN 
-                    DATE_ADD(LAST_DAY(DATE_ADD(p.start_date, INTERVAL 1 MONTH)), INTERVAL -DAYOFMONTH(LAST_DAY(DATE_ADD(p.start_date, INTERVAL 1 MONTH))) + 1 DAY) + INTERVAL 1 DAY - INTERVAL 1 SECOND
-                ELSE NULL
-            END
-    END AS `deadline`
+        WHEN p.report_frequency = 'daily' THEN
+            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL 1 DAY), p.end_date)
+        WHEN p.report_frequency = 'weekly' THEN
+            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 WEEK, CURRENT_DATE() + INTERVAL (7 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
+        WHEN p.report_frequency = 'fortnightly' THEN
+            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 2 WEEK, CURRENT_DATE() + INTERVAL (14 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
+        WHEN p.report_frequency = 'monthly' THEN
+            -- LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 MONTH, CURRENT_DATE() + INTERVAL (LAST_DAY(DATE(p.start_date)) - DAYOFMONTH(CURRENT_DATE()) + 1) DAY), p.end_date)
+            LEAST(GREATEST(DATE_ADD(p.start_date, INTERVAL 1 MONTH), DATE_ADD(CURRENT_DATE(), INTERVAL (DAYOFWEEK(CURRENT_DATE()) - DAYOFWEEK(p.start_date) - 1) DAY)), p.end_date)
+    END + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND AS `deadline_date`
 FROM `assignment` AS a
     JOIN `employee` AS e ON a.employee_id = e.id
     JOIN `project` AS p ON a.project_id = p.id
@@ -144,15 +141,16 @@ ORDER BY r.creation_date DESC
 
 CREATE VIEW v_report_history AS
 SELECT
+    u.id AS `user_id`,
+    u.display_name AS `user_name`,
     rc.id,
     rc.creation_date,
     rc.report_id,
     rc.comment,
     rc.status
-FROM
-    `report_comment` AS rc
-JOIN
-    `report` AS r ON rc.report_id = r.id
+FROM `report_comment` AS rc
+    JOIN `report` AS r ON rc.report_id = r.id
+    JOIN `user` AS u ON u.id = rc.user_id
 GROUP BY rc.id
 ORDER BY rc.creation_date DESC
 ;

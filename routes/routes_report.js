@@ -148,11 +148,6 @@ router.get("/manager/report/history/:id", async (req, res, next) => {
 
     const user = appUtil.getSessionUser(req);
 
-    if (appUtil.isUserAnEmployee(req)) {
-        new errors.AccessNotPermittedError(next, "/dashboard");
-        return;
-    }
-
     const reportId = req.params.id;
     const report = await dbUtil.fetchReport(reportId);
 

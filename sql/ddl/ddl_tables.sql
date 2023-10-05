@@ -24,9 +24,9 @@ CREATE TABLE `user`
     `email_address` VARCHAR(32),
     `phone_number` VARCHAR(32),
     `image_url` VARCHAR(128),
-    `creation_date` DATE,
-    `modified_date` DATE,
-    `logout_date` DATE,
+    `creation_date` DATETIME DEFAULT NOW(),
+    `modified_date` DATETIME,
+    `logout_date` DATETIME,
 
     PRIMARY KEY (`id`)
 );
@@ -53,7 +53,7 @@ CREATE TABLE `project`
     `project_manager_id` CHAR(36) NOT NULL,
     `name` VARCHAR(32),
     `description` VARCHAR(96),
-    `creation_date` DATE DEFAULT CURRENT_DATE(),
+    `creation_date` DATETIME DEFAULT NOW(),
     `modified_date` DATE,
     `start_date` DATE,
     `end_date` DATE,
@@ -79,7 +79,7 @@ CREATE TABLE `project_archive`
     `id` CHAR(36) NOT NULL,
     `name` VARCHAR(32),
     `description` VARCHAR(96),
-    `creation_date` DATE DEFAULT CURRENT_DATE(),
+    `creation_date` DATETIME DEFAULT NOW(),
 
     PRIMARY KEY (`id`)
 );
@@ -88,7 +88,7 @@ CREATE TABLE `assignment`
 (
     `employee_id` CHAR(36) NOT NULL,
     `project_id` CHAR(36) NOT NULL,
-    `creation_date` DATE,
+    `creation_date` DATETIME DEFAULT NOW(),
 
     PRIMARY KEY (`employee_id`, `project_id`),
     FOREIGN KEY (`employee_id`) REFERENCES employee(`id`),
@@ -100,7 +100,7 @@ CREATE TABLE `report`
     `id` INT NOT NULL AUTO_INCREMENT,
     `employee_id` CHAR(36) NOT NULL,
     `project_id` CHAR(36) NOT NULL,
-    `creation_date` DATE,
+    `creation_date` DATETIME DEFAULT NOW(),
     `text` LONGTEXT,
     `status` TINYTEXT,
 
@@ -112,14 +112,14 @@ CREATE TABLE `report`
 CREATE TABLE `report_comment`
 (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `project_manager_id` CHAR(36) NOT NULL,
-    `creation_date` DATETIME,
+    `user_id` CHAR(36) NOT NULL,
+    `creation_date` DATETIME DEFAULT NOW(),
     `report_id` INT NOT NUll,
     `comment` LONGTEXT,
     `status` TINYTEXT,
 
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`project_manager_id`) REFERENCES project_manager(`id`),
+    FOREIGN KEY (`user_id`) REFERENCES user(`id`),
     FOREIGN KEY (`report_id`) REFERENCES report(`id`)
 );
 
@@ -127,6 +127,7 @@ CREATE TABLE `notification`
 (
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` CHAR(36) NOT NULL,
+    `creation_date` DATETIME DEFAULT NOW(),
     `text` LONGTEXT,
 
     FOREIGN KEY (`user_id`) REFERENCES user(`id`),

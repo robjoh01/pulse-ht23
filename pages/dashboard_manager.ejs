@@ -124,7 +124,7 @@
                                 <th class="primary-th">
                                     <div class="primary-flex primary-row">
                                         <i class='bx bx-history'></i>
-                                        <span>Comment History</span>
+                                        <span>Report History</span>
                                     </div>
                                 </th>
                             </tr>
@@ -141,15 +141,15 @@
                                 <td class="primary-td" data-cell="creation-date">
                                     <span><%= x.creation_date %></span>
                                 </td>
-                                <td class="primary-td" data-cell="creation-date">
+                                <td class="primary-td" data-cell="status">
                                     <span><%= x.status %></span>
                                 </td>
-                                <td class="primary-td" data-cell="report-text">
+                                <td class="primary-td" data-cell="report-view">
                                     <a href="/manager/report/<%= x.id %>">
                                         <span>Link</span>
                                     </a>
                                 </td>
-                                <td class="primary-td" data-cell="report-text">
+                                <td class="primary-td" data-cell="report-history">
                                     <a href="/manager/report/history/<%= x.id %>">
                                         <span>Link</span>
                                     </a>

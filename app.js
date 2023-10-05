@@ -57,7 +57,7 @@ app.use(routesJSON);
 
 app.use((error, req, res, next) => {
     if (error.type == 'redirect') {
-        req.session.context = error;
+        req.session.error = error;
         res.redirect('/error');
     }
     else if (error.type == 'time-out')

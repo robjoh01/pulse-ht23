@@ -99,6 +99,10 @@ BEGIN
         -- Remove the assignment
         DELETE FROM `assignment` WHERE employee_id = NEW.employee_id AND project_id = NEW.project_id;
     END IF;
+
+    -- Insert into report_comment table
+    INSERT INTO `report_comment` (`user_id`, `creation_date`, `report_id`, `comment`, `status`)
+        VALUES (NEW.employee_id, NOW(), NEW.id, NEW.text, 'pending');
 END;;
 
 DELIMITER ;

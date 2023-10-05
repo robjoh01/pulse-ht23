@@ -6,8 +6,6 @@ const dropText = document.getElementById("dropText");
 const dropInput = document.getElementById("dropInput");
 
 var projectInput = document.getElementById("projectInput");
-var reportFreqInput = document.getElementById("reportFreqInput");
-var reportDeadlineInput = document.getElementById("reportDeadlineInput");
 
 resetDropForm();
 
@@ -57,8 +55,6 @@ dropForm.addEventListener("submit", async (e) => {
     const formData = new FormData();
     formData.append("data", fileText);
     formData.append("projectId", projectInput.value);
-    formData.append("reportFreq", reportFreqInput.value);
-    formData.append("reportDeadline", reportDeadlineInput.value);
 
     const res = await fetch("/project/assign/upload", {
         method: "POST",

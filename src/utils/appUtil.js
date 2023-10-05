@@ -23,9 +23,6 @@ let appUtil = {
     getSession: function(req) {
         return req.session;
     },
-    getSessionContext: function(req) {
-        return req.session.context;
-    },
     getSessionUser: function(req) {
         return req.session.user;
     },

@@ -15,27 +15,14 @@ CREATE PROCEDURE create_report(
     OUT report_id INT
 )
 BEGIN
-    DECLARE projectExists INT DEFAULT 0;
-    DECLARE employeeExists INT DEFAULT 0;
-
-    -- Check if the project exists
-    SELECT COUNT(*) INTO projectExists FROM `project` WHERE `id` = arg_project_id;
-
-    -- Check if the employee exists
-    SELECT COUNT(*) INTO employeeExists FROM `employee` WHERE `id` = arg_employee_id;
-
-    -- Insert the report if both employee and project exist
-    IF projectExists = 1 AND employeeExists = 1 THEN
-        INSERT INTO `report` (`employee_id`, `project_id`, `creation_date`, `text`, `status`)
+    -- Insert into report table
+    INSERT INTO `report` (`employee_id`, `project_id`, `creation_date`, `text`, `status`)
         VALUES (arg_employee_id, arg_project_id, CURRENT_DATE(), arg_text, 'pending');
 
-        -- Get the last inserted report ID
-        SET report_id = LAST_INSERT_ID();
+    -- Get the last inserted report ID
+    SET report_id = LAST_INSERT_ID();
 
-        SET success = TRUE;
-    ELSE
-        SET success = FALSE;
-    END IF;
+    SET success = TRUE;
 END;;
 
 CREATE PROCEDURE review_report(
@@ -68,7 +55,7 @@ BEGIN
             `id` = arg_report_id;
 
         -- Insert the comment into the report_comment table
-        INSERT INTO `report_comment` (`project_manager_id`, `creation_date`, `report_id`, `comment`, `status`)
+        INSERT INTO `report_comment` (`user_id`, `creation_date`, `report_id`, `comment`, `status`)
             VALUES (arg_project_manager_id, NOW(), arg_report_id, arg_comment, currentStatus)
         ;
 

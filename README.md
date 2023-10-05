@@ -38,8 +38,8 @@ COOKIE_SECRET=<string>
 CONFIG_MODE=<dev|dist>
 
 # Development Config
-FORCE_AS_ADMIN=<boolean>
-ADMIN_ID=<guid>
+FORCE_LOGIN=<boolean>
+FORCE_ID=<guid>
 
 # Email config
 ENABLE_EMAIL=<boolean>

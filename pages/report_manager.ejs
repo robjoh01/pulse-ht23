@@ -13,19 +13,25 @@
                     <label class="form-input-label" for="projectName" id="projectNameLabel">
                         <span>Project's Name</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="projectName" readonly value="<%= report.project_name %>">
+                            <input class="form-text-input" type="text" aria-invalid="false" id="projectName" readonly disabled value="<%= report.project_name %>">
                         </div>
                     </label>
                     <label class="form-input-label" for="employeeName" id="employeeNameLabel">
                         <span>Submitted By</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="employeeName" readonly value="<%= report.employee_name %>">
+                            <input class="form-text-input" type="text" aria-invalid="false" id="employeeName" readonly disabled value="<%= report.employee_name %>">
                         </div>
                     </label>
                     <label class="form-input-label" for="date" id="dateLabel">
                         <span>Sent At</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="datetime" aria-invalid="false" id="date" readonly value="<%= report.creation_date %>">
+                            <input class="form-text-input" type="datetime" aria-invalid="false" id="date" readonly disabled value="<%= report.creation_date %>">
+                        </div>
+                    </label>
+                    <label class="form-input-label" for="message" id="dateLabel">
+                        <span>And wrote</span>
+                        <div class="form-input">
+                            <textarea class="form-textarea-input" aria-invalid="false" id="text" rows="10" cols="33" readonly disabled><%= report.text %></textarea>
                         </div>
                     </label>
                     <label class="form-input-label" for="comment" id="commentLabel">

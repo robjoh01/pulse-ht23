@@ -27,17 +27,19 @@ router.get("/user/register", (req, res, next) => {
     res.render("./../pages/user_register.ejs", data);
 });
 
-router.get("/user/login", (req, res, next) => {
+router.get("/user/login", async (req, res, next) => {
     if (appUtil.isUserAuthenticated(req)) {
         res.redirect("/");
         return;
     }
 
-    if (process.env.FORCE_AS_ADMIN === "true") {
+    if (process.env.FORCE_LOGIN === "true") {
+        const isEmployee = await dbUtil.isEmployee(process.env.FORCE_ID);
+
         appUtil.authenticateUser(
             req,
-            process.env.ADMIN_ID,
-            false
+            process.env.FORCE_ID,
+            isEmployee
         );
 
         res.redirect("/");
@@ -106,7 +108,9 @@ router.get("/user/change_password", async (req, res, next) => {
     data.pageName  = "user";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
-    data.password = req.session.context;
+    data.password = req.session.password ? req.session.password : "";
+
+    console.log(data.password);
 
     res.render("./../pages/user_change_password.ejs", data);
 });
@@ -126,7 +130,7 @@ router.get("/user/change_password/:id/:password", async (req, res, next) => {
 
     appUtil.authenticateUser(req, id, isEmployee);
 
-    req.session.context = password;
+    req.session.password = password;
 
     res.redirect("/user/change_password");
 });

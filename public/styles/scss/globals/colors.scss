@@ -3,7 +3,7 @@
     --color-fg-200-light: hsl(0, 0%, 17%);
     --color-fg-300-light: hsl(0, 0%, 13%);
 
-    --color-fg-alt-100-light: hsl(0, 0%, 63%); 
+    --color-fg-alt-100-light: hsl(0, 0%, 63%);
     --color-fg-alt-200-light: hsl(0, 0%, 83%);
     --color-fg-alt-300-light: hsl(0, 0%, 97%);
 
@@ -16,7 +16,7 @@
     --color-fg-alt-300-dark: hsl(0, 0%, 9%);
 
     --color-bg-100-light: hsl(0, 0%, 26%);
-    --color-bg-200-light: hsl(0, 0%, 63%);
+    --color-bg-200-light: hsl(0, 0%, 83%);
     --color-bg-300-light: hsl(0, 0%, 93%);
 
     --color-bg-alt-100-light: hsl(0, 0%, 26%);
@@ -71,9 +71,6 @@
     --color-form-button-bg-light: hsl(0, 0%, 13%);
     --color-form-button-bg-dark: hsl(0, 0%, 83%);
 
-    --color-accent-light: hsl(56, 72%, 49%);
-    --color-accent-dark: hsl(163, 72%, 61%);
-
     --color-form-input-border-light: hsla(0, 0%, 26%, 0.5);
     --color-form-input-focus-border-light: hsla(0, 0%, 13%, 0.8);
 
@@ -96,6 +93,14 @@
     --color-drop-outline-100-dark: hsl(245, 30%, 83%);
     --color-drop-outline-200-dark: hsl(245, 30%, 93%);
 
+    --color-fg-disabled-light: hsl(0, 0%, 56%);
+    --color-bg-disabled-light: hsl(0, 0%, 93%);
+    --color-border-disabled-light: hsla(200, 10%, 46%, 0.4);
+
+    --color-fg-disabled-dark: hsl(0, 0%, 36%);
+    --color-bg-disabled-dark: hsl(0, 0%, 9%);
+    --color-border-disabled-dark: hsla(0, 0%, 63%, 0.4);
+
     --color-green-light: hsl(120, 63%, 63%);
     --color-green-dark: hsl(120, 45%, 33%);
 
@@ -107,11 +112,21 @@
 
     --color-blue-light: hsl(205, 63%, 63%);
     --color-blue-dark: hsl(205, 63%, 63%);
+
+    --color-pink-light: hsl(300, 50%, 73%);
+    --color-pink-dark: hsl(300, 52%, 61%);
+
+    // --color-accent-light: hsl(56, 72%, 49%);
+    // --color-accent-dark: hsl(163, 72%, 61%);
+
+    --color-accent-light: var(--color-pink-light);
+    --color-accent-dark: var(--color-green-dark);
 }
 
 @mixin light-theme-colors {
     color-scheme: light;
 
+    --color-fg-50: var(--color-fg-50-light);
     --color-fg-100: var(--color-fg-100-light);
     --color-fg-200: var(--color-fg-200-light);
     --color-fg-300: var(--color-fg-300-light);
@@ -121,6 +136,7 @@
     --color-fg-alt-300: var(--color-fg-alt-300-light);
 
     --color-bg-100: var(--color-bg-100-light);
+    --color-bg-150: var(--color-bg-150-light);
     --color-bg-200: var(--color-bg-200-light);
     --color-bg-300: var(--color-bg-300-light);
 
@@ -160,15 +176,21 @@
     --color-drop-outline-100: var(--color-drop-outline-100-light);
     --color-drop-outline-200: var(--color-drop-outline-200-light);
 
+    --color-fg-disabled: var(--color-fg-disabled-light);
+    --color-bg-disabled: var(--color-bg-disabled-light);
+    --color-border-disabled: var(--color-border-disabled-light);
+
     --color-green: var(--color-green-light);
     --color-orange: var(--color-orange-light);
     --color-red: var(--color-red-light);
     --color-blue: var(--color-blue-light);
+    --color-pink: var(--color-pink-light);
 }
 
 @mixin dark-theme-colors {
     color-scheme: dark;
 
+    --color-fg-50: var(--color-fg-50-dark);
     --color-fg-100: var(--color-fg-100-dark);
     --color-fg-200: var(--color-fg-200-dark);
     --color-fg-300: var(--color-fg-300-dark);
@@ -178,6 +200,7 @@
     --color-fg-alt-300: var(--color-fg-alt-300-dark);
 
     --color-bg-100: var(--color-bg-100-dark);
+    --color-bg-150: var(--color-bg-150-dark);
     --color-bg-200: var(--color-bg-200-dark);
     --color-bg-300: var(--color-bg-300-dark);
 
@@ -217,10 +240,15 @@
     --color-drop-outline-100: var(--color-drop-outline-100-dark);
     --color-drop-outline-200: var(--color-drop-outline-200-dark);
 
+    --color-fg-disabled: var(--color-fg-disabled-dark);
+    --color-bg-disabled: var(--color-bg-disabled-dark);
+    --color-border-disabled: var(--color-border-disabled-dark);
+
     --color-green: var(--color-green-dark);
     --color-orange: var(--color-orange-dark);
     --color-red: var(--color-red-dark);
     --color-blue: var(--color-blue-dark);
+    --color-pink: var(--color-pink-dark);
 }
 
 :root, [data-theme="default"] {

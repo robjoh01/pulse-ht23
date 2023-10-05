@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `assignment`;
 CREATE TABLE `assignment` (
   `employee_id` char(36) NOT NULL,
   `project_id` char(36) NOT NULL,
-  `creation_date` date DEFAULT NULL,
+  `creation_date` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`employee_id`,`project_id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `assignment_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`),
@@ -39,7 +39,7 @@ CREATE TABLE `assignment` (
 
 LOCK TABLES `assignment` WRITE;
 /*!40000 ALTER TABLE `assignment` DISABLE KEYS */;
-INSERT INTO `assignment` VALUES ('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','6e885bbc-6d26-411e-b978-2962acae4bdd','2023-10-03');
+INSERT INTO `assignment` VALUES ('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','6e885bbc-6d26-411e-b978-2962acae4bdd','2023-10-03 00:00:00');
 /*!40000 ALTER TABLE `assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,6 +77,7 @@ DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` char(36) NOT NULL,
+  `creation_date` datetime DEFAULT current_timestamp(),
   `text` longtext DEFAULT NULL,
   PRIMARY KEY (`id`,`user_id`),
   KEY `user_id` (`user_id`),
@@ -105,7 +106,7 @@ CREATE TABLE `project` (
   `project_manager_id` char(36) NOT NULL,
   `name` varchar(32) DEFAULT NULL,
   `description` varchar(96) DEFAULT NULL,
-  `creation_date` date DEFAULT curdate(),
+  `creation_date` datetime DEFAULT current_timestamp(),
   `modified_date` date DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
@@ -123,7 +124,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES ('4e658238-d50c-4812-84f2-be58e8be308a','2e889992-6993-42c2-9366-cf9249a1e61b','Quirky Quarters','Lorem Ipsum','2023-10-05','0000-00-00','2030-05-15','2060-01-15','monthly',NULL),('6e885bbc-6d26-411e-b978-2962acae4bdd','2e889992-6993-42c2-9366-cf9249a1e61b','Sharp Suits','Lorem Ipsum','2023-10-05','0000-00-00','2022-10-28','2023-10-28','daily',NULL),('ba28b243-6889-4c54-a138-ff72333186a2','2e889992-6993-42c2-9366-cf9249a1e61b','Modern Maven','Lorem Ipsum','2023-10-05','0000-00-00','2023-10-29','2023-12-31','','2023-12-31 12:00:00');
+INSERT INTO `project` VALUES ('4e658238-d50c-4812-84f2-be58e8be308a','2e889992-6993-42c2-9366-cf9249a1e61b','Quirky Quarters','Lorem Ipsum','2023-10-05 00:00:00','0000-00-00','2030-05-15','2060-01-15','monthly',NULL),('6e885bbc-6d26-411e-b978-2962acae4bdd','2e889992-6993-42c2-9366-cf9249a1e61b','Sharp Suits','Lorem Ipsum','2023-10-05 00:00:00','0000-00-00','2023-10-05','2024-10-18','monthly',NULL),('ba28b243-6889-4c54-a138-ff72333186a2','2e889992-6993-42c2-9366-cf9249a1e61b','Modern Maven','Lorem Ipsum','2023-10-05 00:00:00','0000-00-00','2023-10-29','2023-12-31','','2023-12-31 12:00:00');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -217,7 +218,7 @@ CREATE TABLE `project_archive` (
   `id` char(36) NOT NULL,
   `name` varchar(32) DEFAULT NULL,
   `description` varchar(96) DEFAULT NULL,
-  `creation_date` date DEFAULT curdate(),
+  `creation_date` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -313,7 +314,7 @@ CREATE TABLE `report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` char(36) NOT NULL,
   `project_id` char(36) NOT NULL,
-  `creation_date` date DEFAULT NULL,
+  `creation_date` datetime DEFAULT current_timestamp(),
   `text` longtext DEFAULT NULL,
   `status` tinytext DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -330,7 +331,7 @@ CREATE TABLE `report` (
 
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
-INSERT INTO `report` VALUES (1,'c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','4e658238-d50c-4812-84f2-be58e8be308a','2023-12-23','Hello, World!','submitted'),(2,'c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','ba28b243-6889-4c54-a138-ff72333186a2','2070-12-31','Hello, World!','pending');
+INSERT INTO `report` VALUES (1,'c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','4e658238-d50c-4812-84f2-be58e8be308a','2023-12-23 00:00:00','Hello, World!','submitted'),(2,'c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','ba28b243-6889-4c54-a138-ff72333186a2','2070-12-31 00:00:00','I have completed this project!','pending');
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -351,6 +352,10 @@ BEGIN
         
         DELETE FROM `assignment` WHERE employee_id = NEW.employee_id AND project_id = NEW.project_id;
     END IF;
+
+    
+    INSERT INTO `report_comment` (`user_id`, `creation_date`, `report_id`, `comment`, `status`)
+        VALUES (NEW.employee_id, NOW(), NEW.id, NEW.text, 'pending');
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -388,17 +393,17 @@ DROP TABLE IF EXISTS `report_comment`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `report_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_manager_id` char(36) NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
+  `user_id` char(36) NOT NULL,
+  `creation_date` datetime DEFAULT current_timestamp(),
   `report_id` int(11) NOT NULL,
   `comment` longtext DEFAULT NULL,
   `status` tinytext DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `project_manager_id` (`project_manager_id`),
+  KEY `user_id` (`user_id`),
   KEY `report_id` (`report_id`),
-  CONSTRAINT `report_comment_ibfk_1` FOREIGN KEY (`project_manager_id`) REFERENCES `project_manager` (`id`),
+  CONSTRAINT `report_comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `report_comment_ibfk_2` FOREIGN KEY (`report_id`) REFERENCES `report` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,6 +412,7 @@ CREATE TABLE `report_comment` (
 
 LOCK TABLES `report_comment` WRITE;
 /*!40000 ALTER TABLE `report_comment` DISABLE KEYS */;
+INSERT INTO `report_comment` VALUES (1,'c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','2023-10-05 19:26:04',1,'Hello, World!','pending'),(2,'c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','2023-10-05 19:26:04',2,'I have completed this project!','pending');
 /*!40000 ALTER TABLE `report_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,9 +431,9 @@ CREATE TABLE `user` (
   `email_address` varchar(32) DEFAULT NULL,
   `phone_number` varchar(32) DEFAULT NULL,
   `image_url` varchar(128) DEFAULT NULL,
-  `creation_date` date DEFAULT NULL,
-  `modified_date` date DEFAULT NULL,
-  `logout_date` date DEFAULT NULL,
+  `creation_date` datetime DEFAULT current_timestamp(),
+  `modified_date` datetime DEFAULT NULL,
+  `logout_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -438,7 +444,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-05',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','john','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-05',NULL,NULL);
+INSERT INTO `user` VALUES ('2e889992-6993-42c2-9366-cf9249a1e61b','admin','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','Admin','admin@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-05 00:00:00',NULL,NULL),('c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef','john','$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa','John Doe','johndoe@example.com','555-XXXX','https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg','2023-10-05 00:00:00',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -501,7 +507,7 @@ SET character_set_client = utf8;
   1 AS `project_name`,
   1 AS `project_start_date`,
   1 AS `project_end_date`,
-  1 AS `deadline` */;
+  1 AS `deadline_date` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -585,7 +591,9 @@ DROP TABLE IF EXISTS `v_report_history`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_report_history` AS SELECT
- 1 AS `id`,
+ 1 AS `user_id`,
+  1 AS `user_name`,
+  1 AS `id`,
   1 AS `creation_date`,
   1 AS `report_id`,
   1 AS `comment`,
@@ -644,7 +652,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_assignments` AS select `a`.`employee_id` AS `employee_id`,`a`.`project_id` AS `project_id`,`a`.`creation_date` AS `creation_date`,`p`.`name` AS `project_name`,`p`.`start_date` AS `project_start_date`,`p`.`end_date` AS `project_end_date`,case when `p`.`report_deadline` is not null then `p`.`report_deadline` else case when `p`.`report_frequency` = 'daily' then `p`.`start_date` + interval 1 day + interval 1 day - interval 1 second when `p`.`report_frequency` = 'weekly' then `p`.`start_date` + interval 1 week + interval -dayofweek(`p`.`start_date` + interval 1 week) + 1 day + interval 1 day - interval 1 second when `p`.`report_frequency` = 'fortnightly' then `p`.`start_date` + interval 2 week + interval -dayofweek(`p`.`start_date` + interval 2 week) + 1 day + interval 1 day - interval 1 second when `p`.`report_frequency` = 'monthly' then last_day(`p`.`start_date` + interval 1 month) + interval -dayofmonth(last_day(`p`.`start_date` + interval 1 month)) + 1 day + interval 1 day - interval 1 second else NULL end end AS `deadline` from ((`assignment` `a` join `employee` `e` on(`a`.`employee_id` = `e`.`id`)) join `project` `p` on(`a`.`project_id` = `p`.`id`)) group by `a`.`employee_id`,`a`.`project_id` order by `a`.`creation_date` desc */;
+/*!50001 VIEW `v_assignments` AS select `a`.`employee_id` AS `employee_id`,`a`.`project_id` AS `project_id`,`a`.`creation_date` AS `creation_date`,`p`.`name` AS `project_name`,`p`.`start_date` AS `project_start_date`,`p`.`end_date` AS `project_end_date`,case when `p`.`report_deadline` is not null then `p`.`report_deadline` when `p`.`report_frequency` = 'daily' then least(greatest(cast(`p`.`start_date` as date) + interval 1 day,curdate() + interval 1 day),`p`.`end_date`) when `p`.`report_frequency` = 'weekly' then least(greatest(cast(`p`.`start_date` as date) + interval 1 week,curdate() + interval 7 - dayofweek(curdate()) + dayofweek(`p`.`start_date`) day),`p`.`end_date`) when `p`.`report_frequency` = 'fortnightly' then least(greatest(cast(`p`.`start_date` as date) + interval 2 week,curdate() + interval 14 - dayofweek(curdate()) + dayofweek(`p`.`start_date`) day),`p`.`end_date`) when `p`.`report_frequency` = 'monthly' then least(greatest(`p`.`start_date` + interval 1 month,curdate() + interval dayofweek(curdate()) - dayofweek(`p`.`start_date`) - 1 day),`p`.`end_date`) end + interval 23 hour + interval 59 minute + interval 59 second AS `deadline_date` from ((`assignment` `a` join `employee` `e` on(`a`.`employee_id` = `e`.`id`)) join `project` `p` on(`a`.`project_id` = `p`.`id`)) group by `a`.`employee_id`,`a`.`project_id` order by `a`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -734,7 +742,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`dbadm`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_report_history` AS select `rc`.`id` AS `id`,`rc`.`creation_date` AS `creation_date`,`rc`.`report_id` AS `report_id`,`rc`.`comment` AS `comment`,`rc`.`status` AS `status` from (`report_comment` `rc` join `report` `r` on(`rc`.`report_id` = `r`.`id`)) group by `rc`.`id` order by `rc`.`creation_date` desc */;
+/*!50001 VIEW `v_report_history` AS select `u`.`id` AS `user_id`,`u`.`display_name` AS `user_name`,`rc`.`id` AS `id`,`rc`.`creation_date` AS `creation_date`,`rc`.`report_id` AS `report_id`,`rc`.`comment` AS `comment`,`rc`.`status` AS `status` from ((`report_comment` `rc` join `report` `r` on(`rc`.`report_id` = `r`.`id`)) join `user` `u` on(`u`.`id` = `rc`.`user_id`)) group by `rc`.`id` order by `rc`.`creation_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -784,4 +792,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-05  1:19:14
+-- Dump completed on 2023-10-05 19:26:05

@@ -16,8 +16,8 @@ router.get("/error", (req, res) => {
     let data = {};
 
     data.title = "Error";
-    data.session = appUtil.getSession(req);
-    data.context = appUtil.getSessionContext(req);
+    data.session = req.session;
+    data.context = req.session.error;
 
     if (!data.context) {
         data.error_code = "404";

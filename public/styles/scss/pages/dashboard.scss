@@ -86,7 +86,7 @@ circle-progress::part(base) {
 }
 
 circle-progress::part(value) {
-    stroke: var(--color-green);
+    stroke: var(--color-accent);
 }
 
 circle-progress::part(circle) {
@@ -120,13 +120,13 @@ circle-progress::part(text) {
     // min-width: 128px;
     // min-height: 128px;
     // height: min-content;
-    border: 2px dashed var(--color-green);
+    border: 2px dashed var(--color-accent);
     box-shadow: 0.5rem 0.5rem 0 4px hsla(0, 0%, 0%, 0.2);
     text-align: center;
 
     .dashboard-stats-icon {
         font-size: 2rem;
-        color: var(--color-green);
+        color: var(--color-accent);
     }
 
     .dashboard-stats-value {

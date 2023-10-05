@@ -11,14 +11,20 @@
                         <tr class="primary-tr">
                             <th class="primary-th">
                                 <div class="primary-flex primary-row">
-                                    <i class="bi bi-calendar-x-fill"></i>
-                                    <span>Date Sent</span>
+                                    <i class='bx bxs-id-card'></i>
+                                    <span>Sender's ID</span>
                                 </div>
                             </th>
                             <th class="primary-th">
                                 <div class="primary-flex primary-row">
-                                    <i class='bx bxs-receipt'></i>
-                                    <span>Status</span>
+                                    <i class='bx bxs-send'></i>
+                                    <span>Sender's Name</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
+                                    <i class="bi bi-calendar-x-fill"></i>
+                                    <span>Date Sent</span>
                                 </div>
                             </th>
                             <th class="primary-th">
@@ -32,13 +38,16 @@
                     <tbody class="primary-tbody">
                         <% history.forEach(function(x) { %>
                         <tr class="primary-tr">
-                            <td class="primary-td" data-cell="project-name">
-                                <span><%= x.creation_date %></span>
+                            <td class="primary-td" data-cell="user-id">
+                                <span><%= x.user_id %></span>
                             </td>
-                            <td class="primary-td" data-cell="employee-name">
-                                <span><%= x.status %></span>
+                            <td class="primary-td" data-cell="user-name">
+                                <span><%= x.user_name %></span>
                             </td>
                             <td class="primary-td" data-cell="creation-date">
+                                <span><%= x.creation_date %></span>
+                            </td>
+                            <td class="primary-td" data-cell="comment">
                                 <span><%= x.comment %></span>
                             </td>
                         </tr>

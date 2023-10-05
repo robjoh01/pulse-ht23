@@ -242,8 +242,6 @@ router.get("/project/assign/", async (req, res, next) => {
         return;
     }
 
-    const id = req.params.id;
-
     let data = {};
 
     data.title = "Assign team members";

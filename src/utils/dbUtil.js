@@ -241,6 +241,12 @@ let dbUtil = {
             return false;
         }
 
+        const doesProjectExists = await this.doesProjectExists(null, projectId);
+
+        if (!doesProjectExists) {
+            return false;
+        }
+
         const db = await this.connectDatabase();
 
         const sql = 'CALL create_report(?, ?, ?, @success, @report_id); SELECT @success as success, @report_id as report_id;';
@@ -466,7 +472,7 @@ let dbUtil = {
         data.creation_date = dateUtil.parseDate(data.creation_date);
         data.project_start_date = dateUtil.parseDate(data.project_start_date);
         data.project_end_date = dateUtil.parseDate(data.project_end_date);
-        data.deadline = dateUtil.parseDate(data.deadline);
+        data.deadline_date = dateUtil.parseDateExtend(data.deadline_date);
 
         return data;
     },
@@ -484,7 +490,7 @@ let dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.deadline = dateUtil.parseDate(x.deadline);
+            x.deadline_date = dateUtil.parseDateExtend(x.deadline_date);
         });
 
         return data;
@@ -503,7 +509,8 @@ let dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.deadline = dateUtil.parseDate(x.deadline);
+            x.deadline_date = dateUtil.parseDateExtend(x.deadline_date);
+            x.time_left = dateUtil.calcTimeLeft(x.deadline_date);
         });
 
         return data;
@@ -518,7 +525,9 @@ let dbUtil = {
 
         const data = {...res[0][0]};
 
-        data.creation_date = dateUtil.parseDate(data.creation_date);
+        // creation_date: 2070-12-30T23:00:00.000Z,
+
+        data.creation_date = dateUtil.parseDateExtend(data.creation_date);
 
         return data;
     },
@@ -533,7 +542,7 @@ let dbUtil = {
         const data = JSON.parse(JSON.stringify(rows));
 
         data.forEach(x => {
-            x.creation_date = dateUtil.parseDate(x.creation_date);
+            x.creation_date = dateUtil.parseDateExtend(x.creation_date);
         });
 
         return data;
@@ -549,7 +558,7 @@ let dbUtil = {
         const data = JSON.parse(JSON.stringify(rows));
 
         data.forEach(x => {
-            x.creation_date = dateUtil.parseDate(x.creation_date);
+            x.creation_date = dateUtil.parseDateExtend(x.creation_date);
         });
 
         return data;
