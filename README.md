@@ -1,6 +1,6 @@
 <div align="center">
 
-![Banner](./public/img/markup/Pulse_Project.png)
+![Banner](./public/img/Pulse_Project.png)
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/robjoh01/pulse-ht23/blob/HEAD/LICENSE.txt)
 
