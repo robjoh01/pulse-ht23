@@ -2,18 +2,37 @@
 -- Create tables
 --
 
+DROP TABLE IF EXISTS `category`;
+DROP TABLE IF EXISTS `status`;
+
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `employee`;
 DROP TABLE IF EXISTS `project_manager`;
 
 DROP TABLE IF EXISTS `project`;
-DROP TABLE IF EXISTS `project_category`;
 DROP TABLE IF EXISTS `project_archive`;
 
 DROP TABLE IF EXISTS `assignment`;
+
 DROP TABLE IF EXISTS `report`;
 
 DROP TABLE IF EXISTS `notification`;
+
+CREATE TABLE `category`
+(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` TINYTEXT,
+
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `status`
+(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` TINYTEXT,
+
+    PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `user`
 (
@@ -64,16 +83,6 @@ CREATE TABLE `project`
     FOREIGN KEY (`project_manager_id`) REFERENCES project_manager(`id`)
 );
 
-CREATE TABLE `project_category`
-(
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `project_id` CHAR(36) NOT NULL,
-    `category` VARCHAR(28),
-
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`project_id`) REFERENCES project(`id`)
-);
-
 CREATE TABLE `project_archive`
 (
     `id` CHAR(36) NOT NULL,
@@ -102,11 +111,14 @@ CREATE TABLE `report`
     `project_id` CHAR(36) NOT NULL,
     `creation_date` DATETIME DEFAULT NOW(),
     `text` LONGTEXT,
-    `status` TINYTEXT,
+    `status_id` INT,
+    `category_id` INT,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`employee_id`) REFERENCES employee(`id`),
-    FOREIGN KEY (`project_id`) REFERENCES project(`id`)
+    FOREIGN KEY (`project_id`) REFERENCES project(`id`),
+    FOREIGN KEY (`status_id`) REFERENCES `status`(`id`),
+    FOREIGN KEY (`category_id`) REFERENCES `category`(`id`)
 );
 
 CREATE TABLE `report_comment`

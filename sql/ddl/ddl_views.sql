@@ -2,15 +2,36 @@
 -- Create views
 --
 
+DROP VIEW IF EXISTS v_categories;
+DROP VIEW IF EXISTS v_statuses;
+
 DROP VIEW IF EXISTS v_users;
 DROP VIEW IF EXISTS v_employees;
 DROP VIEW IF EXISTS v_project_managers;
 
 DROP VIEW IF EXISTS v_projects;
 DROP VIEW IF EXISTS v_project_archives;
+
 DROP VIEW IF EXISTS v_assignments;
+
 DROP VIEW IF EXISTS v_reports;
 DROP VIEW IF EXISTS v_report_history;
+
+CREATE VIEW v_categories AS
+SELECT
+    c.id,
+    c.name
+FROM `category` AS c
+GROUP BY c.id
+;
+
+CREATE VIEW v_statuses AS
+SELECT
+    s.id,
+    s.name
+FROM `status` AS s
+GROUP BY s.id
+;
 
 CREATE VIEW v_users AS
 SELECT
@@ -74,10 +95,8 @@ SELECT
     p.creation_date,
     p.modified_date,
     p.start_date,
-    p.end_date,
-    GROUP_CONCAT(pc.category SEPARATOR ', ') AS `categories`
+    p.end_date
 FROM `project` AS p
-    LEFT JOIN `project_category` AS pc ON p.id = pc.project_id
 GROUP BY p.id
 ORDER BY p.modified_date DESC, p.creation_date DESC
 ;
@@ -130,11 +149,14 @@ SELECT
     r.project_id,
     r.creation_date,
     r.text,
-    r.status
+    s.name AS `status`,
+    c.name AS `category`
 FROM `report` AS r
     JOIN `project` AS p ON r.project_id = p.id
     JOIN `employee` AS e ON r.employee_id = e.id
     JOIN `user` AS u ON e.id = u.id
+    LEFT JOIN `status` AS s ON r.status_id = s.id
+    LEFT JOIN `category` AS c ON r.category_id = c.id
 GROUP BY r.id
 ORDER BY r.creation_date DESC
 ;

@@ -2,6 +2,9 @@
 -- Create procedures
 --
 
+DROP PROCEDURE IF EXISTS fetch_categories;
+DROP PROCEDURE IF EXISTS fetch_statuses;
+
 DROP PROCEDURE IF EXISTS fetch_user;
 DROP PROCEDURE IF EXISTS fetch_users;
 
@@ -28,6 +31,22 @@ DROP PROCEDURE IF EXISTS fetch_reports;
 DROP PROCEDURE IF EXISTS fetch_reports_for_employee;
 
 DELIMITER ;;
+
+CREATE PROCEDURE fetch_categories()
+BEGIN
+    SELECT
+        *
+    FROM v_categories
+    ;
+END;;
+
+CREATE PROCEDURE fetch_statuses()
+BEGIN
+    SELECT
+        *
+    FROM v_statuses
+    ;
+END;;
 
 CREATE PROCEDURE fetch_user(
     arg_id CHAR(36)

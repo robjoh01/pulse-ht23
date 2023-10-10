@@ -91,12 +91,6 @@
                         <tr class="primary-tr">
                             <th class="primary-th">
                                 <div class="primary-flex primary-row">
-                                    <i class='bx bxs-id-card'></i>
-                                    <span>Project ID</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
                                     <i class='bx bx-text' ></i>
                                     <span>Project Name</span>
                                 </div>
@@ -121,6 +115,12 @@
                             </th>
                             <th class="primary-th">
                                 <div class="primary-flex primary-row">
+                                    <i class='bx bxs-folder-open'></i>
+                                    <span>Category</span>
+                                </div>
+                            </th>
+                            <th class="primary-th">
+                                <div class="primary-flex primary-row">
                                     <i class='bx bx-history'></i>
                                     <span>Report History</span>
                                 </div>
@@ -130,9 +130,6 @@
                     <tbody class="primary-tbody">
                         <% reports.forEach(function(x) { %>
                         <tr class="primary-tr">
-                            <td class="primary-td" data-cell="project-id">
-                                <span><%= x.project_id %></span>
-                            </td>
                             <td class="primary-td" data-cell="project-name">
                                 <span><%= x.project_name %></span>
                             </td>
@@ -144,6 +141,9 @@
                             </td>
                             <td class="primary-td" data-cell="report-status">
                                 <span><%= x.status %></span>
+                            </td>
+                            <td class="primary-td" data-cell="report-category">
+                                <span><%= x.category %></span>
                             </td>
                             <td class="primary-td" data-cell="report-history">
                                 <a href="/manager/report/history/<%= x.id %>">

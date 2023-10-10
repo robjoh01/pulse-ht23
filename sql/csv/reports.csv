@@ -1,3 +1,3 @@
-employee_id,project_id,creation_date,text,status
-"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","4e658238-d50c-4812-84f2-be58e8be308a","2023-12-23","Hello, World!","submitted"
-"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","ba28b243-6889-4c54-a138-ff72333186a2","2070-12-31","I have completed this project!","pending"
+employee_id,project_id,creation_date,text,status_id,category_id
+"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","4e658238-d50c-4812-84f2-be58e8be308a","2023-12-23 12:00","Hello, World!",1,1
+"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","ba28b243-6889-4c54-a138-ff72333186a2","2070-12-31 15:37","I have completed this project!",2,2

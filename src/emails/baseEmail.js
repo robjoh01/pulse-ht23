@@ -8,6 +8,7 @@ const nodeMailer = require("nodemailer");
 const htmlToText = require('nodemailer-html-to-text').htmlToText;
 const validator = require("email-validator");
 
+/** Docs */
 class BaseEmail {
     constructor(subject, template, data) {
         this.subject = subject

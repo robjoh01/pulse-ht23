@@ -2,11 +2,18 @@
 -- Delete tables, in order, depending on
 -- foreign key constraints.
 --
+
+DELETE FROM `category`;
+DELETE FROM `status`;
+
 DELETE FROM user;
 DELETE FROM employee;
 DELETE FROM project_manager;
+
 DELETE FROM project;
+
 DELETE FROM assignment;
+
 DELETE FROM report;
 
 --
@@ -14,6 +21,36 @@ DELETE FROM report;
 --
 SET GLOBAL local_infile = 1;
 SHOW VARIABLES LIKE 'local_infile';
+
+--
+-- Insert into category 
+--
+LOAD DATA LOCAL INFILE 'csv/categories.csv'
+INTO TABLE `category`
+CHARSET utf8
+FIELDS
+    TERMINATED BY ','
+    ENCLOSED BY '"'
+LINES
+    TERMINATED BY '\n'
+IGNORE 1 LINES
+    (`name`)
+;
+
+--
+-- Insert into category 
+--
+LOAD DATA LOCAL INFILE 'csv/statuses.csv'
+INTO TABLE `status`
+CHARSET utf8
+FIELDS
+    TERMINATED BY ','
+    ENCLOSED BY '"'
+LINES
+    TERMINATED BY '\n'
+IGNORE 1 LINES
+    (`name`)
+;
 
 --
 -- Insert into user 
@@ -102,5 +139,5 @@ FIELDS
 LINES
     TERMINATED BY '\n'
 IGNORE 1 LINES
-    (`employee_id`, `project_id`, `creation_date`, `text`, `status`)
+    (`employee_id`, `project_id`, `creation_date`, `text`, `status_id`, `category_id`)
 ;

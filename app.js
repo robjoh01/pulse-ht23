@@ -18,7 +18,11 @@ const routesJSON = require("./routes/routes_json.js");
 const { minutesToMilliseconds } = require("./src/utils/conversionUtil.js");
 
 const dotenv = require("dotenv");
-dotenv.config();
+const dotenvExpand = require("dotenv-expand");
+const cronUtil = require('./src/utils/cronUtil.js');
+
+const myEnv = dotenv.config();
+dotenvExpand.expand(myEnv);
 
 const app = express();
 const store = new session.MemoryStore();
@@ -69,3 +73,11 @@ app.use((error, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server listening on port: ${port}`);
 });
+
+if (process.env.CONFIG_MODE === "dist") {
+    // Schedule everyday at 12 PM (24:00)
+    cronUtil.schedule("0 12 * * *", () => {
+        // TODO: Check if any employee needs an email reminders (24h or 36h notice)
+        console.log("Send email reminders!");
+    });
+}

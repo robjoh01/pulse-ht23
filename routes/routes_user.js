@@ -33,17 +33,19 @@ router.get("/user/login", async (req, res, next) => {
         return;
     }
 
-    if (process.env.FORCE_LOGIN === "true") {
-        const isEmployee = await dbUtil.isEmployee(process.env.FORCE_ID);
+    if (process.env.CONFIG_MODE === "dev") {
+        if (process.env.FORCE_LOGIN === "true") {
+            const isEmployee = await dbUtil.isEmployee(process.env.FORCE_ID);
 
-        appUtil.authenticateUser(
-            req,
-            process.env.FORCE_ID,
-            isEmployee
-        );
+            appUtil.authenticateUser(
+                req,
+                process.env.FORCE_ID,
+                isEmployee
+            );
 
-        res.redirect("/");
-        return;
+            res.redirect("/");
+            return;
+        }
     }
 
     let data = {};

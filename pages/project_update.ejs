@@ -23,23 +23,23 @@
                     <label class="form-input-label" for="startDate" id="startDateLabel">
                         <span>Start Date</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="date" aria-invalid="false" id="startDate" name="f_start_date" value="<%= project.start_date %>">
+                            <input class="form-date-input" type="date" aria-invalid="false" id="startDate" name="f_start_date" value="<%= project.start_date %>">
                         </div>
                     </label>
                     <label class="form-input-label" for="endDate" id="endDateLabel">
                         <span>End Date</span>
                         <div class="form-input">
-                            <input class="form-text-input" type="date" aria-invalid="false" id="endDate" name="f_end_date" value="<%= project.end_date %>">
+                            <input class="form-date-input" type="date" aria-invalid="false" id="endDate" name="f_end_date" value="<%= project.end_date %>">
                         </div>
                     </label>
                     <label class="form-input-label" for="category" id="categoryLabel">
                         <span>Category</span>
                         <div class="form-input">
-                            <select id="category" class="form-select-input">
-                                <option value="daily">Daily</option>
-                                <option value="weekly">Weekly</option>
-                                <option value="fortnightly">Fortnightly</option>
-                                <option value="monthly">Monthly</option>
+                            <select id="category" required class="form-select-input">
+                                <option value="">--- SELECT A CATEGORY ---</option>
+                                <% categories.forEach(function(x) { %>
+                                <option value="<%= x.id %>"><%= x.name %></option>
+                                <% }); %>
                             </select>
                         </div>
                     </label>

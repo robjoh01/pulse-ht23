@@ -290,6 +290,30 @@ let dbUtil = {
         return Boolean(res[1][0].success);
     },
 
+    fetchStatuses: async function() {
+        const db = await this.connectDatabase();
+        const  sql = `CALL fetch_statuses();`;
+
+        const [rows] = await db.query(sql);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        return data;
+    },
+    fetchCategories: async function() {
+        const db = await this.connectDatabase();
+        const  sql = `CALL fetch_categories();`;
+
+        const [rows] = await db.query(sql);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        return data;
+    },
     fetchEmployee: async function(id) {
         const db = await this.connectDatabase();
 

@@ -34,13 +34,16 @@ router.post("/project/assign/upload", fileUpload({ limits: { fileSize: 10 * 1000
         return;
     }
 
+    const defaultPassword = "password";
     const rows = await csv().fromString(data);
+
+    // TODO: Add ability to tell the client, if there was an issue during this process.
 
     for (const x of rows) {
         const doesUserExists = await dbUtil.doesUserExists(null, x.employee_id);
 
         if (!doesUserExists) {
-            const wasCreated = await dbUtil.createUser(x.employee_id, true, x.username, "password", x.email_address);
+            const wasCreated = await dbUtil.createUser(x.employee_id, true, x.username, defaultPassword, x.email_address);
 
             if (!wasCreated) {
                 continue;
@@ -52,7 +55,13 @@ router.post("/project/assign/upload", fileUpload({ limits: { fileSize: 10 * 1000
                 continue;
             }
 
-            const mail = new emails.RegistrationEmail(req, x.display_name);
+            const mail = new emails.RegistrationEmail(
+                req,
+                x.username,
+                defaultPassword,
+                x.display_name
+            );
+
             await mail.send(x.email_address);
         }
 
