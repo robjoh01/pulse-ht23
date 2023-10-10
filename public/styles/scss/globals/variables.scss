@@ -1,3 +1,5 @@
+@use "./../utils" as *;
+
 @mixin light-theme-variables {
     --bg-img: url("/img/Background_Pattern_01_Inv.png");
     --hero-small-banner: url("/img/Pulse_Project.png");
@@ -12,6 +14,37 @@
     --base-line-height: 1.4;
     --base-font-size: 1.1rem;
     --magic-number: calc(var(--base-line-height) * var(--base-font-size));
+
+    --sidebar-width-large: 96px;
+    --sidebar-width-extended-large: 25dvw;
+    --sidebar-font-size-large: 16px;
+
+    --sidebar-width-medium: 80px;
+    --sidebar-width-extended-medium: 50dvw;
+    --sidebar-font-size-medium: 18px;
+
+    --sidebar-width-small: 64px;
+    --sidebar-width-extended-small: 80dvw;
+    --sidebar-font-size-small: 24px;
+
+    @include breakpoint(medium) {
+        --sidebar-width: var(--sidebar-width-large);
+        --sidebar-width-extended: var(--sidebar-width-extended-large);
+        --sidebar-font-size: var(--sidebar-font-size-large);
+    }
+
+    @include breakpoint-down(medium) {
+        --sidebar-width: var(--sidebar-width-medium);
+        --sidebar-width-extended: var(--sidebar-width-extended-medium);
+        --sidebar-font-size: var(--sidebar-font-size-medium);
+    }
+
+    @include breakpoint-down(small) {
+        --sidebar-width: var(--sidebar-width-small);
+        --sidebar-width-extended: var(--sidebar-width-extended-small);
+        --sidebar-font-size: var(--sidebar-font-size-small);
+    }
+
     @include light-theme-variables;
 }
 

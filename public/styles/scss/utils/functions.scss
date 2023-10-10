@@ -2,6 +2,7 @@
 @function rem($pixels, $context: 16) {
     @return calc($pixels / $context) * 1rem;
 }
+
 // return css color variable with different opacity value
 @function alpha($color, $opacity){
   $color: str-replace($color, 'var(');

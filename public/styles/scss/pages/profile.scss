@@ -8,9 +8,16 @@
 
 .profile-form-header {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 3rem;
     align-items: center;
+
+    @include breakpoint(medium) {
+        grid-template-columns: auto 1fr;
+        gap: 3rem;
+    }
+
+    @include breakpoint-down(small) {
+        grid-template-rows: repeat(2, 1fr);
+    }
 
     .profile-image-details-container {
         display: flex;
@@ -31,8 +38,6 @@
 
     #profileImg {
         object-fit: contain;
-        width: rem(128);
-        height: rem(128);
         border-radius: 1rem;
         background-color: var(--color-bg-300);
         border: 2px solid var(--color-border-300);
