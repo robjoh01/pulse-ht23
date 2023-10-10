@@ -94,6 +94,12 @@ let dbUtil = {
             return false;
         }
 
+        const doesUserExists = await this.doesUserExists(null, id);
+
+        if (!doesUserExists) {
+            return false;
+        }
+
         const db = await this.connectDatabase();
 
         let sql = `SELECT is_user_employee(?);`;

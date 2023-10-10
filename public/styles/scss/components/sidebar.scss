@@ -2,7 +2,10 @@
 
 .primary-sidebar {
     z-index: 1;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
     display: flex;
     gap: 1rem;
     background-color: var(--color-sidebar);
@@ -22,18 +25,22 @@
     }
 
     @include breakpoint-down(small) {
-        flex-flow: row nowrap;
-        width: 100%;
+        flex-flow: column nowrap;
+        // flex-flow: row nowrap;
+        // width: 100%;
+        // height: 2rem;
     }
 
     &.transitioning,
     &.active {
-        width: 16rem;
+        @include breakpoint(medium) {
+            width: 16rem;
+        }
 
         @include breakpoint-down(small) {
-            width: 100%;
-            align-items: center;
-            padding: 4rem;
+            // width: 100%;
+            // align-items: center;
+            // padding: 4rem;
         }
     }
 
