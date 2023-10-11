@@ -134,3 +134,4 @@ dist
 config/
 notes.md
 sql/backup.sql
+!coverage
