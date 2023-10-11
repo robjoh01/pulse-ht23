@@ -2,9 +2,7 @@
 
 ![Banner](./public/img/Pulse_Project.png)
 
-<!-- Jest Coverage Comment:Begin -->
-<!-- Jest Coverage Comment:End -->
-
+![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/robjoh01/79eb9296ff7428497df21f6b1bb9ef0a/raw/jest-coverage-comment__main.json)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/robjoh01/pulse-ht23/blob/HEAD/LICENSE.txt)
 
 </div>
