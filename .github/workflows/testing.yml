@@ -15,7 +15,7 @@ jobs:
         uses: MishaKav/jest-coverage-comment@main
         with:
           hide-comment: true
-          coverage-summary-path: ${{ github.workspace }}/coverage/coverage-summary.json
+          coverage-summary-path: ./../../coverage/coverage-summary.json
 
       - name: Check the output coverage
         run: |
@@ -28,7 +28,7 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.JEST_COVERAGE_COMMENT }}
-          gistID: 5e90d640f8c212ab7bbac38f72323f80
+          gistID: 79eb9296ff7428497df21f6b1bb9ef0a
           filename: jest-coverage-comment__main.json
           label: Coverage
           message: ${{ steps.coverageComment.outputs.coverage }}%
