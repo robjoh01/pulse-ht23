@@ -6,11 +6,16 @@
   "scripts": {
     "dist": "node app.js",
     "dev": "nodemon app.js",
+    "lint": "eslint src public",
     "test": "jest --detectOpenHandles",
     "test-extend": "jest --detectOpenHandles --coverage",
-    "lint": "stylelint \"**/*.scss\"",
+    "jsdoc": "documentation build src/** public/** -f html --github -o docs",
+    "jsdoc-lint": "documentation lint src/** public/**",
     "style": "sass public/styles/scss/style.scss public/styles/dist.css --no-source-map --style compressed",
-    "style-watch": "sass --watch public/styles/scss/style.scss public/styles/dist.css --no-source-map --style compressed"
+    "style-watch": "sass --watch public/styles/scss/style.scss public/styles/dist.css --no-source-map --style compressed",
+    "style-lint": "stylelint \"**/*.scss\"",
+    "analyze": "npm run lint && npm run test-extend && npm run jsdoc-lint && npm run style-lint",
+    "build": "npm run test && npm run jsdoc && npm run style"
   },
   "repository": {
     "type": "git",
@@ -31,6 +36,7 @@
     "canvas-confetti": "^1.9.0",
     "chart.js": "^4.4.0",
     "csvtojson": "^2.0.10",
+    "documentation": "^14.0.2",
     "dotenv": "^16.3.1",
     "dotenv-expand": "^10.0.0",
     "ejs": "^3.1.9",
@@ -52,6 +58,11 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "eslint": "^8.51.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.7.0",
     "normalize.css": "^8.0.1",
     "sass": "^1.66.1",

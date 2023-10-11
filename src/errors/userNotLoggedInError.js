@@ -2,7 +2,7 @@ const AppError = require("./appError.js");
 
 // Hello
 class UserNotLoggedInError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             401,
             "User Not Logged In",

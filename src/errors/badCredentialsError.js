@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class BadCredentialsError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             401,
             "Bad Credentials",

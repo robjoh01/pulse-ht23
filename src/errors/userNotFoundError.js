@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class UserNotFoundError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             404,
             "User Not Found",

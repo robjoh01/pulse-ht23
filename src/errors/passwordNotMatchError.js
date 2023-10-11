@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class PasswordNotMatchError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             400,
             "Passwords Don't Match",

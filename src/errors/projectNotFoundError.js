@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class ProjectNotFoundError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             404,
             "Project Not Found",

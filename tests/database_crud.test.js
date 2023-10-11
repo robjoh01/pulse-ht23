@@ -201,7 +201,9 @@ test("Create a report", async () => {
     const res = await dbUtil.createReport(
         userId,
         projectId,
-        "Hello, World!"
+        "Hello, World!",
+        1,
+        1
     );
 
     reportId = res.reportId;
@@ -214,7 +216,8 @@ test("Review a report", async () => {
         admindId,
         reportId,
         "OK!",
-        true
+        true,
+        2
     );
 
     expect(res).toEqual(true);

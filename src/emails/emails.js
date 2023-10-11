@@ -9,5 +9,5 @@ module.exports = {
     BaseEmail,
     WelcomeEmail,
     RegistrationEmail,
-    PasswordEmail,
+    PasswordEmail
 };

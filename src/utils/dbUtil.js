@@ -7,66 +7,90 @@ const config = require("./../../config/db/pulse.json");
 const hashUtil = require("./hashUtil.js");
 const dateUtil = require("./dateUtil.js");
 
-let dbUtil = {
-    connectDatabase: async function() {
+const statuses = Object.freeze({
+    pending: 1,
+    submitted: 2,
+    read: 3,
+    archived: 4
+});
+
+const categories = Object.freeze({
+    financial_reports: 1,
+    sales_and_marketing: 2,
+    project_progress: 3,
+    customer_feedback: 4,
+    operational_efficiency: 5,
+    human_resources: 6,
+    product_development: 7,
+    market_research: 8,
+    budget_and_expenses: 9
+});
+
+/** @namespace */
+const dbUtil = {
+    statuses,
+    categories,
+
+    connectDatabase: async function () {
         return await mysql.createConnection(config);
     },
 
     /**
     * Checks if the user exists in the database.
-    * @return {Boolean} A value either {true} or {false}.
+    * @return {boolean} A value either {true} or {false}.
+    * @memberof dbUtil
     */
-    doesProjectExists: async function(name = null, id = null) {
+    doesProjectExists: async function (name = null, id = null) {
         const db = await this.connectDatabase();
 
-        let sql = `SELECT does_project_exists(?, ?);`;
-        let res = await db.query(sql, [name, id]);
+        const sql = "SELECT does_project_exists(?, ?);";
+        const res = await db.query(sql, [name, id]);
 
         db.end();
 
         return Boolean(res[0][Object.keys(res[0])[0]]);
     },
-    createProject: async function(id, managerId, name, description = null, startDate, endDate, reportFrequency, reportDeadline) {
+    createProject: async function (id, managerId, name, description = null, startDate, endDate, reportFrequency, reportDeadline) {
         const db = await this.connectDatabase();
-        const query = `CALL create_project(?, ?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;`;
+        const query = "CALL create_project(?, ?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
 
-        let res = await db.query(query, [id, managerId, name, description, startDate, endDate, reportFrequency, reportDeadline]);
+        const res = await db.query(query, [id, managerId, name, description, startDate, endDate, reportFrequency, reportDeadline]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    updateProject: async function(id, name = null, description = null, startDate = null, endDate = null, reportFrequency = null, reportDeadline = null) {
+    updateProject: async function (id, name = null, description = null, startDate = null, endDate = null, reportFrequency = null, reportDeadline = null) {
         const db = await this.connectDatabase();
-        const query = `CALL update_project(?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;`;
+        const query = "CALL update_project(?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
 
-        let res = await db.query(query, [id, name, description, startDate, endDate, reportFrequency, reportDeadline]);
+        const res = await db.query(query, [id, name, description, startDate, endDate, reportFrequency, reportDeadline]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    archiveProject: async function(id) {
+    archiveProject: async function (id) {
         const db = await this.connectDatabase();
-        const query = `CALL archive_project(?, @success); SELECT @success as success;`;
+        const query = "CALL archive_project(?, @success); SELECT @success as success;";
 
-        let res = await db.query(query, [id]);
+        const res = await db.query(query, [id]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    deleteArchiveProject: async function(id) {
+    deleteArchiveProject: async function (id) {
         const db = await this.connectDatabase();
-        const query = `CALL delete_archive_project(?, @success); SELECT @success as success;`;
+        const query = "CALL delete_archive_project(?, @success); SELECT @success as success;";
 
-        let res = await db.query(query, [id]);
+        const res = await db.query(query, [id]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    assignToProject: async function(employeeId, projectId) {
+    assignToProject: async function (employeeId, projectId) {
         const doesUserExists = await this.doesUserExists(null, employeeId);
 
         if (!doesUserExists) {
@@ -80,16 +104,16 @@ let dbUtil = {
         }
 
         const db = await this.connectDatabase();
-        const query = `CALL assign_to_project(?, ?, @success); SELECT @success as success;`;
+        const query = "CALL assign_to_project(?, ?, @success); SELECT @success as success;";
 
-        let res = await db.query(query, [employeeId, projectId]);
+        const res = await db.query(query, [employeeId, projectId]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
 
-    isEmployee: async function(id) {
+    isEmployee: async function (id) {
         if (!id) {
             return false;
         }
@@ -102,8 +126,8 @@ let dbUtil = {
 
         const db = await this.connectDatabase();
 
-        let sql = `SELECT is_user_employee(?);`;
-        let res = await db.query(sql, [id]);
+        const sql = "SELECT is_user_employee(?);";
+        const res = await db.query(sql, [id]);
 
         db.end();
 
@@ -111,23 +135,24 @@ let dbUtil = {
     },
     /**
     * Checks if the user exists in the database.
-    * @return {Boolean} A value either {true} or {false}.
+    * @return {boolean} A value either {true} or {false}.
+    * @memberof dbUtil
     */
-    doesUserExists: async function(username = null, id = null) {
+    doesUserExists: async function (username = null, id = null) {
         if (!username && !id) {
             return false;
         }
 
         const db = await this.connectDatabase();
 
-        let sql = `SELECT does_user_exists(?, ?);`;
-        let res = await db.query(sql, [username, id]);
+        const sql = "SELECT does_user_exists(?, ?);";
+        const res = await db.query(sql, [username, id]);
 
         db.end();
 
         return Boolean(res[0][Object.keys(res[0])[0]]);
     },
-    doesUserHavePermission: async function(id, password) {
+    doesUserHavePermission: async function (id, password) {
         if (!id || !password) {
             return false;
         }
@@ -140,8 +165,8 @@ let dbUtil = {
 
         const db = await this.connectDatabase();
 
-        let sql = `SELECT get_user_password(?);`;
-        let res = await db.query(sql, [id]);
+        const sql = "SELECT get_user_password(?);";
+        const res = await db.query(sql, [id]);
 
         db.end();
 
@@ -149,45 +174,45 @@ let dbUtil = {
 
         return await hashUtil.compare(password, hashedPassword);
     },
-    createUser: async function(id, isEmployee, username, password, email) {
+    createUser: async function (id, isEmployee, username, password, email) {
         const db = await this.connectDatabase();
 
-        const sql = 'CALL create_user(?, ?, ?, ?, ?, @success); SELECT @success as success;';
+        const sql = "CALL create_user(?, ?, ?, ?, ?, @success); SELECT @success as success;";
         const hashedPassword = await hashUtil.hash(password);
 
-        let res = await db.query(sql, [id, isEmployee, username, hashedPassword, email]);
+        const res = await db.query(sql, [id, isEmployee, username, hashedPassword, email]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    updateUser: async function(id, newPassword = null, newDisplayName = null, newEmailAddress = null, newPhoneNumber = null, newImageURL = null) {
+    updateUser: async function (id, newPassword = null, newDisplayName = null, newEmailAddress = null, newPhoneNumber = null, newImageURL = null) {
         const db = await this.connectDatabase();
-    
+
         let hashedPassword = null;
 
         if (newPassword) {
             hashedPassword = await hashUtil.hash(newPassword);
         }
 
-        let sql = `CALL update_user(?, ?, ?, ?, ?, ?, @success); SELECT @success as success;`;
-        let res = await db.query(sql, [id, hashedPassword, newDisplayName, newEmailAddress, newPhoneNumber, newImageURL]);
+        const sql = "CALL update_user(?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
+        const res = await db.query(sql, [id, hashedPassword, newDisplayName, newEmailAddress, newPhoneNumber, newImageURL]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    deleteUser: async function(id) {
+    deleteUser: async function (id) {
         const db = await this.connectDatabase();
-        const sql = `CALL delete_user(?, @success); SELECT @success as success;`;
+        const sql = "CALL delete_user(?, @success); SELECT @success as success;";
 
-        let res = await db.query(sql, [id]);
+        const res = await db.query(sql, [id]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    loginUser: async function(username, password) {
+    loginUser: async function (username, password) {
         const doesUserExist = await this.doesUserExists(username); // Check if user is exists
 
         if (!doesUserExist) {
@@ -196,12 +221,12 @@ let dbUtil = {
 
         const db = await this.connectDatabase();
 
-        let sql = `SELECT get_user_id(?);`;
+        let sql = "SELECT get_user_id(?);";
         let res = await db.query(sql, [username]);
 
         const id = res[0][Object.keys(res[0])[0]]; // Get user's id
 
-        sql = `SELECT get_user_password(?);`;
+        sql = "SELECT get_user_password(?);";
         res = await db.query(sql, [id]);
 
         db.end();
@@ -215,10 +240,10 @@ let dbUtil = {
 
         return id;
     },
-    logoutUser: async function(id) {
+    logoutUser: async function (id) {
         const db = await this.connectDatabase();
 
-        let sql = `CALL user_logout(?);`;
+        const sql = "CALL user_logout(?);";
         await db.query(sql, [id]);
 
         db.end();
@@ -226,21 +251,21 @@ let dbUtil = {
         return true;
     },
 
-    doesReportExists: async function(id) {
+    doesReportExists: async function (id) {
         if (!id) {
             return false;
         }
 
         const db = await this.connectDatabase();
 
-        let sql = `SELECT does_report_exists(?);`;
-        let res = await db.query(sql, [id]);
+        const sql = "SELECT does_report_exists(?);";
+        const res = await db.query(sql, [id]);
 
         db.end();
 
         return Boolean(res[0][Object.keys(res[0])[0]]);
     },
-    createReport: async function(employeeId, projectId, text) {
+    createReport: async function (employeeId, projectId, text, statusId, categoryId) {
         const doesUserExists = await this.doesUserExists(null, employeeId);
 
         if (!doesUserExists) {
@@ -255,9 +280,9 @@ let dbUtil = {
 
         const db = await this.connectDatabase();
 
-        const sql = 'CALL create_report(?, ?, ?, @success, @report_id); SELECT @success as success, @report_id as report_id;';
+        const sql = "CALL create_report(?, ?, ?, ?, ?, @success, @report_id); SELECT @success as success, @report_id as report_id;";
 
-        let res = await db.query(sql, [employeeId, projectId, text]);
+        const res = await db.query(sql, [employeeId, projectId, text, statusId, categoryId]);
 
         db.end();
 
@@ -266,7 +291,7 @@ let dbUtil = {
 
         return { success, reportId };
     },
-    reviewReport: async function(managerId, reportId, comment, markedAsRead) {
+    reviewReport: async function (managerId, reportId, comment, statusId) {
         const doesUserExists = await this.doesUserExists(null, managerId);
 
         if (!doesUserExists) {
@@ -287,18 +312,18 @@ let dbUtil = {
 
         const db = await this.connectDatabase();
 
-        const sql = 'CALL review_report(?, ?, ?, ?, @success); SELECT @success as success;';
+        const sql = "CALL review_report(?, ?, ?, ?, @success); SELECT @success as success;";
 
-        let res = await db.query(sql, [managerId, reportId, comment, markedAsRead]);
+        const res = await db.query(sql, [managerId, reportId, comment, statusId]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
 
-    fetchStatuses: async function() {
+    fetchStatuses: async function () {
         const db = await this.connectDatabase();
-        const  sql = `CALL fetch_statuses();`;
+        const sql = "CALL fetch_statuses();";
 
         const [rows] = await db.query(sql);
 
@@ -308,9 +333,9 @@ let dbUtil = {
 
         return data;
     },
-    fetchCategories: async function() {
+    fetchCategories: async function () {
         const db = await this.connectDatabase();
-        const  sql = `CALL fetch_categories();`;
+        const sql = "CALL fetch_categories();";
 
         const [rows] = await db.query(sql);
 
@@ -320,65 +345,65 @@ let dbUtil = {
 
         return data;
     },
-    fetchEmployee: async function(id) {
+    fetchEmployee: async function (id) {
         const db = await this.connectDatabase();
 
-        let sql = `CALL fetch_employee(?);`;
-
-        let res = await db.query(sql, [id]);
-
-        db.end();
-
-        const data = {...res[0][0]};
-
-        return data;
-    },
-    fetchEmployees: async function() {
-        const db = await this.connectDatabase();
-        const  sql = `CALL fetch_employees();`;
-
-        const [rows] = await db.query(sql);
-
-        db.end();
-
-        const data = JSON.parse(JSON.stringify(rows));
-
-        return data;
-    },
-    fetchProjectManager: async function(id) {
-        const db = await this.connectDatabase();
-
-        let sql = `CALL fetch_project_manager(?);`;
-
-        let res = await db.query(sql, [id]);
-
-        db.end();
-
-        const data = {...res[0][0]};
-
-        return data;
-    },
-    fetchProjectManagers: async function() {
-        const db = await this.connectDatabase();
-        const sql = `CALL fetch_project_managers();`;
-
-        const [rows] = await db.query(sql);
-
-        db.end();
-
-        const data = JSON.parse(JSON.stringify(rows));
-
-        return data;
-    },
-    fetchUser: async function(id) {
-        const db = await this.connectDatabase();
-        const sql = `CALL fetch_user(?);`;
+        const sql = "CALL fetch_employee(?);";
 
         const res = await db.query(sql, [id]);
 
         db.end();
 
-        const data = {...res[0][0]};
+        const data = { ...res[0][0] };
+
+        return data;
+    },
+    fetchEmployees: async function () {
+        const db = await this.connectDatabase();
+        const sql = "CALL fetch_employees();";
+
+        const [rows] = await db.query(sql);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        return data;
+    },
+    fetchProjectManager: async function (id) {
+        const db = await this.connectDatabase();
+
+        const sql = "CALL fetch_project_manager(?);";
+
+        const res = await db.query(sql, [id]);
+
+        db.end();
+
+        const data = { ...res[0][0] };
+
+        return data;
+    },
+    fetchProjectManagers: async function () {
+        const db = await this.connectDatabase();
+        const sql = "CALL fetch_project_managers();";
+
+        const [rows] = await db.query(sql);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        return data;
+    },
+    fetchUser: async function (id) {
+        const db = await this.connectDatabase();
+        const sql = "CALL fetch_user(?);";
+
+        const res = await db.query(sql, [id]);
+
+        db.end();
+
+        const data = { ...res[0][0] };
 
         data.is_employee = Boolean(data.is_employee);
         data.creation_date = dateUtil.parseDate(data.creation_date);
@@ -386,9 +411,9 @@ let dbUtil = {
 
         return data;
     },
-    fetchUsers: async function() {
+    fetchUsers: async function () {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_users();`;
+        const sql = "CALL fetch_users();";
 
         const [rows] = await db.query(sql);
 
@@ -404,15 +429,15 @@ let dbUtil = {
 
         return data;
     },
-    fetchProject: async function(id) {
+    fetchProject: async function (id) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_project(?);`;
+        const sql = "CALL fetch_project(?);";
 
-        let res = await db.query(sql, [id]);
+        const res = await db.query(sql, [id]);
 
         db.end();
 
-        const data = {...res[0][0]};
+        const data = { ...res[0][0] };
 
         data.creation_date = dateUtil.parseDate(data.creation_date);
         data.modified_date = dateUtil.parseDate(data.modified_date);
@@ -421,9 +446,9 @@ let dbUtil = {
 
         return data;
     },
-    fetchProjects: async function() {
+    fetchProjects: async function () {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_projects();`;
+        const sql = "CALL fetch_projects();";
 
         const [rows] = await db.query(sql);
 
@@ -440,23 +465,23 @@ let dbUtil = {
 
         return data;
     },
-    fetchArchiveProject: async function(id) {
+    fetchArchiveProject: async function (id) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_project_archive(?);`;
+        const sql = "CALL fetch_project_archive(?);";
 
-        let res = await db.query(sql, [id]);
+        const res = await db.query(sql, [id]);
 
         db.end();
 
-        const data = {...res[0][0]};
+        const data = { ...res[0][0] };
 
         data.creation_date = dateUtil.parseDate(data.creation_date);
 
         return data;
     },
-    fetchArchiveProjects: async function() {
+    fetchArchiveProjects: async function () {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_project_archives();`;
+        const sql = "CALL fetch_project_archives();";
 
         const [rows] = await db.query(sql);
 
@@ -470,9 +495,9 @@ let dbUtil = {
 
         return data;
     },
-    fetchProjectsWithFilter: async function(query) {
+    fetchProjectsWithFilter: async function (query) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_projects_with_filter(?, ?);`;
+        const sql = "CALL fetch_projects_with_filter(?, ?);";
 
         const [rows] = await db.query(sql, [query, `%${query}%`]);
 
@@ -489,15 +514,15 @@ let dbUtil = {
 
         return data;
     },
-    fetchAssignment: async function(projectId, employeeId) {
+    fetchAssignment: async function (projectId, employeeId) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_assignment(?, ?);`;
+        const sql = "CALL fetch_assignment(?, ?);";
 
-        let res = await db.query(sql, [projectId, employeeId]);
+        const res = await db.query(sql, [projectId, employeeId]);
 
         db.end();
 
-        const data = {...res[0][0]};
+        const data = { ...res[0][0] };
 
         data.creation_date = dateUtil.parseDate(data.creation_date);
         data.project_start_date = dateUtil.parseDate(data.project_start_date);
@@ -506,9 +531,9 @@ let dbUtil = {
 
         return data;
     },
-    fetchAssignments: async function() {
+    fetchAssignments: async function () {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_assignments();`;
+        const sql = "CALL fetch_assignments();";
 
         const [rows] = await db.query(sql);
 
@@ -525,11 +550,11 @@ let dbUtil = {
 
         return data;
     },
-    fetchAssignmentsForEmployee: async function(employeeId) {
+    fetchAssignmentsForEmployee: async function (employeeId) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_assignments_for_employee(?);`;
+        const sql = "CALL fetch_assignments_for_employee(?);";
 
-        const [rows] =  await db.query(sql, [employeeId]);
+        const [rows] = await db.query(sql, [employeeId]);
 
         db.end();
 
@@ -545,25 +570,23 @@ let dbUtil = {
 
         return data;
     },
-    fetchReport: async function(id) {
+    fetchReport: async function (id) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_report(?);`;
+        const sql = "CALL fetch_report(?);";
 
-        let res = await db.query(sql, [id]);
+        const res = await db.query(sql, [id]);
 
         db.end();
 
-        const data = {...res[0][0]};
-
-        // creation_date: 2070-12-30T23:00:00.000Z,
+        const data = { ...res[0][0] };
 
         data.creation_date = dateUtil.parseDateExtend(data.creation_date);
 
         return data;
     },
-    fetchReportHistory: async function(id) {
+    fetchReportHistory: async function (id) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_report_history(?);`;
+        const sql = "CALL fetch_report_history(?);";
 
         const [rows] = await db.query(sql, [id]);
 
@@ -577,9 +600,9 @@ let dbUtil = {
 
         return data;
     },
-    fetchReports: async function() {
+    fetchReports: async function () {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_reports();`;
+        const sql = "CALL fetch_reports();";
 
         const [rows] = await db.query(sql);
 
@@ -593,11 +616,11 @@ let dbUtil = {
 
         return data;
     },
-    fetchReportsForEmployee: async function(employeeId) {
+    fetchReportsForEmployee: async function (employeeId) {
         const db = await this.connectDatabase();
-        const sql = `CALL fetch_reports_for_employee(?);`;
+        const sql = "CALL fetch_reports_for_employee(?);";
 
-        const [rows] =  await db.query(sql, [employeeId]);
+        const [rows] = await db.query(sql, [employeeId]);
 
         db.end();
 
@@ -608,7 +631,7 @@ let dbUtil = {
         });
 
         return data;
-    },
+    }
 };
 
 module.exports = dbUtil;

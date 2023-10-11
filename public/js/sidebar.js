@@ -4,6 +4,7 @@ const sidebarBtn = document.getElementById("sidebarBtn");
 const sidebar = document.getElementById("sidebar");
 const themeBtn = document.getElementById("themeBtn");
 
+/* eslint-disable no-undef */
 if (overrideColorTheme) {
     themeBtn.className = (overrideColorTheme === "dark") ? "light" : "dark";
 } else {
@@ -17,6 +18,7 @@ matchMedia.addEventListener("change", e => {
 
     themeBtn.className = e.matches ? "light" : "dark";
 });
+/* eslint-enable no-undef */
 
 themeBtn.addEventListener("click", () => {
     if (themeBtn.classList.contains("dark")) {

@@ -149,6 +149,8 @@ SELECT
     r.project_id,
     r.creation_date,
     r.text,
+    s.id AS `status_id`,
+    c.id AS `category_id`,
     s.name AS `status`,
     c.name AS `category`
 FROM `report` AS r
@@ -168,9 +170,8 @@ SELECT
     rc.id,
     rc.creation_date,
     rc.report_id,
-    rc.comment,
-    rc.status
-FROM `report_comment` AS rc
+    rc.comment
+FROM `report_history` AS rc
     JOIN `report` AS r ON rc.report_id = r.id
     JOIN `user` AS u ON u.id = rc.user_id
 GROUP BY rc.id

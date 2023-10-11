@@ -3,15 +3,17 @@
 const messageQueue = [];
 let isSnackbarVisible = false;
 
-function showSnackBar(message) {
+/* eslint-disable no-unused-vars */
+function showSnackBar (message) {
     messageQueue.push(message);
 
     if (!isSnackbarVisible) {
         displayNextMessage();
     }
 }
+/* eslint-enable no-unused-vars */
 
-function displayNextMessage() {
+function displayNextMessage () {
     const sb = document.getElementById("snackbar");
     if (messageQueue.length > 0) {
         const message = messageQueue.shift();

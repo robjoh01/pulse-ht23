@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class ReportNotFoundError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             404,
             "Report Not Found",

@@ -1,13 +1,13 @@
 "use strict";
 
-const BaseEmail = require('./baseEmail.js');
+const BaseEmail = require("./baseEmail.js");
 
-const { getBaseURL } = require('../utils/appUtil.js');
+const { getBaseURL } = require("../utils/appUtil.js");
 
 /** Docs */
 class RegistrationEmail extends BaseEmail {
-    constructor(req, username, password, displayName) {
-        let data = {};
+    constructor (req, username, password, displayName) {
+        const data = {};
 
         data.name = displayName;
         data.username = username;

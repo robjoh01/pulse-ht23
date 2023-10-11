@@ -1,5 +1,5 @@
 class AppError extends Error {
-    constructor(code, title, message, redirect = "/") {
+    constructor (code, title, message, redirect = "/") {
         super(message);
 
         this.name = this.constructor.name;

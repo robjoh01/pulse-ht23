@@ -1,27 +1,30 @@
 "use strict";
 
-let conversionUtil = {
-    minutesToMilliseconds: function(minutes) {
+/** @namespace */
+const conversionUtil = {
+    minutesToMilliseconds: function (minutes) {
         return minutes * 60000;
     },
-    hoursToMilliseconds: function(hours) {
+    hoursToMilliseconds: function (hours) {
         return hours * 3600000;
     },
-    daysToMilliseconds: function(days) {
+    daysToMilliseconds: function (days) {
         return days * 86400000;
     },
     /**
     * MB to bytes
-    * @return {Number} A value in bytes.
+    * @return {number} A value in bytes.
+    * @memberof conversionUtil
     */
-    megabytesToBytes: function(megabytes) {
+    megabytesToBytes: function (megabytes) {
         return megabytes * 1000000;
     },
     /**
     * Bytes to MB
-    * @return {Number} A value in MB.
+    * @return {number} A value in MB.
+    * @memberof conversionUtil
     */
-    bytesToMegabytes: function(bytes) {
+    bytesToMegabytes: function (bytes) {
         return bytes / 1000000;
     }
 };

@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class ProfanityDetectedError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             400,
             "Profanity Detected",

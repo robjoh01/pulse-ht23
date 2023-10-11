@@ -2,26 +2,26 @@
 
 const moment = require("moment");
 
-let dateUtil = {
-    parseDate: function(date) {
+const dateUtil = {
+    parseDate: function (date) {
         return moment(date).format("YYYY-MM-DD");
     },
-    parseDateExtend: function(date) {
+    parseDateExtend: function (date) {
         return moment(date).format("YYYY-MM-DD HH:mm:ss");
     },
-    getCurrentDate: function() {
+    getCurrentDate: function () {
         return moment().format("YYYY-MM-DD");
     },
-    getCurrentDateExtend: function() {
+    getCurrentDateExtend: function () {
         return moment().format("YYYY-MM-DD HH:mm:ss");
     },
-    calcTimeLeft: function(datetime) {
+    calcTimeLeft: function (datetime) {
         const now = moment();
         const then = moment(datetime);
         const duration = moment.duration(then.diff(now));
 
         if (duration.asMilliseconds() < 0) {
-            return 'Time has passed';
+            return "Time has passed";
         } else if (duration.asMonths() > 1) {
             const months = Math.floor(duration.asMonths());
             return months + ` ${months > 1 ? "months left" : "month left"}`;

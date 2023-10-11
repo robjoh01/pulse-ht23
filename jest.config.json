@@ -1,0 +1,10 @@
+{
+    "bail": 1,
+    "verbose": true,
+    "coverageReporters": [
+        "html",
+        "json-summary",
+        "text",
+        "text-summary"
+    ]
+}

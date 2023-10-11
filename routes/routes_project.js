@@ -116,7 +116,6 @@ router.get("/project/update/:id", async (req, res, next) => {
     data.user = user;
     data.project_id = projectId;
     data.project = project;
-    data.categories = await dbUtil.fetchCategories();
 
     res.render("./../pages/project_update.ejs", data);
 });

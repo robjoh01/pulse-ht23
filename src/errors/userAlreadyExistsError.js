@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class UserAlreadyExistsError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             409,
             "User Already Exists",

@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS `project_archive`;
 DROP TABLE IF EXISTS `assignment`;
 
 DROP TABLE IF EXISTS `report`;
+DROP TABLE IF EXISTS `report_history`;
 
 DROP TABLE IF EXISTS `notification`;
 
@@ -121,14 +122,13 @@ CREATE TABLE `report`
     FOREIGN KEY (`category_id`) REFERENCES `category`(`id`)
 );
 
-CREATE TABLE `report_comment`
+CREATE TABLE `report_history`
 (
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` CHAR(36) NOT NULL,
     `creation_date` DATETIME DEFAULT NOW(),
     `report_id` INT NOT NUll,
     `comment` LONGTEXT,
-    `status` TINYTEXT,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES user(`id`),

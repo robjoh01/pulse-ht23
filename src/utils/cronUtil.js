@@ -1,6 +1,6 @@
 "use strict";
 
-const cron = require('node-cron');
+const cron = require("node-cron");
 
 /*
 
@@ -20,8 +20,8 @@ const cron = require('node-cron');
 
 */
 
-let cronUtil = {
-    schedule: function(cronExpression, callback) {
+const cronUtil = {
+    schedule: function (cronExpression, callback) {
         cron.schedule(cronExpression, callback, {
             scheduled: true,
             timezone: "Europe/Stockholm"

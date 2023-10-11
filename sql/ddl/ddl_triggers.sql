@@ -86,8 +86,8 @@ CREATE TRIGGER report_before_delete
 BEFORE DELETE ON `report`
 FOR EACH ROW
 BEGIN
-    -- Delete related comments from report_comment
-    DELETE FROM `report_comment` WHERE `report_id` = OLD.id;
+    -- Delete related comments from report_history
+    DELETE FROM `report_history` WHERE `report_id` = OLD.id;
 END;;
 
 CREATE TRIGGER report_after_insert
@@ -100,9 +100,9 @@ BEGIN
         DELETE FROM `assignment` WHERE employee_id = NEW.employee_id AND project_id = NEW.project_id;
     END IF;
 
-    -- Insert into report_comment table
-    INSERT INTO `report_comment` (`user_id`, `creation_date`, `report_id`, `comment`, `status`)
-        VALUES (NEW.employee_id, NOW(), NEW.id, NEW.text, 'pending');
+    -- Insert into report_history table
+    INSERT INTO `report_history` (`user_id`, `creation_date`, `report_id`, `comment`)
+        VALUES (NEW.employee_id, NOW(), NEW.id, NEW.text);
 END;;
 
 DELIMITER ;

@@ -39,7 +39,9 @@ CONFIG_MODE=<dev|dist>
 
 # Development Config
 FORCE_LOGIN=<boolean>
-FORCE_ID=<guid>
+ADMIN_ID=<guid>
+EMPLOYEE_ID=<guid>
+FORCE_ID=$ADMIN_ID <ADMIN_ID|EMPLOYEE_ID>
 
 # Email config
 ENABLE_EMAIL=<boolean>

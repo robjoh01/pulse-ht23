@@ -5,7 +5,7 @@ const dropForm = document.getElementById("dropForm");
 const dropText = document.getElementById("dropText");
 const dropInput = document.getElementById("dropInput");
 
-var projectInput = document.getElementById("projectInput");
+const projectInput = document.getElementById("projectInput");
 
 resetDropForm();
 
@@ -16,7 +16,7 @@ dropArea.addEventListener("dragover", (event) => {
     event.preventDefault();
 
     // Style the drag-and-drop as a "copy file" operation.
-    event.dataTransfer.dropEffect = 'copy';
+    event.dataTransfer.dropEffect = "copy";
 });
 
 dropArea.addEventListener("drop", (event) => {
@@ -36,15 +36,17 @@ dropInput.addEventListener("change", (e) => {
     onFileSelected(files[0]);
 });
 
-async function onFileSelected(file) {
+async function onFileSelected (file) {
     dropText.textContent = "File Selected";
 
+    /* eslint-disable no-undef */
     showSnackBar("File selected");
+    /* eslint-enable no-undef */
 
     fileText = await file.text();
 }
 
-function resetDropForm() {
+function resetDropForm () {
     dropForm.reset();
     dropText.textContent = "Choose a file or drag it here";
 }
@@ -65,16 +67,19 @@ dropForm.addEventListener("submit", async (e) => {
         return;
     }
 
+    /* eslint-disable no-undef */
     showSnackBar("Processing the data");
+    /* eslint-enable no-undef */
 
     const json = await res.json();
 
     console.log(json);
 
     if (json.wasUploaded) {
+        /* eslint-disable no-undef */
         showSnackBar("Data was uploaded");
+        /* eslint-enable no-undef */
+
         resetDropForm();
-    } else {
-        
     }
 });

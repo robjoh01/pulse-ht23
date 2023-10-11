@@ -1,9 +1,9 @@
 "use strict";
 
-const profileImg = document.getElementById("profileImg");
-const profileImgFile = document.getElementById("profileImgFile");
-const profileImgSubmit = document.getElementById("profileImgSubmit");
-const profileImgReset = document.getElementById("profileImgReset");
+// const profileImg = document.getElementById("profileImg");
+// const profileImgFile = document.getElementById("profileImgFile");
+// const profileImgSubmit = document.getElementById("profileImgSubmit");
+// const profileImgReset = document.getElementById("profileImgReset");
 
 // localStorage.setItem("profileImgURL", profileImg.src);
 

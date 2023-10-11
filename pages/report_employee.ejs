@@ -16,6 +16,17 @@
                             <textarea class="form-textarea-input" aria-invalid="false" id="text" name="f_text" rows="10" cols="33" required></textarea>
                         </div>
                     </label>
+                    <label class="form-input-label" for="category" id="categoryLabel">
+                        <span>Category</span>
+                        <div class="form-input">
+                            <select name="f_category_id" id="category" required class="form-select-input">
+                                <option value="">--- SELECT A CATEGORY ---</option>
+                                <% categories.forEach(function(x) { %>
+                                <option value="<%= x.id %>"><%= x.name %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </label>
                     <div class="primary-flex primary-row">
                         <button class="button" type="submit">
                             <span>Send</span>

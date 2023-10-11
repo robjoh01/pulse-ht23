@@ -1,7 +1,7 @@
 const AppError = require("./appError.js");
 
 class ProjectAlreadyExistsError extends AppError {
-    constructor(next, redirect = "/") {
+    constructor (next, redirect = "/") {
         super(
             409,
             "Project Already Exists",

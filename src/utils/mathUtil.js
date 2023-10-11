@@ -1,7 +1,7 @@
 "use strict";
 
-let mathUtil = {
-    
+const mathUtil = {
+
 };
 
 module.exports = mathUtil;

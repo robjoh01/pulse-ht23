@@ -1,7 +1,7 @@
 "use strict";
 
-let matchMedia = window.matchMedia?.("(prefers-color-scheme: dark)");
-let overrideColorTheme = localStorage.getItem("color-theme");
+const matchMedia = window.matchMedia?.("(prefers-color-scheme: dark)");
+const overrideColorTheme = localStorage.getItem("color-theme");
 
 if (overrideColorTheme) {
     document.body.className = overrideColorTheme;

@@ -42,6 +42,7 @@ router.get("/employee/report/:id", async (req, res, next) => {
     data.user = await dbUtil.fetchUser(user.id);
     data.project_id = projectId;
     data.project = project;
+    data.categories = await dbUtil.fetchCategories();
 
     res.render("./../pages/report_employee.ejs", data);
 });
@@ -52,7 +53,7 @@ router.post("/employee/report/posted", async (req, res, next) => {
         return;
     }
 
-    const { f_id, f_text } = req.body;
+    const { f_id, f_text, f_status_id, f_category_id } = req.body;
 
     if (!f_text) {
         new errors.BadCredentialsError(next, `/employee/report/${f_id}`);
@@ -61,7 +62,7 @@ router.post("/employee/report/posted", async (req, res, next) => {
 
     const user = appUtil.getSessionUser(req);
 
-    const wasSuccessful = await dbUtil.createReport(user.id, f_id, f_text);
+    const wasSuccessful = await dbUtil.createReport(user.id, f_id, f_text, dbUtil.statuses.pending, f_category_id);
 
     if (!wasSuccessful) {
         new errors.UnkownError(next, `/employee/report/${f_id}`);
@@ -91,6 +92,8 @@ router.get("/manager/report/:id", async (req, res, next) => {
         new errors.ReportNotFoundError(next, "/dashboard");
         return;
     }
+
+    console.log(report);
 
     let data = {};
 
@@ -122,15 +125,15 @@ router.post("/manager/report/posted", async (req, res, next) => {
         return;
     }
 
-    let markedAsRead = false;
+    let statusId = dbUtil.statuses.submitted;
 
     if (f_read === "on") {
-        markedAsRead = true;
+        statusId = dbUtil.statuses.read;
     }
 
     const user = appUtil.getSessionUser(req);
 
-    const wasSuccessful = await dbUtil.reviewReport(user.id, f_id, f_comment, markedAsRead);
+    const wasSuccessful = await dbUtil.reviewReport(user.id, f_id, f_comment, statusId);
 
     if (!wasSuccessful) {
         new errors.UnkownError(next, `/manager/report/${f_id}`);
