@@ -39,7 +39,8 @@ router.post("/project/create/posted", async (req, res, next) => {
 
     const { f_name, f_description, f_start_date, f_end_date, f_report_freq, f_report_deadline } = req.body;
 
-    if (!f_name) {
+    if (!f_name ||
+        !f_report_freq && !f_report_deadline) {
         new errors.BadCredentialsError(next, "/project/create");
         return;
     }

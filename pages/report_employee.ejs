@@ -8,7 +8,7 @@
                 <div class="form-header">
                     <h2><%= title %></h2>
                 </div>
-                <form class="form-body" method="POST" action="/employee/report/posted">
+                <form id="confettiForm" class="form-body" method="POST" action="/employee/report/posted">
                     <input name="f_id" required hidden value="<%= project_id %>">
                     <label class="form-input-label" for="text" id="textLabel">
                         <span>Report text:</span>

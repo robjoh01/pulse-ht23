@@ -6,10 +6,10 @@
         <main class="main">
             <div class="form-container">
                 <div class="form-header">
-                    <h1>Are you sure you want to delete your account?</h1>
-                    <p>This action will permanently remove all your data from our system.</p>
+                    <h2>Are you sure you want to deactivate your account?</h2>
+                    <p>This action will lock your data until project was deleted from our database.</p>
                 </div>
-                <form class="form-body" method="POST" action="/user/delete/posted">
+                <form class="form-body" method="POST" action="/user/deactivate/posted">
                     <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
                     <label class="form-input-label" for="password" id="passwordLabel">
                         <span>Password</span>

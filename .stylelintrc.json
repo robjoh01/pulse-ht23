@@ -4,7 +4,18 @@
     ],
     "rules": {
         "at-rule-no-unknown": null,
-        "selector-max-compound-selectors": 5
+        "selector-max-compound-selectors": 5,
+        "selector-max-id": 3,
+        "max-nesting-depth": 3,
+        "value-no-vendor-prefix": null,
+        "property-no-vendor-prefix": null,
+        "at-rule-no-vendor-prefix": null,
+        "selector-no-qualifying-type": [
+            true,
+            {
+                "ignore": [ "attribute", "class" ]
+            }
+        ]
     },
     "ignoreFiles": [
         "**/node_modules/",

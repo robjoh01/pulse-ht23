@@ -17,14 +17,14 @@
                     <label class="form-input-label" for="emailInput" id="emailLabel">
                         <span>Email</span>
                         <div class="form-input">
-                            <input class="form-text-input form-email-input" type="email" aria-invalid="false" id="emailInput" name="f_email" required placeholder="Enter your email" autocorrect="true" autocomplete="true" autocapitalize="none">
+                            <input class="form-text-input form-email-input" type="email" aria-invalid="false" id="emailInput" name="f_email" required placeholder="Enter your email" autocorrect="true" autocomplete="true" autocapitalize="none" pattern="/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/" title="Must be a valid email address">
                             <i class="form-input-icon bi bi-postcard-fill"></i>
                         </div>
                     </label>
                     <label class="form-input-label" for="passwordInput" id="passwordLabel">
                         <span>Password</span>
                         <div class="form-input">
-                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
+                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
                             <button class="form-input-icon" id="passwordBtn" type="button">
                                 <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
                                 <i id="passwordShown" class="bi bi-eye"></i>
@@ -34,7 +34,7 @@
                     <label class="form-input-label" for="passwordInputAgain" id="passwordAgainLabel">
                         <span>Password (again)</span>
                         <div class="form-input">
-                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInputAgain" name="f_password_again" required placeholder="Enter your password (again)">
+                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInputAgain" name="f_password_again" required placeholder="Enter your password (again)" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
                         </div>
                     </label>
                     <label class="form-input-label" for="role">

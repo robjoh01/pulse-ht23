@@ -95,8 +95,10 @@ SELECT
     p.creation_date,
     p.modified_date,
     p.start_date,
-    p.end_date
+    p.end_date,
+    COUNT(r.id) AS `report_count`
 FROM `project` AS p
+    LEFT JOIN `report` AS r ON p.id = r.project_id AND r.status_id = 2
 GROUP BY p.id
 ORDER BY p.modified_date DESC, p.creation_date DESC
 ;
@@ -144,7 +146,10 @@ CREATE VIEW v_reports AS
 SELECT
     r.id,
     r.employee_id,
-    u.display_name AS `employee_name`,
+    CASE
+        WHEN u.display_name IS NOT NULL AND u.display_name != '' THEN u.display_name
+        ELSE u.username
+    END AS `employee_name`,
     p.name AS `project_name`,
     r.project_id,
     r.creation_date,

@@ -4,10 +4,6 @@
     position: relative;
     display: grid;
     grid-template-rows: 1fr auto;
-
-    @include breakpoint-down(small) {
-
-    }
 }
 
 .main-layout {
@@ -77,15 +73,4 @@
     max-width: 100%;
     padding: 0;
     margin: 0;
-}
-
-.article {
-    // display: flex;
-    // flex-flow: column nowrap;
-    // gap: 1rem;
-    // margin: 2rem auto;
-}
-
-.section {
-    
 }

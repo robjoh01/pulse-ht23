@@ -35,16 +35,16 @@
                                         <span>Name</span>
                                     </div>
                                 </th>
-                                <th class="primary-th">
+                                <th class="primary-th" colspan="2">
                                     <div class="primary-flex primary-row">
-                                        <i class="bi bi-calendar-x-fill"></i>
-                                        <span>Start</span>
+                                        <i class='bx bxs-calendar-star'></i>
+                                        <span>Start & End date</span>
                                     </div>
                                 </th>
                                 <th class="primary-th">
                                     <div class="primary-flex primary-row">
-                                        <i class="bi bi-calendar-x-fill"></i>
-                                        <span>End</span>
+                                        <i class='bx bxs-bell-ring'></i>
+                                        <span>Submitted Reports</span>
                                     </div>
                                 </th>
                             </tr>
@@ -52,8 +52,7 @@
                         <tbody class="primary-tbody">
                             <% projects.forEach(function(x) { %>
                             <tr class="primary-tr">
-                                <!-- <td class="primary-td color-tab <%= x.severity %>"></td> -->
-                                <td class="primary-td" data-cell="name">
+                                <td class="primary-td" data-cell="Project's Name">
                                     <div class="primary-flex primary-row">
                                         <button aria-label="Copy project as a shareable link" class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
                                             <i class="bi bi-link-45deg"></i>
@@ -63,11 +62,15 @@
                                         </a>
                                     </div>
                                 </td>
-                                <td class="primary-td" data-cell="start date">
-                                    <span><%= x.start_date %></span>
+                                <td class="primary-td" data-cell="Project's Dates" colspan="2">
+                                    <div class="primary-flex primary-row">
+                                        <span><%= x.start_date %></span>
+                                        <span>➟</span>
+                                        <span><%= x.end_date %></span>
+                                    </div>
                                 </td>
-                                <td class="primary-td" data-cell="end date">
-                                    <span><%= x.end_date %></span>
+                                <td class="primary-td" data-cell="Report Count">
+                                    <span><%= x.report_count %></span>
                                 </td>
                             </tr>
                             <% }); %>
@@ -132,24 +135,24 @@
                         <tbody class="primary-tbody">
                             <% reports.forEach(function(x) { %>
                             <tr class="primary-tr">
-                                <td class="primary-td" data-cell="project-name">
+                                <td class="primary-td" data-cell="Project's Name">
                                     <span><%= x.project_name %></span>
                                 </td>
-                                <td class="primary-td" data-cell="employee-name">
+                                <td class="primary-td" data-cell="Employee's Name">
                                     <span><%= x.employee_name %></span>
                                 </td>
-                                <td class="primary-td" data-cell="creation-date">
+                                <td class="primary-td" data-cell="Creation Date">
                                     <span><%= x.creation_date %></span>
                                 </td>
-                                <td class="primary-td" data-cell="status">
+                                <td class="primary-td" data-cell="Status">
                                     <span><%= x.status %></span>
                                 </td>
-                                <td class="primary-td" data-cell="report-view">
+                                <td class="primary-td" data-cell="View report">
                                     <a href="/manager/report/<%= x.id %>">
                                         <span>Link</span>
                                     </a>
                                 </td>
-                                <td class="primary-td" data-cell="report-history">
+                                <td class="primary-td" data-cell="View history">
                                     <a href="/manager/report/history/<%= x.id %>">
                                         <span>Link</span>
                                     </a>

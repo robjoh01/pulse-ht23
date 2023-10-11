@@ -116,6 +116,9 @@
     --color-pink-light: hsl(300, 50%, 73%);
     --color-pink-dark: hsl(300, 52%, 61%);
 
+    --color-black-light: hsl(0, 0%, 0%);
+    --color-black-dark: hsl(0, 0%, 0%);
+
     // --color-accent-light: hsl(56, 72%, 49%);
     // --color-accent-dark: hsl(163, 72%, 61%);
 
@@ -185,6 +188,7 @@
     --color-red: var(--color-red-light);
     --color-blue: var(--color-blue-light);
     --color-pink: var(--color-pink-light);
+    --color-black: var(--color-black-light);
 }
 
 @mixin dark-theme-colors {
@@ -249,6 +253,7 @@
     --color-red: var(--color-red-dark);
     --color-blue: var(--color-blue-dark);
     --color-pink: var(--color-pink-dark);
+    --color-black: var(--color-black-dark);
 }
 
 :root, [data-theme="default"] {

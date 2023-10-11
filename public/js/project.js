@@ -1,5 +1,31 @@
 "use strict";
 
+const startDateInput = document.getElementById("startDateInput");
+const endDateInput = document.getElementById("endDateInput");
+
+function checkDates () {
+    const startDate = startDateInput.value;
+    const endDate = endDateInput.value;
+
+    if (!startDate ||
+        !endDate) {
+        return;
+    }
+
+    const isBeforeDate = startDate < endDate;
+
+    if (!isBeforeDate) {
+        startDateInput.setCustomValidity(`Select a date before ${endDate}.`);
+    } else {
+        startDateInput.setCustomValidity("");
+    }
+
+    startDateInput.reportValidity();
+}
+
+startDateInput.addEventListener("input", checkDates);
+endDateInput.addEventListener("input", checkDates);
+
 const reportFreqInput = document.getElementById("reportFreqInput");
 const reportDeadlineInput = document.getElementById("reportDeadlineInput");
 

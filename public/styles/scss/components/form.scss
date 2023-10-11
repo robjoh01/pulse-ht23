@@ -113,101 +113,6 @@
         }
     }
 
-    .form-input {
-        position: relative;
-        display: flex;
-        align-items: center;
-        font-size: 1.2rem;
-        transition: all 150ms ease-in-out;
-
-        .form-text-input,
-        .form-textarea-input {
-            width: 100%;
-            -webkit-appearance: none;
-            appearance: none;
-            // background: transparent;
-            // backdrop-filter: blur(16px);
-            padding-right: 3rem;
-            font-size: 1rem;
-        }
-
-        .form-date-input {
-            width: 100%;
-            -webkit-appearance: none;
-            appearance: none;
-            // background: transparent;
-            // backdrop-filter: blur(16px);
-            font-size: 1rem;
-        }
-
-        input:not(input[type='checkbox']):read-only {
-            cursor: not-allowed;
-        }
-
-        select {
-            width: 100%;
-        }
-
-        input,
-        select,
-        textarea {
-            background-color: var(--color-bg-200);
-            backdrop-filter: blur(16px);
-            padding: 0.5rem 1rem;
-            outline: 0;
-            border: 0;
-            border-radius: 1rem;
-            color: var(--color-fg-100);
-            outline: 2px solid var(--color-border-200);
-
-            &:not(:read-only):focus-within {
-                outline-color: var(--color-border-300);
-                color: var(--color-fg-300);
-            }
-
-            &[type="checkbox"] {
-                background-color: var(--color-blue);
-            }
-
-            &:disabled {
-                color: var(--color-fg-disabled);
-                background-color: var(--color-bg-disabled);
-                outline-color: var(--color-border-disabled);
-
-                ~.form-input-icon {
-                    color: var(--color-fg-disabled);
-                }
-            }
-        }
-
-        textarea {
-            resize: none;
-
-            &::-webkit-scrollbar {
-                width: 1rem;
-            }
-
-            &::-webkit-scrollbar-button {
-                display: none;
-            }
-
-            &::-webkit-scrollbar-track {
-                background-color: transparent;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                background-color:  var(--color-bg-alt-200);
-                border-radius: 1rem;
-            }
-        }
-
-        .form-input-icon {
-            position: absolute;
-            font-size: 1em;
-            right: 0.5em;
-        }
-    }
-
     .form-link {
         font-size: 0.9rem;
         text-align: center;
@@ -229,5 +134,100 @@
         button {
             width: 100%;
         }
+    }
+}
+
+.form-body .form-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    transition: all 150ms ease-in-out;
+
+    .form-text-input,
+    .form-textarea-input {
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        // background: transparent;
+        // backdrop-filter: blur(16px);
+        padding-right: 3rem;
+        font-size: 1rem;
+    }
+
+    .form-date-input {
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        // background: transparent;
+        // backdrop-filter: blur(16px);
+        font-size: 1rem;
+    }
+
+    input:not(input[type='checkbox']):read-only {
+        cursor: not-allowed;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    input,
+    select,
+    textarea {
+        background-color: var(--color-bg-200);
+        backdrop-filter: blur(16px);
+        padding: 0.5rem 1rem;
+        outline: 0;
+        border: 0;
+        border-radius: 1rem;
+        color: var(--color-fg-100);
+        outline: 2px solid var(--color-border-200);
+
+        &:not(:read-only):focus-within {
+            outline-color: var(--color-border-300);
+            color: var(--color-fg-300);
+        }
+
+        &[type="checkbox"] {
+            background-color: var(--color-blue);
+        }
+
+        &:disabled {
+            color: var(--color-fg-disabled);
+            background-color: var(--color-bg-disabled);
+            outline-color: var(--color-border-disabled);
+
+            ~.form-input-icon {
+                color: var(--color-fg-disabled);
+            }
+        }
+    }
+
+    textarea {
+        resize: none;
+
+        &::-webkit-scrollbar {
+            width: 1rem;
+        }
+
+        &::-webkit-scrollbar-button {
+            display: none;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color:  var(--color-bg-alt-200);
+            border-radius: 1rem;
+        }
+    }
+
+    .form-input-icon {
+        position: absolute;
+        font-size: 1em;
+        right: 0.5em;
     }
 }

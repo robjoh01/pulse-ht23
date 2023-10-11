@@ -93,8 +93,6 @@ router.get("/manager/report/:id", async (req, res, next) => {
         return;
     }
 
-    console.log(report);
-
     let data = {};
 
     data.title = `Viewing report`;

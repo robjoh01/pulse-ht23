@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="dashboard-grid-2" id="circleProgress">
-                <circle-progress value="<%= progress %>" max="100" text-format="percent"></circle-progress>
+                <circle-progress id="circleProgressComponent" value="<%= progress %>" max="100" text-format="percent"></circle-progress>
             </div>
             <div class="dashboard-grid-3 dashboard-grid-report">
                 <table class="primary-table assignment-table">
@@ -45,7 +45,7 @@
                             <th class="primary-th" colspan="2">
                                 <div class="primary-flex primary-row">
                                     <i class='bx bxs-calendar-star'></i>
-                                    <span>Start and end date</span>
+                                    <span>Start & End date</span>
                                 </div>
                             </th>
                             <th class="primary-th">
@@ -65,20 +65,22 @@
                     <tbody class="primary-tbody">
                         <% assignments.forEach(function(x) { %>
                         <tr class="primary-tr">
-                            <td class="primary-td" data-cell="project-name">
+                            <td class="primary-td" data-cell="Project's Name">
                                 <a href="/employee/report/<%= x.project_id %>">
                                     <span><%= x.project_name %></span>
                                 </a>
                             </td>
-                            <td class="primary-td" data-cell="deadline" colspan="2">
-                                <span><%= x.project_start_date %></span>
-                                <span>➟</span>
-                                <span><%= x.project_end_date %></span>
+                            <td class="primary-td" data-cell="Project's Dates" colspan="2">
+                                <div class="primary-flex primary-row">
+                                    <span><%= x.project_start_date %></span>
+                                    <span>➟</span>
+                                    <span><%= x.project_end_date %></span>
+                                </div>
                             </td>
-                            <td class="primary-td" data-cell="deadline">
+                            <td class="primary-td" data-cell="Deadline">
                                 <span><%= x.deadline_date %></span>
                             </td>
-                            <td class="primary-td" data-cell="time-left">
+                            <td class="primary-td" data-cell="Time Left">
                                 <span><%= x.time_left %></span>
                             </td>
                         </tr>
@@ -130,22 +132,22 @@
                     <tbody class="primary-tbody">
                         <% reports.forEach(function(x) { %>
                         <tr class="primary-tr">
-                            <td class="primary-td" data-cell="project-name">
+                            <td class="primary-td" data-cell="Project's Name">
                                 <span><%= x.project_name %></span>
                             </td>
-                            <td class="primary-td" data-cell="report-text">
+                            <td class="primary-td" data-cell="Text">
                                 <span><%= x.text %></span>
                             </td>
-                            <td class="primary-td" data-cell="report-creation-date">
+                            <td class="primary-td" data-cell="Creation Date">
                                 <span><%= x.creation_date %></span>
                             </td>
-                            <td class="primary-td" data-cell="report-status">
+                            <td class="primary-td" data-cell="Status">
                                 <span><%= x.status %></span>
                             </td>
-                            <td class="primary-td" data-cell="report-category">
+                            <td class="primary-td" data-cell="Category">
                                 <span><%= x.category %></span>
                             </td>
-                            <td class="primary-td" data-cell="report-history">
+                            <td class="primary-td" data-cell="View history">
                                 <a href="/manager/report/history/<%= x.id %>">
                                     <span>Link</span>
                                 </a>
@@ -163,4 +165,6 @@
     <%- include("./../partials/footer.ejs") %>
 
     <script text="text/javascript" src="/js/dashboard.js" defer></script>
+    <script type="text/javascript" src="/js/confetti.js" defer></script>
+
 </div>

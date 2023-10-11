@@ -112,8 +112,6 @@ router.get("/user/change_password", async (req, res, next) => {
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
     data.password = req.session.password ? req.session.password : "";
 
-    console.log(data.password);
-
     res.render("./../pages/user_change_password.ejs", data);
 });
 
@@ -137,7 +135,7 @@ router.get("/user/change_password/:id/:password", async (req, res, next) => {
     res.redirect("/user/change_password");
 });
 
-router.get("/user/delete", async (req, res, next) => {
+router.get("/user/deactivate", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/login");
         return;
@@ -145,12 +143,12 @@ router.get("/user/delete", async (req, res, next) => {
 
     let data = {};
 
-    data.title = "Delete Account";
+    data.title = "Deactivate Account";
     data.pageName  = "user";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(appUtil.getSessionUser(req).id);
 
-    res.render("./../pages/user_delete.ejs", data);
+    res.render("./../pages/user_deactivate.ejs", data);
 });
 
 router.post("/user/register/posted", async (req, res, next) => {
@@ -298,7 +296,7 @@ router.post("/user/change_password/posted", async (req, res, next) => {
     res.redirect("/user/profile");
 });
 
-router.post("/user/delete/posted", async (req, res, next) => {
+router.post("/user/deactivate/posted", async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/profile");
         return;
@@ -307,12 +305,12 @@ router.post("/user/delete/posted", async (req, res, next) => {
     const { f_password, f_password_again } = req.body;
 
     if (!f_password || !f_password_again) {
-        new errors.BadCredentialsError(next, "/user/delete");
+        new errors.BadCredentialsError(next, "/user/deactivate");
         return;
     }
 
     if (f_password != f_password_again) {
-        new errors.PasswordNotMatchError(next, "/user/delete");
+        new errors.PasswordNotMatchError(next, "/user/deactivate");
         return;
     }
 
@@ -321,7 +319,7 @@ router.post("/user/delete/posted", async (req, res, next) => {
     const id = await dbUtil.doesUserHavePermission(user.id, f_password);
 
     if (!id) {
-        new errors.UserNotFoundError(next, "/user/delete");
+        new errors.UserNotFoundError(next, "/user/deactivate");
         return;
     }
 

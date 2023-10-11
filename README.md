@@ -9,19 +9,28 @@
 
 #
 
-## Description
+Welcome to **Pulse - Project Management System** 🚀
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus a tortor ac condimentum. Vivamus bibendum velit in sollicitudin lobortis. Etiam ac urna vitae dui sollicitudin dignissim ut volutpat libero. Donec a neque eu elit pulvinar pretium ac vel libero. Aenean auctor mattis massa et ultrices. Nulla facilisi. Phasellus suscipit augue mi, nec condimentum tellus porttitor sed. Duis id vehicula arcu. Etiam id faucibus libero, in pharetra urna. Morbi gravida dignissim convallis. Nam tempus libero venenatis sodales ultricies.
-
-Nunc tempor viverra dolor et interdum. In ullamcorper risus quis finibus aliquam. Fusce vestibulum turpis vel mi vehicula, id rhoncus lectus volutpat. Curabitur non vestibulum elit. Fusce interdum metus sit amet pharetra ultricies. Phasellus sed justo non augue finibus iaculis. Sed imperdiet sed neque non blandit. Duis nec augue in metus efficitur dapibus eu ut mauris. Aliquam sagittis neque sollicitudin elit maximus tempus. Nunc dapibus eget enim ut laoreet.
+_Pulse is a powerful custom reporting system developed with Node.js and Express to streamline project management for our team. It revolutionizes how we register team members, configure projects, set reporting frequencies, customize report formats, and provide insightful dashboards for better collaboration and efficiency._
 
 > [!NOTE]
 > This project uses `npm` package manager and `express.js` package for handling the server side.
 
+### Key Features
+- **Security**: Utilizes [environment variables](https://www.npmjs.com/package/dotenv) and [server-side session cookies](https://www.npmjs.com/package/express-session) for enhanced security.In addition, hashing the user's password into the database with [bcrypt](https://www.npmjs.com/package/bcrypt).
+- **Best Practices**: Adheres to industry best practices for robust and maintainable code.
+- **Linting**: Includes [ESLint](https://www.npmjs.com/package/eslint) for code consistency and quality checks.
+- **GitHub Actions**: Implements [GitHub Actions](https://github.com/features/actions) for automated workflows and testing.
+- **Documentation**: Comprehensive and well-structured codebase with extensive documentation for easier understanding and onboarding.
+- **Database**: Powered by [MySQL](https://www.npmjs.com/package/promise-mysql) for efficient and organized data management.
+- **Themes**: Offers both **light** and **dark** theme options for a personalized user experience.
+- **Sass**: Utilizes [Sass](https://sass-lang.com/) for efficient CSS styling and maintainability.
+- **Testing**: Includes [Jest](https://www.npmjs.com/package/jest) for testing and ensuring code coverage.
+- **NPM Packages**: Utilizes a wide range of npm packages for added functionalities and productivity.
+
 ## Installment
 
 ```console
-$ sudo npm install -g bcrypt
 $ npm install
 ```
 

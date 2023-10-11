@@ -73,8 +73,6 @@ dropForm.addEventListener("submit", async (e) => {
 
     const json = await res.json();
 
-    console.log(json);
-
     if (json.wasUploaded) {
         /* eslint-disable no-undef */
         showSnackBar("Data was uploaded");
