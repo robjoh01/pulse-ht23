@@ -131,7 +131,6 @@ dist
 
 # Project Pulse
 .env
-coverage/
 config/
 notes.md
 sql/backup.sql
