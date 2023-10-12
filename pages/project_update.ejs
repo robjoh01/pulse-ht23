@@ -1,56 +1,58 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <div class="form-container">
-                <div class="form-header"></div>
-                <form class="form-body" method="POST" action="/project/update/posted">
-                    <input name="f_id" required hidden value="<%= project.id %>">
-                    <label class="form-input-label" for="name" id="nameLabel">
-                        <span>Project Name</span>
-                        <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" autocomplete="off" required placeholder="Enter a project name" value="<%= project.name %>">
+            <div class="form-root">
+                <div class="form-container">
+                    <div class="form-header"></div>
+                    <form class="form-body" method="POST" action="/project/update/posted">
+                        <input name="f_id" required hidden value="<%= project.id %>">
+                        <label class="form-input-label" for="name" id="nameLabel">
+                            <span>Project Name</span>
+                            <div class="form-input">
+                                <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" autocomplete="off" required placeholder="Enter a project name" value="<%= project.name %>">
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="name" id="nameLabel">
+                            <span>Project Description</span>
+                            <div class="form-input">
+                                <textarea class="form-textarea-input" aria-invalid="false" id="description" name="f_description" rows="5" cols="33"><%= project.description %></textarea>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="startDate" id="startDateLabel">
+                            <span>Start Date</span>
+                            <div class="form-input">
+                                <input class="form-date-input" type="date" aria-invalid="false" id="startDate" name="f_start_date" value="<%= project.start_date %>">
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="endDate" id="endDateLabel">
+                            <span>End Date</span>
+                            <div class="form-input">
+                                <input class="form-date-input" type="date" aria-invalid="false" id="endDate" name="f_end_date" value="<%= project.end_date %>">
+                            </div>
+                        </label>
+                        <div class="primary-flex primary-row">
+                            <button class="button" type="submit">
+                                <span>Save changes</span>
+                            </button>
+                            <button class="button" type="reset">
+                                <span>Cancel changes</span>
+                            </button>
                         </div>
-                    </label>
-                    <label class="form-input-label" for="name" id="nameLabel">
-                        <span>Project Description</span>
-                        <div class="form-input">
-                            <textarea class="form-textarea-input" aria-invalid="false" id="description" name="f_description" rows="5" cols="33"><%= project.description %></textarea>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="startDate" id="startDateLabel">
-                        <span>Start Date</span>
-                        <div class="form-input">
-                            <input class="form-date-input" type="date" aria-invalid="false" id="startDate" name="f_start_date" value="<%= project.start_date %>">
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="endDate" id="endDateLabel">
-                        <span>End Date</span>
-                        <div class="form-input">
-                            <input class="form-date-input" type="date" aria-invalid="false" id="endDate" name="f_end_date" value="<%= project.end_date %>">
-                        </div>
-                    </label>
-                    <div class="primary-flex primary-row">
-                        <button class="button" type="submit">
-                            <span>Save changes</span>
-                        </button>
-                        <button class="button" type="reset">
-                            <span>Cancel changes</span>
-                        </button>
-                    </div>
-                    <a href="/project/archive/<%= project_id %>">
-                        <button class="button form-button" type="button">
-                            <span>Archive project</span>
-                        </button>
-                    </a>
-                    <a href="/dashboard">
-                        <button class="button form-button" type="button">
-                            <span>Go back</span>
-                        </button>
-                    </a>
-                </form>
+                        <a href="/project/archive/<%= project_id %>">
+                            <button class="button form-button" type="button">
+                                <span>Archive project</span>
+                            </button>
+                        </a>
+                        <a href="/dashboard">
+                            <button class="button form-button" type="button">
+                                <span>Go back</span>
+                            </button>
+                        </a>
+                    </form>
+                </div>
             </div>
         </main>
     </div>

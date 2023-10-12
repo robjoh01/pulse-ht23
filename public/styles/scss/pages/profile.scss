@@ -1,11 +1,5 @@
 @use "./../utils" as * ;
 
-.profile-container {
-    display: grid;
-    // grid-template-rows: auto 1fr;
-    justify-content: unset;
-}
-
 .profile-form-header {
     display: grid;
     align-items: center;
@@ -23,6 +17,13 @@
         display: flex;
         flex-flow: column nowrap;
         gap: 1rem;
+
+        @include breakpoint-down(small) {
+            span {
+                text-align: center;
+                font-size: 0.8rem;
+            }
+        }
     }
 
     .profile-image-details {
@@ -47,4 +48,3 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
-

@@ -1,0 +1,28 @@
+// circle-progress {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+// }
+
+circle-progress::part(base) {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+circle-progress::part(value) {
+    stroke: var(--color-accent);
+}
+
+circle-progress::part(circle) {
+    fill: var(--color-bg-300);
+    stroke: var(--color-bg-alt-200);
+    stroke-opacity: 0.8;
+}
+
+circle-progress::part(text) {
+    fill: var(--color-fg-200);
+    font-family: var(--font-martian-mono);
+    font-weight: 900;
+}

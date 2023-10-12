@@ -1,49 +1,51 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <div class="form-container">
-                <div class="form-header">
-                    <img class="header-hero" alt="Pulse Project">
-                    <h2>Welcome to Pulse 👋🏻</h2>
-                    <p>Please sign-in to your account and start the adventure</p>
-                </div>
-                <form class="form-body" method="POST" action="/user/login/posted">
-                    <label class="form-input-label" for="username" id="username-label">
-                        <span>Username</span>
-                        <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required placeholder="Enter your username" autocorrect="on" autocomplete="on" autocapitalize="none">
-                            <i class="form-input-icon bi bi-person-fill"></i>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="passwordInput" id="passwordLabel">
-                        <span>Password</span>
-                        <div class="form-input">
-                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
-                            <button class="form-input-icon" id="passwordBtn" type="button">
-                                <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
-                                <i id="passwordShown" class="bi bi-eye"></i>
-                            </button>
-                        </div>
-                    </label>
-                    <div class="form-input-container flex-end">
-                        <label class="form-input-label form-input-label-none-full form-row" for="rememberInput" id="rememberLabel">
-                            <span>Remember me</span>
+            <div class="form-root">
+                <div class="form-container">
+                    <div class="form-header">
+                        <img class="header-hero" alt="Pulse Project">
+                        <h2>Welcome to Pulse 👋🏻</h2>
+                        <p>Please sign-in to your account and start the adventure</p>
+                    </div>
+                    <form class="form-body" method="POST" action="/user/login/posted">
+                        <label class="form-input-label" for="username" id="username-label">
+                            <span>Username</span>
                             <div class="form-input">
-                                <input class="form-check-input" type="checkbox" aria-invalid="false" id="rememberInput" name="f_remember">
+                                <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required placeholder="Enter your username" autocorrect="on" autocomplete="on" autocapitalize="none">
+                                <i class="form-input-icon bi bi-person-fill"></i>
                             </div>
                         </label>
-                        <a href="#">Forgot Password?</a>
-                    </div>
-                    <button class="button" type="submit">
-                        <span>Login</span>
-                    </button>
-                    <div class="form-link">
-                        <p>Don't have an account? <strong><a href="/user/register">Register</a></strong></p>
-                    </div>
-                </form>
+                        <label class="form-input-label" for="passwordInput" id="passwordLabel">
+                            <span>Password</span>
+                            <div class="form-input">
+                                <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
+                                <button class="form-input-icon" id="passwordBtn" type="button">
+                                    <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
+                                    <i id="passwordShown" class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="form-input-container flex-end">
+                            <label class="form-input-label form-input-label-none-full form-row" for="rememberInput" id="rememberLabel">
+                                <span>Remember me</span>
+                                <div class="form-input">
+                                    <input class="form-check-input" type="checkbox" aria-invalid="false" id="rememberInput" name="f_remember">
+                                </div>
+                            </label>
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                        <button class="button" type="submit">
+                            <span>Login</span>
+                        </button>
+                        <div class="form-link">
+                            <p>Don't have an account? <strong><a href="/user/register">Register</a></strong></p>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
     </div>

@@ -1,7 +1,7 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
             <div class="primary-flex primary-col">
@@ -38,16 +38,16 @@
                     <tbody class="primary-tbody">
                         <% history.forEach(function(x) { %>
                         <tr class="primary-tr">
-                            <td class="primary-td" data-cell="user-id">
+                            <td class="primary-td" data-label="user-id">
                                 <span><%= x.user_id %></span>
                             </td>
-                            <td class="primary-td" data-cell="user-name">
+                            <td class="primary-td" data-label="user-name">
                                 <span><%= x.user_name %></span>
                             </td>
-                            <td class="primary-td" data-cell="creation-date">
+                            <td class="primary-td" data-label="creation-date">
                                 <span><%= x.creation_date %></span>
                             </td>
-                            <td class="primary-td" data-cell="comment">
+                            <td class="primary-td" data-label="comment">
                                 <span><%= x.comment %></span>
                             </td>
                         </tr>

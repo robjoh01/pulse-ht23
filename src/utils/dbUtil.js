@@ -527,7 +527,7 @@ const dbUtil = {
         data.creation_date = dateUtil.parseDate(data.creation_date);
         data.project_start_date = dateUtil.parseDate(data.project_start_date);
         data.project_end_date = dateUtil.parseDate(data.project_end_date);
-        data.deadline_date = dateUtil.parseDateExtend(data.deadline_date);
+        data.deadline_date = dateUtil.parseDateToReadableString(data.deadline_date);
 
         return data;
     },
@@ -545,7 +545,7 @@ const dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.deadline_date = dateUtil.parseDateExtend(x.deadline_date);
+            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
         });
 
         return data;
@@ -564,7 +564,7 @@ const dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.deadline_date = dateUtil.parseDateExtend(x.deadline_date);
+            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
             x.time_left = dateUtil.calcTimeLeft(x.deadline_date);
         });
 
@@ -580,7 +580,7 @@ const dbUtil = {
 
         const data = { ...res[0][0] };
 
-        data.creation_date = dateUtil.parseDateExtend(data.creation_date);
+        data.creation_date = dateUtil.parseDateToReadableString(data.creation_date);
 
         return data;
     },
@@ -595,7 +595,7 @@ const dbUtil = {
         const data = JSON.parse(JSON.stringify(rows));
 
         data.forEach(x => {
-            x.creation_date = dateUtil.parseDateExtend(x.creation_date);
+            x.creation_date = dateUtil.parseDateToReadableString(x.creation_date);
         });
 
         return data;
@@ -611,7 +611,23 @@ const dbUtil = {
         const data = JSON.parse(JSON.stringify(rows));
 
         data.forEach(x => {
-            x.creation_date = dateUtil.parseDateExtend(x.creation_date);
+            x.creation_date = dateUtil.parseDateToReadableString(x.creation_date);
+        });
+
+        return data;
+    },
+    fetchReportsWithFilter: async function (query) {
+        const db = await this.connectDatabase();
+        const sql = "CALL fetch_reports_with_filter(?, ?);";
+
+        const [rows] = await db.query(sql, [query, `%${query}%`]);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDateToReadableString(x.creation_date);
         });
 
         return data;

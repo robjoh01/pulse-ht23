@@ -1,82 +1,12 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
-        <main class="main extend">
-
-        <div class="dashboard-grid">
-            <div class="dashboard-grid-projects">
-                <div class="primary-flex primary-col">
-                    <search class="projects-searchbar">
-                        <form class="form-body projects-searchbar-form">
-                            <label class="projects-searchbar-label" for="searchbarInput">
-                                <div class="form-input">
-                                    <input id="searchbarInput" class="projects-searchbar-input form-search-input" type="search" placeholder="Search for a specific project (id, name or dates)" name="q" required autocomplete="off" autocapitalize="off">
-                                </div>
-                            </label>
-                            <button class="projects-searchbar-button button" type="submit">
-                                <span>Search</span>
-                            </button>
-                            <a class="form-button-link" href="?">
-                                <button class="projects-searchbar-button button" type="button">
-                                    <span>Clear query</span>
-                                </button>
-                            </a>
-                        </form>
-                    </search>
-                    <table class="primary-table">
-                        <caption>Managed Projects</caption>
-                        <thead class="primary-thead">
-                            <tr class="primary-tr">
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class='bx bx-text'></i>
-                                        <span>Name</span>
-                                    </div>
-                                </th>
-                                <th class="primary-th" colspan="2">
-                                    <div class="primary-flex primary-row">
-                                        <i class='bx bxs-calendar-star'></i>
-                                        <span>Start & End date</span>
-                                    </div>
-                                </th>
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class='bx bxs-bell-ring'></i>
-                                        <span>Submitted Reports</span>
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="primary-tbody">
-                            <% projects.forEach(function(x) { %>
-                            <tr class="primary-tr">
-                                <td class="primary-td" data-cell="Project's Name">
-                                    <div class="primary-flex primary-row">
-                                        <button aria-label="Copy project as a shareable link" class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
-                                            <i class="bi bi-link-45deg"></i>
-                                        </button>
-                                        <a href="/project/update/<%= x.project_id %>">
-                                            <span><%= x.name %></span>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="primary-td" data-cell="Project's Dates" colspan="2">
-                                    <div class="primary-flex primary-row">
-                                        <span><%= x.start_date %></span>
-                                        <span>➟</span>
-                                        <span><%= x.end_date %></span>
-                                    </div>
-                                </td>
-                                <td class="primary-td" data-cell="Report Count">
-                                    <span><%= x.report_count %></span>
-                                </td>
-                            </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                    <div class="primary-flex primary-row">
+        <main class="main">
+            <div class="dashboard-grid">
+                <div class="dashboard-grid-project-creation">
+                    <div class="primary-flex primary-row primary-space-between">
                         <a href="/project/create">
                             <button class="button">
                                 <span>Create new project</span>
@@ -89,82 +19,170 @@
                         </a>
                     </div>
                 </div>
-                <div class="primary-flex primary-col">
-                    <table class="primary-table">
-                        <caption>Submitted Reports</caption>
-                        <thead class="primary-thead">
-                            <tr class="primary-tr">
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class="bi bi-calendar-x-fill"></i>
-                                        <span>Project's Name</span>
+                <div class="dashboard-grid-projects">
+                    <div class="dashboard-table-projects primary-flex primary-col">
+                        <search class="searchbar-container">
+                            <form class="form-body searchbar-form">
+                                <label class="searchbar-label" for="searchbarInput">
+                                    <div class="form-input">
+                                        <input id="searchbarInput" class="searchbar-input" type="search" name="q1" required autocomplete="off" autocapitalize="off" onblur="this.value=''" placeholder="Search">
+                                        <i class='searchbar-input-icon bx bx-search' ></i>
+                                        <a class="searchbar-input-reset" href="?">
+                                            <button class="projects-searchbar-button" type="button">
+                                                <i class='bx bx-reset'></i>
+                                            </button>
+                                        </a>
                                     </div>
-                                </th>
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class="bi bi-calendar-x-fill"></i>
-                                        <span>Employee's Name</span>
+                                </label>
+                            </form>
+                        </search>
+                        <table class="primary-table">
+                            <caption>Managed Projects</caption>
+                            <thead class="primary-thead">
+                                <tr class="primary-tr">
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-hard-hat'></i>
+                                            <span>Name</span>
+                                        </div>
+                                    </th>
+                                    <th class="primary-th">
+                                        <i class='bx bxs-calendar-check' ></i>
+                                        <span>Start Date</span>
+                                    </th>
+                                    <th class="primary-th">
+                                        <i class='bx bxs-calendar-x' ></i>
+                                        <span>End Date</span>
+                                    </th>
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-bell-ring'></i>
+                                            <span>Submitted Reports</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="primary-tbody">
+                                <% projects.forEach(function(x) { %>
+                                <tr class="primary-tr">
+                                    <td class="primary-td" data-label="Name" data-icon="🚧">
+                                        <div class="primary-flex primary-row">
+                                            <button aria-label="Copy project as a shareable link" class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
+                                                <i class="bi bi-link-45deg"></i>
+                                            </button>
+                                            <a href="/project/update/<%= x.project_id %>">
+                                                <span><%= x.name %></span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="primary-td" data-label="Start Date" data-icon="📅">
+                                        <span><%= x.start_date %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="End Date" data-icon="📅">
+                                        <span><%= x.end_date %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Count" data-icon="💯">
+                                        <span><%= x.report_count %></span>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dashboard-table-reports primary-flex primary-col">
+                        <search class="searchbar-container">
+                            <form class="form-body searchbar-form">
+                                <label class="searchbar-label" for="searchbarInput">
+                                    <div class="form-input">
+                                        <input id="searchbarInput" class="searchbar-input" type="search" name="q2" required autocomplete="off" autocapitalize="off" onblur="this.value=''" placeholder="Search">
+                                        <i class='searchbar-input-icon bx bx-search' ></i>
+                                        <a class="searchbar-input-reset" href="?">
+                                            <button class="projects-searchbar-button" type="button">
+                                                <i class='bx bx-reset'></i>
+                                            </button>
+                                        </a>
                                     </div>
-                                </th>
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class="bi bi-calendar-x-fill"></i>
-                                        <span>Date Sent</span>
-                                    </div>
-                                </th>
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class='bx bxs-receipt'></i>
-                                        <span>Status</span>
-                                    </div>
-                                </th>
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class="bi bi-calendar-x-fill"></i>
-                                        <span>View Report</span>
-                                    </div>
-                                </th>
-                                <th class="primary-th">
-                                    <div class="primary-flex primary-row">
-                                        <i class='bx bx-history'></i>
-                                        <span>Report History</span>
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="primary-tbody">
-                            <% reports.forEach(function(x) { %>
-                            <tr class="primary-tr">
-                                <td class="primary-td" data-cell="Project's Name">
-                                    <span><%= x.project_name %></span>
-                                </td>
-                                <td class="primary-td" data-cell="Employee's Name">
-                                    <span><%= x.employee_name %></span>
-                                </td>
-                                <td class="primary-td" data-cell="Creation Date">
-                                    <span><%= x.creation_date %></span>
-                                </td>
-                                <td class="primary-td" data-cell="Status">
-                                    <span><%= x.status %></span>
-                                </td>
-                                <td class="primary-td" data-cell="View report">
-                                    <a href="/manager/report/<%= x.id %>">
-                                        <span>Link</span>
-                                    </a>
-                                </td>
-                                <td class="primary-td" data-cell="View history">
-                                    <a href="/manager/report/history/<%= x.id %>">
-                                        <span>Link</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
+                                </label>
+                            </form>
+                        </search>
+                        <table class="primary-table">
+                            <caption>Submitted Reports</caption>
+                            <thead class="primary-thead">
+                                <tr class="primary-tr">
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-hard-hat'></i>
+                                            <span>Project</span>
+                                        </div>
+                                    </th>
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-user'></i>
+                                            <span>Employee</span>
+                                        </div>
+                                    </th>
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class="bi bi-calendar-x-fill"></i>
+                                            <span>Date Sent</span>
+                                        </div>
+                                    </th>
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-receipt'></i>
+                                            <span>Status</span>
+                                        </div>
+                                    </th>
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-category-alt' ></i>
+                                            <span>Category</span>
+                                        </div>
+                                    </th>
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-megaphone'></i>
+                                            <span>Actions</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="primary-tbody">
+                                <% reports.forEach(function(x) { %>
+                                <tr class="primary-tr">
+                                    <td class="primary-td" data-label="Project's Name" data-icon="🚧">
+                                        <span><%= x.project_name %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Employee's Name" data-icon="🃏">
+                                        <span><%= x.employee_name %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Creation Date" data-icon="📅">
+                                        <span><%= x.creation_date %></span>
+                                        <!-- <input class="table-input" type="datetime-local" readonly disabled value="<%= x.creation_date %>"> -->
+                                    </td>
+                                    <td class="primary-td" data-label="Status" data-icon="🕹️">
+                                        <span><%= x.status %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Category" data-icon="🗂️">
+                                        <span><%= x.category %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Actions" data-icon="📣">
+                                        <div class="primary-flex primary-row">
+                                            <a href="/manager/report/<%= x.id %>">
+                                                <i class='bx bxs-edit' ></i>
+                                            </a>
+                                            <a href="/manager/report/history/<%= x.id %>">
+                                                <i class='bx bx-history'></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-
         </main>
     </div>
 

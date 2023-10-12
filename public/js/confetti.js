@@ -1,6 +1,6 @@
 "use strict";
 
-const circleProgressComponent = document.getElementById("circleProgressComponent");
+const circleProgress = document.getElementById("circleProgress");
 
 const duration = 5 * 1000; // 5 seconds
 const animationEnd = Date.now() + duration;
@@ -11,7 +11,7 @@ function randomInRange (min, max) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const value = Math.floor(circleProgressComponent.value);
+    const value = Math.floor(circleProgress.value);
     const hasdisplayedConfetti = localStorage.getItem("confetti") === "true" || false;
 
     if (hasdisplayedConfetti) {

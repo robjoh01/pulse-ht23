@@ -1,41 +1,43 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>Are you sure you want to deactivate your account?</h2>
-                    <p>This action will lock your data until project was deleted from our database.</p>
-                </div>
-                <form class="form-body" method="POST" action="/user/deactivate/posted">
-                    <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
-                    <label class="form-input-label" for="password" id="passwordLabel">
-                        <span>Password</span>
-                        <div class="form-input">
-                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
-                            <button class="form-input-icon" id="passwordBtn" type="button">
-                                <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
-                                <i id="passwordShown" class="bi bi-eye"></i>
-                            </button>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="passwordAgainInput" id="passwordAgainLabel">
-                        <span>Password</span>
-                        <div class="form-input">
-                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordAgainInput" name="f_password_again" required placeholder="Enter your password (again)" autocorrect="false" autocomplete="true" autocapitalize="none">
-                        </div>
-                    </label>
-                    <button class="button form-button" type="submit">
-                        <span>Accept</span>
-                    </button>
-                    <a href="/user/profile">
-                        <button class="button form-button" type="button">
-                            <span>Cancel</span>
+            <div class="form-root">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2>Are you sure you want to deactivate your account?</h2>
+                        <p>This action will lock your data until project was deleted from our database.</p>
+                    </div>
+                    <form class="form-body" method="POST" action="/user/deactivate/posted">
+                        <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
+                        <label class="form-input-label" for="password" id="passwordLabel">
+                            <span>Password</span>
+                            <div class="form-input">
+                                <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
+                                <button class="form-input-icon" id="passwordBtn" type="button">
+                                    <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
+                                    <i id="passwordShown" class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="passwordAgainInput" id="passwordAgainLabel">
+                            <span>Password</span>
+                            <div class="form-input">
+                                <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordAgainInput" name="f_password_again" required placeholder="Enter your password (again)" autocorrect="false" autocomplete="true" autocapitalize="none">
+                            </div>
+                        </label>
+                        <button class="button form-button" type="submit">
+                            <span>Accept</span>
                         </button>
-                    </a>
-                </form>
+                        <a href="/user/profile">
+                            <button class="button form-button" type="button">
+                                <span>Cancel</span>
+                            </button>
+                        </a>
+                    </form>
+                </div>
             </div>
         </main>
     </div>

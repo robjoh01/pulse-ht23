@@ -34,15 +34,12 @@ button {
     border: 2px solid var(--color-border-200);
     box-shadow: 0.2rem 0.2rem 16px 4px hsla(0, 0%, 0%, 0.2);
     transition: all 250ms ease-in-out;
-
-    @include breakpoint(large) {
-        padding: 1rem 2rem;
-        border-radius: 2.5rem;
-    }
+    padding: 0.5rem 1.5rem;
+    border-radius: 1.5rem;
 
     @include breakpoint-down(medium) {
-        padding: 0.5rem 1.5rem;
-        border-radius: 1.5rem;
+        padding: 0.5rem;
+        border-radius: 1rem;
     }
 
     span {

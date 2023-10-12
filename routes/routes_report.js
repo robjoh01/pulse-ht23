@@ -95,7 +95,7 @@ router.get("/manager/report/:id", async (req, res, next) => {
 
     let data = {};
 
-    data.title = `Viewing report`;
+    data.title = `Viewing ${report.employee_name}'s report`;
     data.pageName  = "dashboard";
     data.session = appUtil.getSession(req);
     data.user = await dbUtil.fetchUser(user.id);

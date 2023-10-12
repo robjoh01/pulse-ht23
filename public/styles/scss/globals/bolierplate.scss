@@ -14,17 +14,13 @@ html {
 
 body {
     position: relative;
-    // height: 100vh;
-    // height: 100dvh;
-    // display: flex;
-    // flex-flow: column nowrap;
     background-size: 100vh;
     color: var(--color-fg-100);
     line-height: var(--base-line-height);
     font-family: var(--font-inter);
     background: var(--color-bg);
     background-image: var(--bg-img);
-    background-size: cover;
+    // background-size: cover;
     background-repeat: repeat;
     background-position: center center;
 }

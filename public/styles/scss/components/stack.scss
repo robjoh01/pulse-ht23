@@ -28,4 +28,8 @@
     &.primary-row-wrap {
         flex-flow: row wrap;
     }
+
+    &.primary-space-between {
+        justify-content: space-between;
+    }
 }

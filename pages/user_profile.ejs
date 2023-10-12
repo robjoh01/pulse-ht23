@@ -1,79 +1,81 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-laycontainerout">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <div class="form-container profile-container">
-                <form class="profile-form-header" method="POST" action="/user/profile/image/posted" enctype="multipart/form-data">
-                    <label class="profile-image-label" for="profileImgFile" role="button">
-                        <picture>
-                            <source srcset="<%= user.image_url %>">
-                            <img id="profileImg" src="/img/avatar.png" alt="Profile Image" width="120px" height="120px" fetchPriority="high">
-                        </picture>
-                        <input id="profileImgFile" type="file" accept="image/png, image/jpeg" name="f_img" required hidden>
-                    </label>
-                    <div class="profile-image-details-container">
-                        <div class="profile-image-details">
-                            <button id="profileImgSubmit" class="button" type="submit">
-                                <span>Upload</span>
+            <div class="form-root">
+                <div class="form-container profile-container">
+                    <form class="profile-form-header" method="POST" action="/user/profile/image/posted" enctype="multipart/form-data">
+                        <label class="profile-image-label" for="profileImgFile" role="button">
+                            <picture>
+                                <source srcset="<%= user.image_url %>">
+                                <img id="profileImg" src="/img/avatar.png" alt="Profile Image" width="120px" height="120px" fetchPriority="high">
+                            </picture>
+                            <input id="profileImgFile" type="file" accept="image/png, image/jpeg" name="f_img" required hidden>
+                        </label>
+                        <div class="profile-image-details-container">
+                            <div class="profile-image-details">
+                                <button id="profileImgSubmit" class="button" type="submit">
+                                    <span>Upload</span>
+                                </button>
+                                <button id="profileImgReset" class="button" type="reset">
+                                    <span>Cancel</span>
+                                </button>
+                            </div>
+                            <span>Allowed PNG or JPEG. Max size of 800K.</span>
+                        </div>
+                    </form>
+                    <form class="form-body profile-form-body" method="POST" action="/user/profile/posted">
+                        <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= user.id %>" required hidden>
+                        <div class="profile-form-body-container">
+                            <label class="form-input-label">
+                                <span>Username</span>
+                                <div class="form-input">
+                                    <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required readonly disabled autocomplete="off" value="<%= user.username %>">
+                                    <i class="form-input-icon bi bi-person-fill"></i>
+                                </div>
+                            </label>
+                            <label class="form-input-label">
+                                <span>Display Name</span>
+                                <div class="form-input">
+                                    <input class="form-text-input" type="text" aria-invalid="false" id="display-name" name="f_display_name" value="<%= user.display_name %>" placeholder="Enter your display name">
+                                    <i class="form-input-icon bi bi-fonts"></i>
+                                </div>
+                            </label>
+                            <label class="form-input-label">
+                                <span>Email Address</span>
+                                <div class="form-input">
+                                    <input class="form-text-input" type="email" aria-invalid="false" id="email" name="f_email" value="<%= user.email_address %>" autocomplete="on" placeholder="Enter your email address">
+                                    <i class="form-input-icon bi bi-postcard-fill"></i>
+                                </div>
+                            </label>
+                            <label class="form-input-label">
+                                <span>Phone number</span>
+                                <div class="form-input">
+                                    <input class="form-text-input" type="tel" aria-invalid="false" id="phone-number" name="f_phone_number" value="<%= user.phone_number %>" placeholder="Enter your phone number">
+                                    <i class="form-input-icon bi bi-telephone-fill"></i>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-link">
+                            <p>Change password? <strong><a href="/user/change_password">Click here</a></strong></p>
+                        </div>
+                        <div class="form-flex form-row form-flex-space-around">
+                            <button class="button" type="submit">
+                                <span>Save</span>
                             </button>
-                            <button id="profileImgReset" class="button" type="reset">
+                            <button class="button" type="reset">
                                 <span>Cancel</span>
                             </button>
                         </div>
-                        <span>Allowed PNG or JPEG. Max size of 800K.</span>
-                    </div>
-                </form>
-                <form class="form-body profile-form-body" method="POST" action="/user/profile/posted">
-                    <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= user.id %>" required hidden>
-                    <div class="profile-form-body-container">
-                        <label class="form-input-label">
-                            <span>Username</span>
-                            <div class="form-input">
-                                <input class="form-text-input" type="text" aria-invalid="false" id="username" name="f_username" required readonly disabled autocomplete="off" value="<%= user.username %>">
-                                <i class="form-input-icon bi bi-person-fill"></i>
-                            </div>
-                        </label>
-                        <label class="form-input-label">
-                            <span>Display Name</span>
-                            <div class="form-input">
-                                <input class="form-text-input" type="text" aria-invalid="false" id="display-name" name="f_display_name" value="<%= user.display_name %>" placeholder="Enter your display name">
-                                <i class="form-input-icon bi bi-fonts"></i>
-                            </div>
-                        </label>
-                        <label class="form-input-label">
-                            <span>Email Address</span>
-                            <div class="form-input">
-                                <input class="form-text-input" type="email" aria-invalid="false" id="email" name="f_email" value="<%= user.email_address %>" autocomplete="on" placeholder="Enter your email address">
-                                <i class="form-input-icon bi bi-postcard-fill"></i>
-                            </div>
-                        </label>
-                        <label class="form-input-label">
-                            <span>Phone number</span>
-                            <div class="form-input">
-                                <input class="form-text-input" type="tel" aria-invalid="false" id="phone-number" name="f_phone_number" value="<%= user.phone_number %>" placeholder="Enter your phone number">
-                                <i class="form-input-icon bi bi-telephone-fill"></i>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="form-link">
-                        <p>Change password? <strong><a href="/user/change_password">Click here</a></strong></p>
-                    </div>
-                    <div class="form-flex form-row form-flex-space-around">
-                        <button class="button" type="submit">
-                            <span>Save Changes</span>
-                        </button>
-                        <button class="button" type="reset">
-                            <span>Cancel Changes</span>
-                        </button>
-                    </div>
-                    <a class="form-button-link" href="/user/deactivate">
-                        <button class="button" type="button">
-                            <span>Deactivate Account</span>
-                        </button>
-                    </a>
-                </form>
+                        <a class="form-button-link" href="/user/deactivate">
+                            <button class="button" type="button">
+                                <span>Deactivate Account</span>
+                            </button>
+                        </a>
+                    </form>
+                </div>
             </div>
         </main>
     </div>

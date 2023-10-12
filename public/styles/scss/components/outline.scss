@@ -1,29 +1,19 @@
 @use "./../utils" as *;
 
-.body-layout {
+.body-container {
     position: relative;
     display: grid;
     grid-template-rows: 1fr auto;
 }
 
-.main-layout {
+.main-container {
     position: relative;
     min-height: 100vh;
     min-height: 100dvh;
     display: grid;
     grid-template-columns: auto;
-    padding: 2rem;
-    padding-left: calc(var(--sidebar-width) + 2rem);
-
-    // @include breakpoint-down(small) {
-    //     &:has(.primary-sidebar.transitioning),
-    //     &:has(.primary-sidebar.active) {
-    //         grid-template-columns: 1fr 0;
-    //     }
-
-    //     grid-template-rows: auto 1fr;
-    //     grid-template-columns: none;
-    // }
+    // padding: 2rem;
+    // padding-left: calc(var(--sidebar-width) + 2rem);
 
     &:has(.main-full) {
         padding: 0;
@@ -37,7 +27,7 @@
     }
 }
 
-.main-layout-alt {
+.main-container-alt {
     min-height: 100vh;
     min-height: 100dvh;
     position: relative;
@@ -47,30 +37,9 @@
 
 .main {
     position: relative;
-    display: grid;
-    place-content: center;
-
-    @include breakpoint(medium) {
-        padding: 2rem;
-
-
-        &.extend {
-            margin: unset;
-        }
-    }
-
-    @include breakpoint-down(small) {
-        padding: 0;
-        // display: block;
-        // place-items: unset;
-        // margin: 0;
-        // padding: 0;
-    }
+    padding: 2rem;
 }
 
 .main-full {
-    display: block;
     max-width: 100%;
-    padding: 0;
-    margin: 0;
 }

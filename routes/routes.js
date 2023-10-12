@@ -86,13 +86,16 @@ router.get("/dashboard", async (req, res, next) => {
         data.assignments = await dbUtil.fetchAssignmentsForEmployee(user.id);
         data.reports = await dbUtil.fetchReportsForEmployee(user.id);
 
-        const totalCount = data.assignments.length + data.reports.length;
-        data.progress = (totalCount > 0) ? ((1 - (data.assignments.length / totalCount)) * 100) : 0;
+        data.totalCount = data.assignments.length + data.reports.length;
+        data.submittedCount = data.reports.length;
+        data.upcomingCount = data.assignments.length;
+
+        data.progress = (data.totalCount > 0) ? ((1 - (data.assignments.length / data.totalCount)) * 100) : 0;
 
         res.render("./../pages/dashboard_employee.ejs", data);
     } else {
-        data.projects = (req.query?.q) ? await dbUtil.fetchProjectsWithFilter(req.query.q) : await dbUtil.fetchProjects();
-        data.reports = await dbUtil.fetchReports();
+        data.projects = (req.query?.q1) ? await dbUtil.fetchProjectsWithFilter(req.query.q1) : await dbUtil.fetchProjects();
+        data.reports =  (req.query?.q2) ? await dbUtil.fetchReportsWithFilter(req.query.q2) : await dbUtil.fetchReports();
 
         res.render("./../pages/dashboard_manager.ejs", data);
     }

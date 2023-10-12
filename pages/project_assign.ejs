@@ -1,67 +1,69 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <div class="form-container drop-container">
-                <div class="form-header drop-header">
-                    <h2>Assign team members 💾</h2>
-                    <q>Streamline your team management process by effortlessly uploading a .CSV file.</q>
-                    <p>Assign team members to projects with tailored reporting frequencies or handpick specific deadline dates for seamless project coordination and progress tracking.</p>
-                    <a href="/media/sample.csv" download>Download .csv sample file</a>
-                </div>
-                <form id="dropForm" class="form-body drop-body" method="POST" action="/project/assign/upload">
-                    <div id="dropArea" class="drop-body-container">
-                        <label class="drop-label" for="dropInput" id="dropArea">
-                            <i class='drop-icon bx bxs-file'></i>
-                            <p id="dropText" class="drop-text"><b>Choose a file</b> or drag it here</p>
-                            <span class="drop-extension">Supports: CSV</span>
-                            <input type="file" accept=".csv" id="dropInput" hidden>
-                        </label>
+            <div class="form-root">
+                <div class="form-container drop-container">
+                    <div class="form-header drop-header">
+                        <h2>Assign team members 💾</h2>
+                        <q>Streamline your team management process by effortlessly uploading a .CSV file.</q>
+                        <p>Assign team members to projects with tailored reporting frequencies or handpick specific deadline dates for seamless project coordination and progress tracking.</p>
+                        <a href="/media/sample.csv" download>Download .csv sample file</a>
                     </div>
-                    <label class="form-input-label" for="projectInput">
-                        <span>Choose a project:</span>
-                        <div class="form-input">
-                            <select id="projectInput" required class="form-select-input">
-                                <!-- <optgroup label="Theropods">
-                                    <option value="">Pulse</option>
-                                </optgroup> -->
-                                <% projects.forEach(function(x) { %>
-                                <option value="<%= x.project_id %>"><%= x.name %></option>
-                                <% }); %>
-                            </select>
+                    <form id="dropForm" class="form-body drop-body" method="POST" action="/project/assign/upload">
+                        <div id="dropArea" class="drop-body-container">
+                            <label class="drop-label" for="dropInput" id="dropArea">
+                                <i class='drop-icon bx bxs-file'></i>
+                                <p id="dropText" class="drop-text"><b>Choose a file</b> or drag it here</p>
+                                <span class="drop-extension">Supports: CSV</span>
+                                <input type="file" accept=".csv" id="dropInput" hidden>
+                            </label>
                         </div>
-                    </label>
-                    <!-- <div class="drop-body-details-container">
-                        <label class="form-input-label" for="reportFreqInput">
-                            <span>Choose a report frequency:</span>
+                        <label class="form-input-label" for="projectInput">
+                            <span>Choose a project:</span>
                             <div class="form-input">
-                                <select name="f_report_freq" id="reportFreqInput" class="form-select-input">
-                                    <option value="" selected>None</option>
-                                    <option value="daily">Daily</option>
-                                    <option value="weekly">Weekly</option>
-                                    <option value="fortnightly">Fortnightly</option>
-                                    <option value="monthly">Monthly</option>
+                                <select id="projectInput" required class="form-select-input">
+                                    <!-- <optgroup label="Theropods">
+                                        <option value="">Pulse</option>
+                                    </optgroup> -->
+                                    <% projects.forEach(function(x) { %>
+                                    <option value="<%= x.project_id %>"><%= x.name %></option>
+                                    <% }); %>
                                 </select>
                             </div>
                         </label>
-                        <label class="form-input-label" for="reportDeadlineInput">
-                            <span>Choose a report deadline date:</span>
-                            <div class="form-input">
-                                <input id="reportDeadlineInput" type="datetime-local" class="form-date-input">
-                            </div>
-                        </label>
-                    </div> -->
-                    <button id="dropSubmitBtn" class="button form" type="submit">
-                        <span>Assign team members</span>
-                    </button>
-                    <a class="form-button-link" href="/dashboard">
-                        <button class="button" type="button">
-                            <span>Go Back</span>
+                        <!-- <div class="drop-body-details-container">
+                            <label class="form-input-label" for="reportFreqInput">
+                                <span>Choose a report frequency:</span>
+                                <div class="form-input">
+                                    <select name="f_report_freq" id="reportFreqInput" class="form-select-input">
+                                        <option value="" selected>None</option>
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="fortnightly">Fortnightly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                            </label>
+                            <label class="form-input-label" for="reportDeadlineInput">
+                                <span>Choose a report deadline date:</span>
+                                <div class="form-input">
+                                    <input id="reportDeadlineInput" type="datetime-local" class="form-date-input">
+                                </div>
+                            </label>
+                        </div> -->
+                        <button id="dropSubmitBtn" class="button form" type="submit">
+                            <span>Assign team members</span>
                         </button>
-                    </a>
-                </form>
+                        <a class="form-button-link" href="/dashboard">
+                            <button class="button" type="button">
+                                <span>Go Back</span>
+                            </button>
+                        </a>
+                    </form>
+                </div>
             </div>
         </main>
     </div>

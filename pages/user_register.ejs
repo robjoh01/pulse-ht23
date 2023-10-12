@@ -1,66 +1,68 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <div class="form-container">
-                <div class="form-header"></div>
-                <form class="form-body" method="POST" action="/user/register/posted">
-                    <label class="form-input-label" for="usernameInput" id="usernameLabel">
-                        <span>Username</span>
-                        <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="usernameInput" name="f_username" required placeholder="Enter your username" autocorrect="true" autocomplete="true" autocapitalize="none">
-                            <i class="form-input-icon bi bi-person-fill"></i>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="emailInput" id="emailLabel">
-                        <span>Email</span>
-                        <div class="form-input">
-                            <input class="form-text-input form-email-input" type="email" aria-invalid="false" id="emailInput" name="f_email" required placeholder="Enter your email" autocorrect="true" autocomplete="true" autocapitalize="none" pattern="/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/" title="Must be a valid email address">
-                            <i class="form-input-icon bi bi-postcard-fill"></i>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="passwordInput" id="passwordLabel">
-                        <span>Password</span>
-                        <div class="form-input">
-                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
-                            <button class="form-input-icon" id="passwordBtn" type="button">
-                                <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
-                                <i id="passwordShown" class="bi bi-eye"></i>
-                            </button>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="passwordInputAgain" id="passwordAgainLabel">
-                        <span>Password (again)</span>
-                        <div class="form-input">
-                            <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInputAgain" name="f_password_again" required placeholder="Enter your password (again)" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="role">
-                        <span>Choose a role:</span>
-                        <div class="form-input">
-                            <select name="f_role" id="role" class="form-select-input">
-                                <option value="true">Employee</option>
-                                <option value="false">Project Manager</option>
-                            </select>
-                        </div>
-                    </label>
-                    <div class="form-input-container flex-end">
-                        <label class="form-input-label form-input-label-none-full form-row" for="privacy">
-                            <span>I agree to <a href="#">privacy policy & terms</a></span>
+            <div class="form-root">
+                <div class="form-container">
+                    <div class="form-header"></div>
+                    <form class="form-body" method="POST" action="/user/register/posted">
+                        <label class="form-input-label" for="usernameInput" id="usernameLabel">
+                            <span>Username</span>
                             <div class="form-input">
-                                <input class="form-checkbox-input" id="privacy" type="checkbox" name="f_privacy_policy" required>
+                                <input class="form-text-input" type="text" aria-invalid="false" id="usernameInput" name="f_username" required placeholder="Enter your username" autocorrect="true" autocomplete="true" autocapitalize="none">
+                                <i class="form-input-icon bi bi-person-fill"></i>
                             </div>
                         </label>
-                    </div>
-                    <button class="button" type="submit">
-                        <span>Sign up</span>
-                    </button>
-                    <div class="form-link">
-                        <p>Already have an account? <strong><a href="/user/login">Sign in instead</a></strong></p>
-                    </div>
-                </form>
+                        <label class="form-input-label" for="emailInput" id="emailLabel">
+                            <span>Email</span>
+                            <div class="form-input">
+                                <input class="form-text-input form-email-input" type="email" aria-invalid="false" id="emailInput" name="f_email" required placeholder="Enter your email" autocorrect="true" autocomplete="true" autocapitalize="none" pattern="/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/" title="Must be a valid email address">
+                                <i class="form-input-icon bi bi-postcard-fill"></i>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="passwordInput" id="passwordLabel">
+                            <span>Password</span>
+                            <div class="form-input">
+                                <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
+                                <button class="form-input-icon" id="passwordBtn" type="button">
+                                    <i id="passwordHidden" class="bi bi-eye-slash-fill"></i>
+                                    <i id="passwordShown" class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="passwordInputAgain" id="passwordAgainLabel">
+                            <span>Password (again)</span>
+                            <div class="form-input">
+                                <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInputAgain" name="f_password_again" required placeholder="Enter your password (again)" autocorrect="false" autocomplete="true" autocapitalize="none" pattern="[a-zA-Z0-9]{8,}" title="Must be at least 8 characters">
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="role">
+                            <span>Choose a role:</span>
+                            <div class="form-input">
+                                <select name="f_role" id="role" class="form-select-input">
+                                    <option value="true">Employee</option>
+                                    <option value="false">Project Manager</option>
+                                </select>
+                            </div>
+                        </label>
+                        <div class="form-input-container flex-end">
+                            <label class="form-input-label form-input-label-none-full form-row" for="privacy">
+                                <span>I agree to <a href="#">privacy policy & terms</a></span>
+                                <div class="form-input">
+                                    <input class="form-checkbox-input" id="privacy" type="checkbox" name="f_privacy_policy" required>
+                                </div>
+                            </label>
+                        </div>
+                        <button class="button" type="submit">
+                            <span>Sign up</span>
+                        </button>
+                        <div class="form-link">
+                            <p>Already have an account? <strong><a href="/user/login">Sign in instead</a></strong></p>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
     </div>

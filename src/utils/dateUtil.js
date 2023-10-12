@@ -9,6 +9,9 @@ const dateUtil = {
     parseDateExtend: function (date) {
         return moment(date).format("YYYY-MM-DD HH:mm:ss");
     },
+    parseDateToReadableString: function (date) {
+        return moment(date).format("YYYY-MM-DD hh:mm A");
+    },
     getCurrentDate: function () {
         return moment().format("YYYY-MM-DD");
     },
@@ -17,7 +20,7 @@ const dateUtil = {
     },
     calcTimeLeft: function (datetime) {
         const now = moment();
-        const then = moment(datetime);
+        const then = moment(datetime, "YYYY-MM-DD hh:mm A");
         const duration = moment.duration(then.diff(now));
 
         if (duration.asMilliseconds() < 0) {

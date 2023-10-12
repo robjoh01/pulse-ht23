@@ -1,54 +1,56 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
         <main class="main">
-            <div class="form-container">
-                <div class="form-header"></div>
-                <form class="form-body">
-                    <label class="form-input-label" for="name" id="nameLabel">
-                        <span>Project Name</span>
-                        <div class="form-input">
-                            <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" readonly placeholder="Enter a project name" value="<%= project.name %>">
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="name" id="nameLabel">
-                        <span>Project Description</span>
-                        <div class="form-input">
-                            <textarea class="form-textarea-input" aria-invalid="false" id="description" name="f_description" rows="5" cols="33" readonly><%= project.description %></textarea>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="endDate" id="endDateLabel">
-                        <span>Creation Date</span>
-                        <div class="form-input">
-                            <input class="form-date-input" type="date" aria-invalid="false" id="" value="<%= project.creation_date %>" readonly>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="endDate" id="endDateLabel">
-                        <span>Modified Date</span>
-                        <div class="form-input">
-                            <input class="form-date-input" type="date" aria-invalid="false" id="" value="<%= project.modified_date %>" readonly>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="startDate" id="startDateLabel">
-                        <span>Start Date</span>
-                        <div class="form-input">
-                            <input class="form-date-input" type="date" aria-invalid="false" id="startDate" name="f_start_date" value="<%= project.start_date %>" readonly>
-                        </div>
-                    </label>
-                    <label class="form-input-label" for="endDate" id="endDateLabel">
-                        <span>End Date</span>
-                        <div class="form-input">
-                            <input class="form-date-input" type="date" aria-invalid="false" id="endDate" name="f_end_date" value="<%= project.end_date %>" readonly>
-                        </div>
-                    </label>
-                    <a href="/dashboard">
-                        <button class="button form-button" type="button">
-                            <span>Go Back</span>
-                        </button>
-                    </a>
-                </form>
+            <div class="form-root">
+                <div class="form-container">
+                    <div class="form-header"></div>
+                    <form class="form-body">
+                        <label class="form-input-label" for="name" id="nameLabel">
+                            <span>Project Name</span>
+                            <div class="form-input">
+                                <input class="form-text-input" type="text" aria-invalid="false" id="name" name="f_name" readonly placeholder="Enter a project name" value="<%= project.name %>">
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="name" id="nameLabel">
+                            <span>Project Description</span>
+                            <div class="form-input">
+                                <textarea class="form-textarea-input" aria-invalid="false" id="description" name="f_description" rows="5" cols="33" readonly><%= project.description %></textarea>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="endDate" id="endDateLabel">
+                            <span>Creation Date</span>
+                            <div class="form-input">
+                                <input class="form-date-input" type="date" aria-invalid="false" id="" value="<%= project.creation_date %>" readonly>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="endDate" id="endDateLabel">
+                            <span>Modified Date</span>
+                            <div class="form-input">
+                                <input class="form-date-input" type="date" aria-invalid="false" id="" value="<%= project.modified_date %>" readonly>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="startDate" id="startDateLabel">
+                            <span>Start Date</span>
+                            <div class="form-input">
+                                <input class="form-date-input" type="date" aria-invalid="false" id="startDate" name="f_start_date" value="<%= project.start_date %>" readonly>
+                            </div>
+                        </label>
+                        <label class="form-input-label" for="endDate" id="endDateLabel">
+                            <span>End Date</span>
+                            <div class="form-input">
+                                <input class="form-date-input" type="date" aria-invalid="false" id="endDate" name="f_end_date" value="<%= project.end_date %>" readonly>
+                            </div>
+                        </label>
+                        <a href="/dashboard">
+                            <button class="button form-button" type="button">
+                                <span>Go Back</span>
+                            </button>
+                        </a>
+                    </form>
+                </div>
             </div>
         </main>
     </div>

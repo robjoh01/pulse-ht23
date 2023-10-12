@@ -1,164 +1,152 @@
 <%- include("./../partials/header.ejs") %>
 
-<div class="body-layout">
-    <div class="main-layout">
+<div class="body-container">
+    <div class="main-container">
         <%- include("./../partials/sidebar.ejs") %>
-        <main class="main extend">
-
-        <div class="dashboard-grid">
-            <div class="dashboard-grid-1">
+        <main class="main">
+            <div class="dashboard-grid">
                 <div class="dashboard-stats">
-                    <i class='dashboard-stats-icon bx bxs-star'></i>
-                    <span data-value="400" class="dashboard-stats-value"></span>
-                    <span data-value="lorem ipsum" class="dashboard-stats-text"></span>
+                    <div class="dashboard-cards">
+                        <div class="dashboard-card">
+                            <span data-value="<%= totalCount %>" class="dashboard-stats-value">
+                                <i class='dashboard-stats-icon bx bxs-star'></i>
+                            </span>
+                            <span data-value="Total Reports" class="dashboard-stats-text"></span>
+                        </div>
+                        <div class="dashboard-card">
+                            <span data-value="<%= submittedCount %>" class="dashboard-stats-value">
+                                <i class='dashboard-stats-icon bx bxs-star'></i>
+                            </span>
+                            <span data-value="Submitted Reports" class="dashboard-stats-text"></span>
+                        </div>
+                        <div class="dashboard-card">
+                            <span data-value="<%= upcomingCount %>" class="dashboard-stats-value">
+                                <i class='dashboard-stats-icon bx bxs-star'></i>
+                            </span>
+                            <span data-value="Upcoming Reports" class="dashboard-stats-text"></span>
+                        </div>
+                    </div>
+                    <circle-progress id="circleProgress" class="dashboard-progress" value="<%= progress %>" max="100" text-format="percent"></circle-progress>
                 </div>
-                <div class="dashboard-stats">
-                    <i class='dashboard-stats-icon bx bxs-star'></i>
-                    <span data-value="340" class="dashboard-stats-value"></span>
-                    <span data-value="lorem ipsum" class="dashboard-stats-text"></span>
-                </div>
-                <div class="dashboard-stats">
-                    <i class='dashboard-stats-icon bx bxs-star'></i>
-                    <span data-value="225" class="dashboard-stats-value"></span>
-                    <span data-value="lorem ipsum" class="dashboard-stats-text"></span>
-                </div>
-                <div class="dashboard-stats">
-                    <i class='dashboard-stats-icon bx bxs-star'></i>
-                    <span data-value="280" class="dashboard-stats-value"></span>
-                    <span data-value="lorem ipsum" class="dashboard-stats-text"></span>
-                </div>
-            </div>
-            <div class="dashboard-grid-2" id="circleProgress">
-                <circle-progress id="circleProgressComponent" value="<%= progress %>" max="100" text-format="percent"></circle-progress>
-            </div>
-            <div class="dashboard-grid-3 dashboard-grid-report">
-                <table class="primary-table assignment-table">
-                    <caption>Upcoming Reports</caption>
-                    <thead class="primary-thead">
-                        <tr class="primary-tr">
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bx-text' ></i>
-                                    <span>Name</span>
-                                </div>
-                            </th>
-                            <th class="primary-th" colspan="2">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bxs-calendar-star'></i>
-                                    <span>Start & End date</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bx-calendar-x' ></i>
-                                    <span>Deadline</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bxs-time-five' ></i>
-                                    <span>Time left</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="primary-tbody">
-                        <% assignments.forEach(function(x) { %>
-                        <tr class="primary-tr">
-                            <td class="primary-td" data-cell="Project's Name">
-                                <a href="/employee/report/<%= x.project_id %>">
+                <div class="dashboard-report">
+                    <table class="primary-table assignment-table">
+                        <caption>Upcoming Reports</caption>
+                        <thead class="primary-thead">
+                            <tr class="primary-tr">
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bx-text' ></i>
+                                        <span>Name</span>
+                                    </div>
+                                </th>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bx-calendar-x' ></i>
+                                        <span>Deadline</span>
+                                    </div>
+                                </th>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bxs-time-five' ></i>
+                                        <span>Time left</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="primary-tbody">
+                            <% assignments.forEach(function(x) { %>
+                            <tr class="primary-tr">
+                                <td class="primary-td" data-label="Project" data-icon="🚧">
+                                    <a href="/employee/report/<%= x.project_id %>">
+                                        <span><%= x.project_name %></span>
+                                    </a>
+                                </td>
+                                <td class="primary-td" data-label="Deadline" data-icon="🪦">
+                                    <span><%= x.deadline_date %></span>
+                                </td>
+                                <td class="primary-td" data-label="Time Left" data-icon="⏰">
+                                    <span><%= x.time_left %></span>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <table class="primary-table report-table">
+                        <caption>Sent Reports</caption>
+                        <thead class="primary-thead">
+                            <tr class="primary-tr">
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bxs-hard-hat'></i>
+                                        <span>Project Name</span>
+                                    </div>
+                                </th>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bx-text' ></i>
+                                        <span>Text</span>
+                                    </div>
+                                </th>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bxs-calendar-check' ></i>
+                                        <span>Date sent</span>
+                                    </div>
+                                </th>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bxs-receipt'></i>
+                                        <span>Status</span>
+                                    </div>
+                                </th>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bxs-folder-open'></i>
+                                        <span>Category</span>
+                                    </div>
+                                </th>
+                                <th class="primary-th">
+                                    <div class="primary-flex primary-row">
+                                        <i class='bx bxs-megaphone'></i>
+                                        <span>Actions</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="primary-tbody">
+                            <% reports.forEach(function(x) { %>
+                            <tr class="primary-tr">
+                                <td class="primary-td" data-label="Project" data-icon="🚧">
                                     <span><%= x.project_name %></span>
-                                </a>
-                            </td>
-                            <td class="primary-td" data-cell="Project's Dates" colspan="2">
-                                <div class="primary-flex primary-row">
-                                    <span><%= x.project_start_date %></span>
-                                    <span>➟</span>
-                                    <span><%= x.project_end_date %></span>
-                                </div>
-                            </td>
-                            <td class="primary-td" data-cell="Deadline">
-                                <span><%= x.deadline_date %></span>
-                            </td>
-                            <td class="primary-td" data-cell="Time Left">
-                                <span><%= x.time_left %></span>
-                            </td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-                <table class="primary-table report-table">
-                    <caption>Sent Reports</caption>
-                    <thead class="primary-thead">
-                        <tr class="primary-tr">
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bx-text' ></i>
-                                    <span>Project Name</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bx-text' ></i>
-                                    <span>Text</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bxs-calendar-check' ></i>
-                                    <span>Date sent</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bxs-receipt'></i>
-                                    <span>Status</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bxs-folder-open'></i>
-                                    <span>Category</span>
-                                </div>
-                            </th>
-                            <th class="primary-th">
-                                <div class="primary-flex primary-row">
-                                    <i class='bx bx-history'></i>
-                                    <span>Report History</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="primary-tbody">
-                        <% reports.forEach(function(x) { %>
-                        <tr class="primary-tr">
-                            <td class="primary-td" data-cell="Project's Name">
-                                <span><%= x.project_name %></span>
-                            </td>
-                            <td class="primary-td" data-cell="Text">
-                                <span><%= x.text %></span>
-                            </td>
-                            <td class="primary-td" data-cell="Creation Date">
-                                <span><%= x.creation_date %></span>
-                            </td>
-                            <td class="primary-td" data-cell="Status">
-                                <span><%= x.status %></span>
-                            </td>
-                            <td class="primary-td" data-cell="Category">
-                                <span><%= x.category %></span>
-                            </td>
-                            <td class="primary-td" data-cell="View history">
-                                <a href="/manager/report/history/<%= x.id %>">
-                                    <span>Link</span>
-                                </a>
-                            </td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
+                                </td>
+                                <td class="primary-td" data-cell="text" data-label="Text" data-icon="📝">
+                                    <span><%= x.text %></span>
+                                </td>
+                                <td class="primary-td" data-label="Creation Date" data-icon="📅">
+                                    <span><%= x.creation_date %></span>
+                                </td>
+                                <td class="primary-td" data-label="Status" data-icon="🕹️">
+                                    <span><%= x.status %></span>
+                                </td>
+                                <td class="primary-td" data-label="Category" data-icon="🗂️">
+                                    <span><%= x.category %></span>
+                                </td>
+                                <td class="primary-td" data-label="Actions" data-icon="📣">
+                                    <div class="primary-flex primary-row">
+                                        <!-- <a href="/manager/report/history/<%= x.id %>">
+                                            <i class='bx bx-link'></i>
+                                        </a> -->
+                                        <a href="/manager/report/history/<%= x.id %>">
+                                            <i class='bx bx-history'></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
         </main>
     </div>
 

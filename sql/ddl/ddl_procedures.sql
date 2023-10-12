@@ -28,6 +28,7 @@ DROP PROCEDURE IF EXISTS fetch_assignments_for_employee;
 DROP PROCEDURE IF EXISTS fetch_report;
 DROP PROCEDURE IF EXISTS fetch_report_history;
 DROP PROCEDURE IF EXISTS fetch_reports;
+DROP PROCEDURE IF EXISTS fetch_reports_with_filter;
 DROP PROCEDURE IF EXISTS fetch_reports_for_employee;
 
 DELIMITER ;;
@@ -226,6 +227,27 @@ BEGIN
     SELECT
         *
     FROM v_reports
+    ;
+END;;
+
+
+CREATE PROCEDURE fetch_reports_with_filter(
+    arg_query CHAR(36),
+    arg_query_alt MEDIUMTEXT
+)
+BEGIN
+    SELECT
+        *
+    FROM v_reports
+    WHERE
+        `id` = arg_query
+        OR `employee_id` = arg_query
+        OR `employee_name` LIKE arg_query_alt
+        OR `project_id` = arg_query
+        OR `project_name` LIKE arg_query_alt
+        OR `creation_date` LIKE arg_query_alt
+        OR `status` LIKE arg_query_alt
+        OR `category` LIKE arg_query_alt
     ;
 END;;
 

@@ -1,7 +1,7 @@
 @use "../utils" as *;
 
 .primary-table {
-    table-layout: fixed;
+    // table-layout: fixed;
     width: 100%;
 
     @include breakpoint(large) {
@@ -25,6 +25,10 @@
         color: var(--color-fg-alt-300);
         border-radius: 1rem 1rem 0 0;
         font-weight: 900;
+
+        @include breakpoint-down(small) {
+            border-radius: 0;
+        }
     }
 
     .primary-tr {
@@ -74,6 +78,15 @@
             }
         }
     }
+
+    .primary-td[data-cell="text"] {
+        span {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
 }
 
 .primary-table .primary-thead {
@@ -83,31 +96,34 @@
 
 .primary-table {
     @include breakpoint-down(medium) {
-        th {
+        .primary-th {
             display: none;
         }
 
-        td {
+        .primary-td {
             display: grid;
-            gap: 0.5rem;
-            grid-template-columns: 15ch auto;
-            // padding: 0.5rem 1rem;
-            padding-left: 1rem;
-            margin-bottom: 0.5rem;
+            grid-template-columns: 1fr auto;
+            padding: 0.5rem 1rem;
         }
 
-        td:first-child {
+        .primary-td:first-child {
             padding-top: 1rem;
         }
 
-        td:last-child {
+        .primary-td:last-child {
             padding-bottom: 1rem;
         }
         
-        td::before {
-            content: attr(data-cell) ": ";
+        .primary-td::before {
+            content: attr(data-icon) " " attr(data-label) ": ";
             font-weight: 700;
             text-transform: capitalize;
+        }
+    }
+
+    @include breakpoint-down(small) {
+        .primary-td {
+            grid-template-columns: 20ch auto;
         }
     }
 }
