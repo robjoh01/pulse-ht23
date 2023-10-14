@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/27</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/20</span>
+                <span class='fraction'>17/20</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">59.25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/27</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -116,42 +116,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">39x</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,23 +182,23 @@ const dateUtil = {
         const then = moment(datetime, "YYYY-MM-DD hh:mm A");
         const duration = moment.duration(then.diff(now));
 &nbsp;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (duration.asMilliseconds() &lt; 0) {
-<span class="cstat-no" title="statement not covered" >            return "Time has passed";</span>
-        } else <span class="missing-if-branch" title="if path not taken" >I</span>if (duration.asMonths() &gt; 1) {
-            const months = <span class="cstat-no" title="statement not covered" >Math.floor(duration.asMonths());</span>
-<span class="cstat-no" title="statement not covered" >            return months + ` ${months &gt; 1 ? "months left" : "month left"}`;</span>
+        if (duration.asMilliseconds() &lt; 0) {
+            return "Time has passed";
+        } else if (duration.asMonths() &gt; 1) {
+            const months = Math.floor(duration.asMonths());
+            return months + ` ${months &gt; 1 ? "months left" : "month left"}`;
         } else if (duration.asWeeks() &gt; 1) {
             const weeks = Math.floor(duration.asWeeks());
             return weeks + ` ${weeks &gt; 1 ? "weeks left" : <span class="branch-1 cbranch-no" title="branch not covered" >"week left"}</span>`;
-        } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>if (duration.asDays() &gt; 1) {</span>
-            const days = <span class="cstat-no" title="statement not covered" >Math.floor(duration.asDays());</span>
-<span class="cstat-no" title="statement not covered" >            return days + ` ${days &gt; 1 ? "days left" : "day left"}`;</span>
-        } else <span class="cstat-no" title="statement not covered" >if (duration.asHours() &gt; 1) {</span>
-            const hours = <span class="cstat-no" title="statement not covered" >Math.floor(duration.asHours());</span>
-<span class="cstat-no" title="statement not covered" >            return hours + ` ${hours &gt; 1 ? "hours left" : "hour left"}`;</span>
+        } else if (duration.asDays() &gt; 1) {
+            const days = Math.floor(duration.asDays());
+            return days + ` ${days &gt; 1 ? "days left" : <span class="branch-1 cbranch-no" title="branch not covered" >"day left"}</span>`;
+        } else if (duration.asHours() &gt; 1) {
+            const hours = Math.floor(duration.asHours());
+            return hours + ` ${hours &gt; 1 ? "hours left" : <span class="branch-1 cbranch-no" title="branch not covered" >"hour left"}</span>`;
         } else {
-            const minutes = <span class="cstat-no" title="statement not covered" >Math.floor(duration.asMinutes());</span>
-<span class="cstat-no" title="statement not covered" >            return minutes + ` ${minutes &gt; 1 ? "minutes left" : "minute left"}`;</span>
+            const minutes = Math.floor(duration.asMinutes());
+            return minutes + ` ${minutes &gt; 1 ? "minutes left" : "minute left"}`;
         }
     }
 };
@@ -211,7 +211,7 @@ module.exports = dateUtil;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-12T18:06:57.433Z
+                at 2023-10-14T16:10:41.391Z
             </div>
         <script src="prettify.js"></script>
         <script>

@@ -8,6 +8,7 @@ const hashUtil = require('../src/utils/hashUtil.js');
 
 const admindId = "2e889992-6993-42c2-9366-cf9249a1e61b";
 const username = "mrrobin";
+let id = null;
 let password = "password1";
 const userId = hashUtil.generateGuid();
 const projectId = hashUtil.generateGuid();
@@ -106,25 +107,31 @@ test("Check if a user has permission (not valid version)", async () => {
     expect(res2).toEqual(false);
 });
 
-test("Login for a user", async () => {
-    const res = await dbUtil.loginUser(
-        username,
+test("Get the id for a user", async () => {
+    id = await dbUtil.getUserId(username);
+
+    expect(id).not.toEqual(null);
+});
+
+test("Check the password for a user", async () => {
+    const res = await dbUtil.checkPassword(
+        id,
         password,
     );
 
     expect(res).not.toEqual(false);
 });
 
-test("Login for a user (not valid version)", async () => {
-    const res = await dbUtil.loginUser(
+test("Check the password for a user (not valid version)", async () => {
+    const res = await dbUtil.checkPassword(
         "",
         password,
     );
 
     expect(res).toEqual(false);
 
-    const res2 = await dbUtil.loginUser(
-        username,
+    const res2 = await dbUtil.checkPassword(
+        id,
         "password",
     );
 

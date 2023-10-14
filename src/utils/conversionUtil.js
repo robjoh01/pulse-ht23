@@ -1,7 +1,7 @@
 "use strict";
 
 const timeScalars = [1000, 60, 60, 24, 7, 52];
-const timeUnits = ['ms', 'secs', 'mins', 'hrs', 'days', 'weeks', 'years'];
+const timeUnits = ["now", "seconds", "minutes", "hours", "days", "weeks", "years"];
 
 /** @namespace */
 const conversionUtil = {
@@ -36,14 +36,15 @@ const conversionUtil = {
     * @memberof conversionUtil
     */
     getHumanReadableTime: function (milliseconds, dp = 0) {
-        let timeScalarIndex = 0, scaledTime = milliseconds;
+        let timeScalarIndex = 0;
+        let scaledTime = milliseconds;
 
         while (scaledTime > timeScalars[timeScalarIndex]) {
             scaledTime /= timeScalars[timeScalarIndex++];
         }
 
         return `${scaledTime.toFixed(dp)} ${timeUnits[timeScalarIndex]}`;
-    },
+    }
 };
 
 module.exports = conversionUtil;

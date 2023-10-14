@@ -15,6 +15,13 @@ test("Parse date extend", () => {
     expect(res).toEqual(true);
 });
 
+test("Parse date to readable string", () => {
+    const date = dateUtil.parseDateToReadableString("2023-12-31 18:30");
+    const res = moment(date, 'YYYY-MM-DD hh:mm A', false).isValid();
+
+    expect(res).toEqual(true);
+});
+
 test("Get current date", () => {
     const date = dateUtil.getCurrentDate();
     const res = moment(date, 'YYYY-MM-DD', true).isValid();
@@ -27,4 +34,46 @@ test("Get current date extend", () => {
     const res = moment(date, 'YYYY-MM-DD HH:mm:ss', true).isValid();
 
     expect(res).toEqual(true);
-}); 
+});
+
+test("Calculate time left", () => {
+    const res = dateUtil.calcTimeLeft(moment());
+
+    expect(res).toEqual(expect.any(String));
+});
+
+test("Calculate time left (5+ minutes)", () => {
+    const res = dateUtil.calcTimeLeft(moment().add(5, "minutes"));
+
+    expect(res).toEqual(expect.any(String));
+});
+
+test("Calculate time left (1+ day)", () => {
+    const res = dateUtil.calcTimeLeft(moment().add(1, "days"));
+
+    expect(res).toEqual(expect.any(String));
+});
+
+test("Calculate time left (1+ week)", () => {
+    const res = dateUtil.calcTimeLeft(moment().add(1, "weeks"));
+
+    expect(res).toEqual(expect.any(String));
+});
+
+test("Calculate time left (2+ weeks)", () => {
+    const res = dateUtil.calcTimeLeft(moment().add(2, "weeks"));
+
+    expect(res).toEqual(expect.any(String));
+});
+
+test("Calculate time left (1+ months)", () => {
+    const res = dateUtil.calcTimeLeft(moment().add(1, "months"));
+
+    expect(res).toEqual(expect.any(String));
+});
+
+test("Calculate time left (1+ years)", () => {
+    const res = dateUtil.calcTimeLeft(moment().add(1, "years"));
+
+    expect(res).toEqual(expect.any(String));
+});
