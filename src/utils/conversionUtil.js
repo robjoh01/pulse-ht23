@@ -1,5 +1,8 @@
 "use strict";
 
+const timeScalars = [1000, 60, 60, 24, 7, 52];
+const timeUnits = ['ms', 'secs', 'mins', 'hrs', 'days', 'weeks', 'years'];
+
 /** @namespace */
 const conversionUtil = {
     minutesToMilliseconds: function (minutes) {
@@ -26,7 +29,21 @@ const conversionUtil = {
     */
     bytesToMegabytes: function (bytes) {
         return bytes / 1000000;
-    }
+    },
+    /**
+    * Text
+    * @return {string} Text
+    * @memberof conversionUtil
+    */
+    getHumanReadableTime: function (milliseconds, dp = 0) {
+        let timeScalarIndex = 0, scaledTime = milliseconds;
+
+        while (scaledTime > timeScalars[timeScalarIndex]) {
+            scaledTime /= timeScalars[timeScalarIndex++];
+        }
+
+        return `${scaledTime.toFixed(dp)} ${timeUnits[timeScalarIndex]}`;
+    },
 };
 
 module.exports = conversionUtil;

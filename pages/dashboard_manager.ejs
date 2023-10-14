@@ -2,7 +2,7 @@
 
 <div class="body-container">
     <div class="main-container">
-        <%- include("./../partials/sidebar.ejs") %>
+        <%- include("./../partials/menu.ejs") %>
         <main class="main">
             <div class="dashboard-grid">
                 <div class="dashboard-grid-project-creation">
@@ -55,6 +55,10 @@
                                         <span>End Date</span>
                                     </th>
                                     <th class="primary-th">
+                                        <i class='bx bxs-calendar-star'></i>
+                                        <span>Deadline</span>
+                                    </th>
+                                    <th class="primary-th">
                                         <div class="primary-flex primary-row">
                                             <i class='bx bxs-bell-ring'></i>
                                             <span>Submitted Reports</span>
@@ -70,7 +74,7 @@
                                             <button aria-label="Copy project as a shareable link" class="project-btn" onclick="copyToClipboard('<%= baseUrl + '/project/view/' + x.project_id %>')">
                                                 <i class="bi bi-link-45deg"></i>
                                             </button>
-                                            <a href="/project/update/<%= x.project_id %>">
+                                            <a href="/project/update/<%= x.id %>">
                                                 <span><%= x.name %></span>
                                             </a>
                                         </div>
@@ -80,6 +84,9 @@
                                     </td>
                                     <td class="primary-td" data-label="End Date" data-icon="📅">
                                         <span><%= x.end_date %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Deadline" data-icon="📅">
+                                        <span><%= x.report_deadline %></span>
                                     </td>
                                     <td class="primary-td" data-label="Count" data-icon="💯">
                                         <span><%= x.report_count %></span>
@@ -158,7 +165,6 @@
                                     </td>
                                     <td class="primary-td" data-label="Creation Date" data-icon="📅">
                                         <span><%= x.creation_date %></span>
-                                        <!-- <input class="table-input" type="datetime-local" readonly disabled value="<%= x.creation_date %>"> -->
                                     </td>
                                     <td class="primary-td" data-label="Status" data-icon="🕹️">
                                         <span><%= x.status %></span>

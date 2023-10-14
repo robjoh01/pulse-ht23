@@ -36,6 +36,10 @@ GROUP BY s.id
 CREATE VIEW v_users AS
 SELECT
     u.id,
+    CASE
+        WHEN u.display_name IS NOT NULL AND u.display_name != '' THEN u.display_name
+        ELSE u.username
+    END AS `name`,
     u.username,
     u.display_name,
     u.email_address,
@@ -89,13 +93,27 @@ ORDER BY u.logout_date DESC, u.creation_date DESC
 
 CREATE VIEW v_projects AS
 SELECT
-    p.id AS `project_id`,
+    p.id,
     p.name,
     p.description,
     p.creation_date,
     p.modified_date,
     p.start_date,
     p.end_date,
+    p.report_frequency,
+    CASE 
+        WHEN p.report_deadline IS NOT NULL THEN 
+            p.report_deadline
+        WHEN p.report_frequency = 'daily' THEN
+            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL 1 DAY), p.end_date)
+        WHEN p.report_frequency = 'weekly' THEN
+            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 WEEK, CURRENT_DATE() + INTERVAL (7 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
+        WHEN p.report_frequency = 'fortnightly' THEN
+            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 2 WEEK, CURRENT_DATE() + INTERVAL (14 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
+        WHEN p.report_frequency = 'monthly' THEN
+            -- LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 MONTH, CURRENT_DATE() + INTERVAL (LAST_DAY(DATE(p.start_date)) - DAYOFMONTH(CURRENT_DATE()) + 1) DAY), p.end_date)
+            LEAST(GREATEST(DATE_ADD(p.start_date, INTERVAL 1 MONTH), DATE_ADD(CURRENT_DATE(), INTERVAL (DAYOFWEEK(CURRENT_DATE()) - DAYOFWEEK(p.start_date) - 1) DAY)), p.end_date)
+    END + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND AS `deadline_date`,
     COUNT(r.id) AS `report_count`
 FROM `project` AS p
     LEFT JOIN `report` AS r ON p.id = r.project_id AND r.status_id = 2
@@ -122,22 +140,10 @@ SELECT
     p.name AS `project_name`,
     p.start_date AS `project_start_date`,
     p.end_date AS `project_end_date`,
-    CASE 
-        WHEN p.report_deadline IS NOT NULL THEN 
-            p.report_deadline
-        WHEN p.report_frequency = 'daily' THEN
-            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL 1 DAY), p.end_date)
-        WHEN p.report_frequency = 'weekly' THEN
-            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 WEEK, CURRENT_DATE() + INTERVAL (7 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
-        WHEN p.report_frequency = 'fortnightly' THEN
-            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 2 WEEK, CURRENT_DATE() + INTERVAL (14 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
-        WHEN p.report_frequency = 'monthly' THEN
-            -- LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 MONTH, CURRENT_DATE() + INTERVAL (LAST_DAY(DATE(p.start_date)) - DAYOFMONTH(CURRENT_DATE()) + 1) DAY), p.end_date)
-            LEAST(GREATEST(DATE_ADD(p.start_date, INTERVAL 1 MONTH), DATE_ADD(CURRENT_DATE(), INTERVAL (DAYOFWEEK(CURRENT_DATE()) - DAYOFWEEK(p.start_date) - 1) DAY)), p.end_date)
-    END + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND AS `deadline_date`
+    p.deadline_date AS `project_deadline_date`
 FROM `assignment` AS a
     JOIN `employee` AS e ON a.employee_id = e.id
-    JOIN `project` AS p ON a.project_id = p.id
+    JOIN v_projects AS p ON a.project_id = p.id
 GROUP BY a.employee_id, a.project_id
 ORDER BY a.creation_date DESC
 ;
@@ -146,10 +152,7 @@ CREATE VIEW v_reports AS
 SELECT
     r.id,
     r.employee_id,
-    CASE
-        WHEN u.display_name IS NOT NULL AND u.display_name != '' THEN u.display_name
-        ELSE u.username
-    END AS `employee_name`,
+    u.name AS `employee_name`,
     p.name AS `project_name`,
     r.project_id,
     r.creation_date,
@@ -161,7 +164,7 @@ SELECT
 FROM `report` AS r
     JOIN `project` AS p ON r.project_id = p.id
     JOIN `employee` AS e ON r.employee_id = e.id
-    JOIN `user` AS u ON e.id = u.id
+    JOIN v_users AS u ON e.id = u.id
     LEFT JOIN `status` AS s ON r.status_id = s.id
     LEFT JOIN `category` AS c ON r.category_id = c.id
 GROUP BY r.id

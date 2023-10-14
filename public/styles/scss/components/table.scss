@@ -16,7 +16,7 @@
     box-shadow: 0.8rem 1.2rem 8px 0 hsla(0, 0%, 0%, 0.2);
     -webkit-box-shadow: 0.8rem 1.2rem 8px 0 hsla(0, 0%, 0%, 0.2);
     -moz-box-shadow: 0.8rem 1.2rem 8px 0 hsla(0, 0%, 0%, 0.2);
-    border: 2px solid hsla(0, 0%, 0%, 0.5);
+    border: 2px solid var(--color-border-200);
 
     caption {
         caption-side: top;
@@ -32,7 +32,7 @@
     }
 
     .primary-tr {
-        border-bottom: 1pt solid var(--color-black);
+        border-bottom: 1pt solid var(--color-border-200);
     }
 
     .primary-flex {
@@ -81,10 +81,12 @@
 
     .primary-td[data-cell="text"] {
         span {
+            width: min-content;
+            overflow: hidden;
+            text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
-            overflow: hidden;
         }
     }
 }

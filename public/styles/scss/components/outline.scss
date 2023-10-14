@@ -12,12 +12,12 @@
     min-height: 100dvh;
     display: grid;
     grid-template-columns: auto;
+    grid-template-rows: auto 1fr;
     // padding: 2rem;
     // padding-left: calc(var(--sidebar-width) + 2rem);
 
     &:has(.main-full) {
-        padding: 0;
-        padding-left: var(--sidebar-width);
+        // padding-left: var(--sidebar-width);
 
         .primary-sidebar {
             box-shadow: none;
@@ -42,4 +42,10 @@
 
 .main-full {
     max-width: 100%;
+    padding: 0;
+}
+
+.header-hero {
+    max-width: 50%;
+    content: var(--hero-small-banner);
 }

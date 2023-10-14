@@ -2,7 +2,7 @@
 
 <div class="body-container">
     <div class="main-container">
-        <%- include("./../partials/sidebar.ejs") %>
+        <%- include("./../partials/menu.ejs") %>
         <main class="main">
             <div class="form-root">
                 <div class="form-container drop-container">
@@ -29,31 +29,11 @@
                                         <option value="">Pulse</option>
                                     </optgroup> -->
                                     <% projects.forEach(function(x) { %>
-                                    <option value="<%= x.project_id %>"><%= x.name %></option>
+                                    <option value="<%= x.id %>"><%= x.name %></option>
                                     <% }); %>
                                 </select>
                             </div>
                         </label>
-                        <!-- <div class="drop-body-details-container">
-                            <label class="form-input-label" for="reportFreqInput">
-                                <span>Choose a report frequency:</span>
-                                <div class="form-input">
-                                    <select name="f_report_freq" id="reportFreqInput" class="form-select-input">
-                                        <option value="" selected>None</option>
-                                        <option value="daily">Daily</option>
-                                        <option value="weekly">Weekly</option>
-                                        <option value="fortnightly">Fortnightly</option>
-                                        <option value="monthly">Monthly</option>
-                                    </select>
-                                </div>
-                            </label>
-                            <label class="form-input-label" for="reportDeadlineInput">
-                                <span>Choose a report deadline date:</span>
-                                <div class="form-input">
-                                    <input id="reportDeadlineInput" type="datetime-local" class="form-date-input">
-                                </div>
-                            </label>
-                        </div> -->
                         <button id="dropSubmitBtn" class="button form" type="submit">
                             <span>Assign team members</span>
                         </button>

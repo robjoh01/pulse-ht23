@@ -41,7 +41,7 @@ const dateUtil = {
             const minutes = Math.floor(duration.asMinutes());
             return minutes + ` ${minutes > 1 ? "minutes left" : "minute left"}`;
         }
-    }
+    },
 };
 
 module.exports = dateUtil;

@@ -19,7 +19,7 @@ CREATE PROCEDURE create_report(
 BEGIN
     -- Insert into report table
     INSERT INTO `report` (`employee_id`, `project_id`, `creation_date`, `text`, `status_id`, `category_id`)
-        VALUES (arg_employee_id, arg_project_id, CURRENT_DATE(), arg_text, arg_status_id, arg_category_id);
+        VALUES (arg_employee_id, arg_project_id, NOW(), arg_text, arg_status_id, arg_category_id);
 
     -- Get the last inserted report ID
     SET report_id = LAST_INSERT_ID();

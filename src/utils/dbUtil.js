@@ -113,6 +113,20 @@ const dbUtil = {
         return Boolean(res[1][0].success);
     },
 
+    getUserId: async function (username) {
+        const doesUserExists = await this.doesUserExists(username); // Check if user is exists
+
+        if (!doesUserExists) {
+            return false;
+        }
+
+        const db = await this.connectDatabase();
+
+        const sql = "SELECT get_user_id(?);";
+        const res = await db.query(sql, [username]);
+
+        return res[0][Object.keys(res[0])[0]]; // Get user's id
+    },
     isEmployee: async function (id) {
         if (!id) {
             return false;
@@ -127,6 +141,26 @@ const dbUtil = {
         const db = await this.connectDatabase();
 
         const sql = "SELECT is_user_employee(?);";
+        const res = await db.query(sql, [id]);
+
+        db.end();
+
+        return Boolean(res[0][Object.keys(res[0])[0]]);
+    },
+    isUserActivated: async function (id) {
+        if (!id) {
+            return false;
+        }
+
+        const doesUserExists = await this.doesUserExists(null, id);
+
+        if (!doesUserExists) {
+            return false;
+        }
+
+        const db = await this.connectDatabase();
+
+        const sql = "SELECT is_user_activated(?);";
         const res = await db.query(sql, [id]);
 
         db.end();
@@ -212,22 +246,37 @@ const dbUtil = {
 
         return Boolean(res[1][0].success);
     },
-    loginUser: async function (username, password) {
-        const doesUserExist = await this.doesUserExists(username); // Check if user is exists
+    reactivateUser: async function (id) {
+        const db = await this.connectDatabase();
+        const sql = "CALL reactivate_user(?, @success); SELECT @success as success;";
 
-        if (!doesUserExist) {
+        const res = await db.query(sql, [id]);
+
+        db.end();
+
+        return Boolean(res[1][0].success);
+    },
+    deactivateUser: async function (id) {
+        const db = await this.connectDatabase();
+        const sql = "CALL deactivate_user(?, @success); SELECT @success as success;";
+
+        const res = await db.query(sql, [id]);
+
+        db.end();
+
+        return Boolean(res[1][0].success);
+    },
+    checkPassword: async function (id, password) {
+        const doesUserExists = await this.doesUserExists(null, id); // Check if user is exists
+
+        if (!doesUserExists) {
             return false;
         }
 
         const db = await this.connectDatabase();
 
-        let sql = "SELECT get_user_id(?);";
-        let res = await db.query(sql, [username]);
-
-        const id = res[0][Object.keys(res[0])[0]]; // Get user's id
-
-        sql = "SELECT get_user_password(?);";
-        res = await db.query(sql, [id]);
+        const sql = "SELECT get_user_password(?);";
+        const res = await db.query(sql, [id]);
 
         db.end();
 
@@ -439,10 +488,11 @@ const dbUtil = {
 
         const data = { ...res[0][0] };
 
-        data.creation_date = dateUtil.parseDate(data.creation_date);
-        data.modified_date = dateUtil.parseDate(data.modified_date);
+        data.creation_date = dateUtil.parseDateToReadableString(data.creation_date);
+        data.modified_date = dateUtil.parseDateToReadableString(data.modified_date);
         data.start_date = dateUtil.parseDate(data.start_date);
         data.end_date = dateUtil.parseDate(data.end_date);
+        data.report_deadline = dateUtil.parseDateToReadableString(data.report_deadline);
 
         return data;
     },
@@ -457,40 +507,11 @@ const dbUtil = {
         const data = JSON.parse(JSON.stringify(rows));
 
         data.forEach(x => {
-            x.creation_date = dateUtil.parseDate(x.creation_date);
-            x.modified_date = dateUtil.parseDate(x.modified_date);
+            x.creation_date = dateUtil.parseDateToReadableString(x.creation_date);
+            x.modified_date = dateUtil.parseDateToReadableString(x.modified_date);
             x.start_date = dateUtil.parseDate(x.start_date);
             x.end_date = dateUtil.parseDate(x.end_date);
-        });
-
-        return data;
-    },
-    fetchArchiveProject: async function (id) {
-        const db = await this.connectDatabase();
-        const sql = "CALL fetch_project_archive(?);";
-
-        const res = await db.query(sql, [id]);
-
-        db.end();
-
-        const data = { ...res[0][0] };
-
-        data.creation_date = dateUtil.parseDate(data.creation_date);
-
-        return data;
-    },
-    fetchArchiveProjects: async function () {
-        const db = await this.connectDatabase();
-        const sql = "CALL fetch_project_archives();";
-
-        const [rows] = await db.query(sql);
-
-        db.end();
-
-        const data = JSON.parse(JSON.stringify(rows));
-
-        data.forEach(x => {
-            x.creation_date = dateUtil.parseDate(x.creation_date);
+            x.report_deadline = dateUtil.parseDateToReadableString(x.report_deadline);
         });
 
         return data;
@@ -506,10 +527,41 @@ const dbUtil = {
         const data = JSON.parse(JSON.stringify(rows));
 
         data.forEach(x => {
-            x.creation_date = dateUtil.parseDate(x.creation_date);
-            x.modified_date = dateUtil.parseDate(x.modified_date);
+            x.creation_date = dateUtil.parseDateToReadableString(x.creation_date);
+            x.modified_date = dateUtil.parseDateToReadableString(x.modified_date);
             x.start_date = dateUtil.parseDate(x.start_date);
             x.end_date = dateUtil.parseDate(x.end_date);
+            x.report_deadline = dateUtil.parseDateToReadableString(x.report_deadline);
+        });
+
+        return data;
+    },
+    fetchArchiveProject: async function (id) {
+        const db = await this.connectDatabase();
+        const sql = "CALL fetch_project_archive(?);";
+
+        const res = await db.query(sql, [id]);
+
+        db.end();
+
+        const data = { ...res[0][0] };
+
+        data.creation_date = dateUtil.parseDateToReadableString(data.creation_date);
+
+        return data;
+    },
+    fetchArchiveProjects: async function () {
+        const db = await this.connectDatabase();
+        const sql = "CALL fetch_project_archives();";
+
+        const [rows] = await db.query(sql);
+
+        db.end();
+
+        const data = JSON.parse(JSON.stringify(rows));
+
+        data.forEach(x => {
+            x.creation_date = dateUtil.parseDateToReadableString(x.creation_date);
         });
 
         return data;

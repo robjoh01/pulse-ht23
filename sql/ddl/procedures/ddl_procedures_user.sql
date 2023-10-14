@@ -5,6 +5,8 @@
 DROP PROCEDURE IF EXISTS create_user;
 DROP PROCEDURE IF EXISTS update_user;
 DROP PROCEDURE IF EXISTS delete_user;
+DROP PROCEDURE IF EXISTS reactivate_user;
+DROP PROCEDURE IF EXISTS deactivate_user;
 DROP PROCEDURE IF EXISTS logout_user;
 
 DELIMITER ;;
@@ -72,7 +74,7 @@ BEGIN
         `email_address` = IFNULL(new_email_address, `email_address`),
         `phone_number` = IFNULL(new_phone_number, `phone_number`),
         `image_url` = IFNULL(new_image_url, `image_url`),
-        `modified_date` = CURRENT_DATE()
+        `modified_date` = NOW()
     WHERE `id` = arg_id;
 
     COMMIT;
@@ -108,12 +110,42 @@ BEGIN
     END IF;
 END;
 
+CREATE PROCEDURE reactivate_user (
+    IN arg_id CHAR(36),
+    OUT success BOOLEAN
+)
+BEGIN
+    UPDATE `user`
+    SET `activated` = TRUE,
+        `modified_date` = NOW()
+    WHERE
+        `id` = arg_id
+    ;
+
+    SET success = TRUE;
+END;
+
+CREATE PROCEDURE deactivate_user (
+    IN arg_id CHAR(36),
+    OUT success BOOLEAN
+)
+BEGIN
+    UPDATE `user`
+    SET `activated` = FALSE,
+        `modified_date` = NOW()
+    WHERE
+        `id` = arg_id
+    ;
+
+    SET success = TRUE;
+END;
+
 CREATE PROCEDURE user_logout(
     IN arg_id CHAR(36)
 )
 BEGIN
     UPDATE `user`
-    SET `logout_date` = CURRENT_DATE()
+    SET `logout_date` = NOW()
     WHERE `id` = arg_id
     ;
 END;;

@@ -17,18 +17,13 @@
 
     @include breakpoint(medium) {
         max-width: 800px;
+        min-width: 600px;
     }
 
     @include breakpoint-down(medium) {
         max-width: 800px;
         border-radius: 1rem;
     }
-
-    // @include breakpoint-down(small) {
-    //     width: 100%;
-    //     border: 0;
-    //     border-radius: 0;
-    // }
 
     * {
         &.form-flex {
@@ -73,7 +68,7 @@
 .form-header {
     display: flex;
     flex-flow: column nowrap;
-    // align-items: center;
+    align-items: center;
 }
 
 .form-body {

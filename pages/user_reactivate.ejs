@@ -7,15 +7,15 @@
             <div class="form-root">
                 <div class="form-container">
                     <div class="form-header">
-                        <h1>Are you sure you want to archive the project?</h1>
-                        <!-- <p>This action will permanently remove all of '<%= project.name %>' data from our system.</p> -->
+                        <h2>Do you want to reactivate your account?</h2>
+                        <p>Current status of your current account is deactivation.</p>
                     </div>
-                    <form class="form-body" method="POST" action="/project/archive/posted">
-                        <input name="f_id" required hidden value="<%= project_id %>">
+                    <form class="form-body" method="POST" action="/user/reactivate/posted">
+                        <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= user_id %>" required hidden>
                         <button class="button" type="submit">
-                            <span>Accept</span>
+                            <span>Reactivate</span>
                         </button>
-                        <a class="form-button-link" href="/dashboard">
+                        <a class="form-button-link" href="/user/login">
                             <button class="button" type="button">
                                 <span>Cancel</span>
                             </button>

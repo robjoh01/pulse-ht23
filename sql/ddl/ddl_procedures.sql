@@ -117,7 +117,7 @@ BEGIN
         *
     FROM v_projects
     WHERE
-        `project_id` = arg_id
+        `id` = arg_id
     ;
 END;;
 
@@ -138,7 +138,7 @@ BEGIN
         *
     FROM v_projects
     WHERE
-        `project_id` = arg_query
+        `id` = arg_query
         OR `name` LIKE arg_query_alt
         OR `start_date` LIKE arg_query_alt
         OR `end_date` LIKE arg_query_alt

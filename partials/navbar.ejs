@@ -1,14 +1,7 @@
-    <div class="primary-sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <i class='bx bxs-network-chart'></i>
-                <span>Pulse</span>
-            </div>
-            <i class="bx bx-menu" id="sidebarBtn"></i>
-        </div>
-        
+<header class="header">
+    <nav class="navbar" id="navbar">
         <% if (session.authenticated) { %>
-        <div class="user <%= pageName === 'user' ? 'active' : '' %>">
+        <div class="user-container <%= pageName === 'user' ? 'active' : '' %>">
             <a aria-label="Profile" class="user-link" href="/user/profile">
                 <picture>
                     <source srcset="<%= user.image_url %>">
@@ -43,7 +36,7 @@
             </li>
             <li>
                 <a aria-label="Logout" class="nav-item <%= pageName === 'user' ? 'active' : '' %>" href="/user/logout">
-                    <i class="nav-item-icon bx bx-log-out"></i>
+                    <i class="nav-item-icon nav-item-icon bx bx-log-out"></i>
                     <span class="nav-item-label">Logout</span>
                 </a>
                 <span class="primary-tooltip">Logout</span>
@@ -62,6 +55,7 @@
             <i id="themeSun" class='nav-item-icon bx bxs-sun'></i>
             <i id="themeMoon" class='nav-item-icon bx bxs-moon' ></i>
         </button>
-    </div>
+    </nav>
+</header>
 
-    <script type="text/javascript" src="/js/sidebar.js" defer></script>
+    <script type="text/javascript" src="/js/navbar.js" defer></script>

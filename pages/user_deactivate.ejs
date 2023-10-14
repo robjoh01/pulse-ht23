@@ -2,7 +2,7 @@
 
 <div class="body-container">
     <div class="main-container">
-        <%- include("./../partials/sidebar.ejs") %>
+        <%- include("./../partials/menu.ejs") %>
         <main class="main">
             <div class="form-root">
                 <div class="form-container">
@@ -12,7 +12,7 @@
                     </div>
                     <form class="form-body" method="POST" action="/user/deactivate/posted">
                         <input type="text" aria-invalid="false" id="id" name="f_id" value="<%= session.id %>" required hidden>
-                        <label class="form-input-label" for="password" id="passwordLabel">
+                        <label class="form-input-label" for="passwordInput" id="passwordLabel">
                             <span>Password</span>
                             <div class="form-input">
                                 <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordInput" name="f_password" required placeholder="Enter your password" autocorrect="false" autocomplete="true" autocapitalize="none">
@@ -23,7 +23,7 @@
                             </div>
                         </label>
                         <label class="form-input-label" for="passwordAgainInput" id="passwordAgainLabel">
-                            <span>Password</span>
+                            <span>Password (again)</span>
                             <div class="form-input">
                                 <input class="form-text-input form-password-input" type="password" aria-invalid="false" id="passwordAgainInput" name="f_password_again" required placeholder="Enter your password (again)" autocorrect="false" autocomplete="true" autocapitalize="none">
                             </div>

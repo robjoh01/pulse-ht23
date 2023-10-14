@@ -27,6 +27,17 @@ router.get("/user/register", (req, res, next) => {
     res.render("./../pages/user_register.ejs", data);
 });
 
+router.get("/user/reactivate/:id", (req, res, next) => {
+    let data = {};
+
+    data.title = "Reactivate your account";
+    data.pageName  = "user";
+    data.session = appUtil.getSession(req);
+    data.user_id = req.params.id;
+
+    res.render("./../pages/user_reactivate.ejs", data);
+});
+
 router.get("/user/login", async (req, res, next) => {
     if (appUtil.isUserAuthenticated(req)) {
         res.redirect("/");
@@ -204,6 +215,35 @@ router.post("/user/register/posted", async (req, res, next) => {
     res.redirect("/user/profile");
 });
 
+router.post("/user/reactivate/posted", async (req, res, next) => {
+    if (appUtil.isUserAuthenticated(req)) {
+        res.redirect("/");
+        return;
+    }
+
+    const { f_id } = req.body;
+
+    if (!f_id) {
+        new errors.UserNotFoundError(next, "/user/login");
+        return;
+    }
+
+    const wasSuccessful = await dbUtil.reactivateUser(f_id);
+
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/user/login");
+        return;
+    }
+
+    const isEmployee = await dbUtil.isEmployee(f_id);
+
+    appUtil.authenticateUser(req, f_id, isEmployee);
+
+    // TODO: Flash("your account was successfully reinstated")
+
+    res.redirect("/user/profile");
+});
+
 router.post("/user/login/posted", async (req, res, next) => {
     if (appUtil.isUserAuthenticated(req)) {
         res.redirect("/");
@@ -217,9 +257,29 @@ router.post("/user/login/posted", async (req, res, next) => {
         return;
     }
 
-    const id = await dbUtil.loginUser(f_username, f_password);
+    const doesUserExists = await dbUtil.doesUserExists(f_username); // Check if user is exists
+
+    if (!doesUserExists) {
+        return false;
+    }
+
+    const id = await dbUtil.getUserId(f_username);
 
     if (!id) {
+        new errors.UserNotFoundError(next, "/user/login");
+        return;
+    }
+
+    const isUserActivated = await dbUtil.isUserActivated(id);
+
+    if (!isUserActivated) {
+        res.redirect(`/user/reactivate/${id}`);
+        return;
+    }
+
+    const hasValidPassword = await dbUtil.checkPassword(id, f_password);
+
+    if (!hasValidPassword) {
         new errors.UserNotFoundError(next, "/user/login");
         return;
     }
@@ -323,7 +383,7 @@ router.post("/user/deactivate/posted", async (req, res, next) => {
         return;
     }
 
-    let wasSuccessful = await dbUtil.deleteUser(user.id);
+    let wasSuccessful = await dbUtil.deactivateUser(user.id);
 
     if (!wasSuccessful) {
         res.redirect("/user/profile");

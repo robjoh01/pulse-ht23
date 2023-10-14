@@ -46,6 +46,7 @@ CREATE TABLE `user`
     `image_url` VARCHAR(128),
     `creation_date` DATETIME DEFAULT NOW(),
     `modified_date` DATETIME,
+    `activated` BOOLEAN DEFAULT TRUE,
     `logout_date` DATETIME,
 
     PRIMARY KEY (`id`)
@@ -74,7 +75,7 @@ CREATE TABLE `project`
     `name` VARCHAR(32),
     `description` VARCHAR(96),
     `creation_date` DATETIME DEFAULT NOW(),
-    `modified_date` DATE,
+    `modified_date` DATETIME,
     `start_date` DATE,
     `end_date` DATE,
     `report_frequency` ENUM('daily', 'weekly', 'fortnightly', 'monthly'),

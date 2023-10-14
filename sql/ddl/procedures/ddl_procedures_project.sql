@@ -52,7 +52,7 @@ BEGIN
             arg_project_manager_id,
             arg_name,
             arg_description,
-            CURRENT_DATE(),
+            NOW(),
             arg_start_date,
             arg_end_date,
             arg_report_frequency,
@@ -80,7 +80,7 @@ BEGIN
     SET
         `name` = arg_name,
         `description` = arg_description,
-        `modified_date` = CURRENT_DATE(),
+        `modified_date` = NOW(),
         `start_date` = arg_start_date,
         `end_date` = arg_end_date,
         `report_frequency` = arg_report_frequency,
@@ -146,7 +146,7 @@ BEGIN
     ELSE
         -- Assignment doesn't exist, create a new assignment
         INSERT INTO assignment (`employee_id`, `project_id`, `creation_date`)
-            VALUES (arg_employee_id, arg_project_id, CURRENT_DATE())
+            VALUES (arg_employee_id, arg_project_id, NOW())
         ;
         
         -- Set success to true

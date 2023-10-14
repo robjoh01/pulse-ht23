@@ -2,7 +2,7 @@
 
 <div class="body-container">
     <div class="main-container">
-        <%- include("./../partials/sidebar.ejs") %>
+        <%- include("./../partials/menu.ejs") %>
         <main class="main">
             <div class="dashboard-grid">
                 <div class="dashboard-stats">
@@ -57,7 +57,7 @@
                             <% assignments.forEach(function(x) { %>
                             <tr class="primary-tr">
                                 <td class="primary-td" data-label="Project" data-icon="🚧">
-                                    <a href="/employee/report/<%= x.project_id %>">
+                                    <a href="/employee/report/<%= x.id %>">
                                         <span><%= x.project_name %></span>
                                     </a>
                                 </td>

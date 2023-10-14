@@ -127,17 +127,23 @@ router.post("/project/update/posted", async (req, res, next) => {
         return;
     }
 
-    const { f_id, f_name, f_description, f_due_date } = req.body;
+    const { f_id, f_name, f_description, f_start_date, f_end_date, f_report_freq, f_report_deadline } = req.body;
 
-    if (!f_name) {
+    let doesProjectExists = await dbUtil.doesProjectExists(null, f_id);
+
+    if (!doesProjectExists) {
+        new errors.ProjectNotFoundError(next, "/dashboard");
+        return;
+    }
+
+    if (!f_name ||
+        !f_report_freq && !f_report_deadline) {
         new errors.BadCredentialsError(next, `/project/update/${f_id}`);
         return;
     }
 
-    const project = await dbUtil.fetchProject(f_id);
-
-    if (!project) {
-        new errors.ProjectNotFoundError(next, "/dashboard");
+    if (profanityUtil.exists(f_name)) {
+        new errors.ProfanityDetectedError(next, `/project/update/${f_id}`);
         return;
     }
 
@@ -145,11 +151,14 @@ router.post("/project/update/posted", async (req, res, next) => {
         f_id,
         f_name,
         f_description,
-        f_due_date
+        f_start_date,
+        f_end_date,
+        f_report_freq,
+        f_report_deadline
     );
 
     if (!wasSuccessful) {
-        new errors.UnknownError(next, "/project/update");
+        new errors.UnknownError(next, `/project/update/${f_id}`);
         return;
     }
 

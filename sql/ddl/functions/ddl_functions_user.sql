@@ -4,6 +4,7 @@
 
 DROP FUNCTION IF EXISTS does_user_exists;
 DROP FUNCTION IF EXISTS is_user_employee;
+DROP FUNCTION IF EXISTS is_user_activated;
 
 DELIMITER ;;
 
@@ -38,6 +39,24 @@ BEGIN
     ) INTO employee_exists;
 
     RETURN employee_exists;
+END;;
+
+CREATE FUNCTION is_user_activated(
+    arg_id CHAR(36)
+)
+RETURNS BOOLEAN
+BEGIN
+    DECLARE user_status BOOLEAN;
+    
+    -- Get the status of the user
+    SELECT
+        `activated` INTO user_status
+    FROM `user`
+    WHERE
+        `id` = arg_id
+    ;
+    
+    RETURN user_status;
 END;;
 
 DELIMITER ;
