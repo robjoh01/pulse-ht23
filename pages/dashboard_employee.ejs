@@ -57,7 +57,7 @@
                             <% assignments.forEach(function(x) { %>
                             <tr class="primary-tr">
                                 <td class="primary-td" data-label="Project" data-icon="🚧">
-                                    <a href="/employee/report/<%= x.id %>">
+                                    <a href="/employee/report/<%= x.project_id %>">
                                         <span><%= x.project_name %></span>
                                     </a>
                                 </td>
@@ -133,10 +133,7 @@
                                 </td>
                                 <td class="primary-td" data-label="Actions" data-icon="📣">
                                     <div class="primary-flex primary-row">
-                                        <!-- <a href="/manager/report/history/<%= x.id %>">
-                                            <i class='bx bx-link'></i>
-                                        </a> -->
-                                        <a href="/manager/report/history/<%= x.id %>">
+                                        <a href="/manager/report/history/<%= x.project_id %>">
                                             <i class='bx bx-history'></i>
                                         </a>
                                     </div>

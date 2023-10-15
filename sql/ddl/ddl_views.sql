@@ -101,19 +101,28 @@ SELECT
     p.start_date,
     p.end_date,
     p.report_frequency,
+    p.report_deadline,
     CASE 
         WHEN p.report_deadline IS NOT NULL THEN 
             p.report_deadline
         WHEN p.report_frequency = 'daily' THEN
-            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL 1 DAY), p.end_date)
+            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL 1 DAY), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
         WHEN p.report_frequency = 'weekly' THEN
-            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 WEEK, CURRENT_DATE() + INTERVAL (7 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
+            LEAST(GREATEST(
+                DATE(p.start_date) + INTERVAL 1 WEEK, 
+                CURRENT_DATE() + INTERVAL (CASE WHEN DAYOFWEEK(CURRENT_DATE()) <= 5 THEN 5 - DAYOFWEEK(CURRENT_DATE()) ELSE 7 - DAYOFWEEK(CURRENT_DATE()) + 5 END) DAY
+            ), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
         WHEN p.report_frequency = 'fortnightly' THEN
-            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 2 WEEK, CURRENT_DATE() + INTERVAL (14 - DAYOFWEEK(CURRENT_DATE()) + DAYOFWEEK(p.start_date)) DAY), p.end_date)
+            LEAST(GREATEST(
+                DATE(p.start_date) + INTERVAL 2 WEEK, 
+                CURRENT_DATE() + INTERVAL (CASE WHEN DAYOFWEEK(CURRENT_DATE()) <= 5 THEN 12 - DAYOFWEEK(CURRENT_DATE()) ELSE 14 - DAYOFWEEK(CURRENT_DATE()) + 12 END) DAY
+            ), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
         WHEN p.report_frequency = 'monthly' THEN
-            -- LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 MONTH, CURRENT_DATE() + INTERVAL (LAST_DAY(DATE(p.start_date)) - DAYOFMONTH(CURRENT_DATE()) + 1) DAY), p.end_date)
-            LEAST(GREATEST(DATE_ADD(p.start_date, INTERVAL 1 MONTH), DATE_ADD(CURRENT_DATE(), INTERVAL (DAYOFWEEK(CURRENT_DATE()) - DAYOFWEEK(p.start_date) - 1) DAY)), p.end_date)
-    END + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND AS `deadline_date`,
+            LEAST(GREATEST(
+                DATE_ADD(p.start_date, INTERVAL 1 MONTH), 
+                DATE_ADD(CURRENT_DATE(), INTERVAL (CASE WHEN DAYOFWEEK(CURRENT_DATE()) <= 5 THEN 5 - DAYOFWEEK(CURRENT_DATE()) ELSE 7 - DAYOFWEEK(CURRENT_DATE()) + 5 END) DAY)
+            ), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
+    END AS `deadline_date`,
     COUNT(r.id) AS `report_count`
 FROM `project` AS p
     LEFT JOIN `report` AS r ON p.id = r.project_id AND r.status_id = 2
