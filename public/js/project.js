@@ -2,6 +2,8 @@
 
 const startDateInput = document.getElementById("startDateInput");
 const endDateInput = document.getElementById("endDateInput");
+const reportFreqInput = document.getElementById("reportFreqInput");
+const customDeadlinesInput = document.getElementById("customDeadlinesInput");
 
 function checkDates () {
     const startDate = startDateInput.value;
@@ -26,21 +28,18 @@ function checkDates () {
 startDateInput.addEventListener("input", checkDates);
 endDateInput.addEventListener("input", checkDates);
 
-const reportFreqInput = document.getElementById("reportFreqInput");
-const reportDeadlineInput = document.getElementById("reportDeadlineInput");
-
 // Function to handle the change in report frequency selection
 function handleReportFrequencyChange () {
     const selectedValue = reportFreqInput.value;
 
     // Check if the selected report frequency is not "None"
-    if (selectedValue !== "") {
+    if (selectedValue !== "custom") {
         // Disable the report deadline input
-        reportDeadlineInput.disabled = true;
-        reportDeadlineInput.value = null;
+        customDeadlinesInput.disabled = true;
+        customDeadlinesInput.value = null;
     } else {
         // Enable the report deadline input
-        reportDeadlineInput.disabled = false;
+        customDeadlinesInput.disabled = false;
     }
 }
 

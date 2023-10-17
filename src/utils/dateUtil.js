@@ -21,6 +21,11 @@ const dateUtil = {
     calcTimeLeft: function (datetime) {
         const now = moment();
         const then = moment(datetime, "YYYY-MM-DD hh:mm A");
+        return moment.duration(then.diff(now));
+    },
+    calcTimeLeftAsString: function (datetime) {
+        const now = moment();
+        const then = moment(datetime, "YYYY-MM-DD hh:mm A");
         const duration = moment.duration(then.diff(now));
 
         if (duration.asMilliseconds() < 0) {
@@ -41,6 +46,12 @@ const dateUtil = {
             const minutes = Math.floor(duration.asMinutes());
             return minutes + ` ${minutes > 1 ? "minutes left" : "minute left"}`;
         }
+    },
+    isSameDates: function (dateA, dateB) {
+        return moment(dateA).isSame(moment(dateB), "D");
+    },
+    isBetweenDates: function (date, dateA, dateB) {
+        return date.isBetween(dateA, dateB, "days", true);
     }
 };
 

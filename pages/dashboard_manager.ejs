@@ -56,12 +56,22 @@
                                     </th>
                                     <th class="primary-th">
                                         <i class='bx bxs-calendar-star'></i>
-                                        <span>Deadline</span>
+                                        <span>Report Frequency</span>
+                                    </th>
+                                    <th class="primary-th">
+                                        <i class='bx bxs-calendar-star'></i>
+                                        <span>Deadline Date</span>
                                     </th>
                                     <th class="primary-th">
                                         <div class="primary-flex primary-row">
                                             <i class='bx bxs-bell-ring'></i>
-                                            <span>Submitted Reports</span>
+                                            <span>Assignments</span>
+                                        </div>
+                                    </th>
+                                    <th class="primary-th">
+                                        <div class="primary-flex primary-row">
+                                            <i class='bx bxs-bell-ring'></i>
+                                            <span>Reports</span>
                                         </div>
                                     </th>
                                 </tr>
@@ -85,10 +95,16 @@
                                     <td class="primary-td" data-label="End Date" data-icon="📅">
                                         <span><%= x.end_date %></span>
                                     </td>
-                                    <td class="primary-td" data-label="Deadline" data-icon="📅">
-                                        <span><%= x.report_deadline %></span>
+                                    <td class="primary-td" data-label="Report Frequency" data-icon="📅">
+                                        <span><%= x.report_frequency %></span>
                                     </td>
-                                    <td class="primary-td" data-label="Count" data-icon="💯">
+                                    <td class="primary-td" data-label="Current Deadline" data-icon="📅">
+                                        <span><%= x.deadline_date %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Assignments" data-icon="💯">
+                                        <span><%= x.assignment_count %></span>
+                                    </td>
+                                    <td class="primary-td" data-label="Reports" data-icon="💯">
                                         <span><%= x.report_count %></span>
                                     </td>
                                 </tr>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.01% </span>
+                <span class="strong">83.8% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>295/347</span>
+                <span class='fraction'>295/352</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">48.33% </span>
+                <span class="strong">49.15% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>29/60</span>
+                <span class='fraction'>29/59</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.9% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>45/53</span>
+                <span class='fraction'>45/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.01% </span>
+                <span class="strong">83.8% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>295/347</span>
+                <span class='fraction'>295/352</span>
             </div>
         
             
@@ -768,7 +768,17 @@
 <a name='L703'></a><a href='#L703'>703</a>
 <a name='L704'></a><a href='#L704'>704</a>
 <a name='L705'></a><a href='#L705'>705</a>
-<a name='L706'></a><a href='#L706'>706</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L706'></a><a href='#L706'>706</a>
+<a name='L707'></a><a href='#L707'>707</a>
+<a name='L708'></a><a href='#L708'>708</a>
+<a name='L709'></a><a href='#L709'>709</a>
+<a name='L710'></a><a href='#L710'>710</a>
+<a name='L711'></a><a href='#L711'>711</a>
+<a name='L712'></a><a href='#L712'>712</a>
+<a name='L713'></a><a href='#L713'>713</a>
+<a name='L714'></a><a href='#L714'>714</a>
+<a name='L715'></a><a href='#L715'>715</a>
+<a name='L716'></a><a href='#L716'>716</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -829,6 +839,16 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1525,21 +1545,31 @@ const dbUtil = {
 &nbsp;
         return Boolean(res[0][Object.keys(res[0])[0]]);
     },
-    createProject: async function (id, managerId, name, description = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> startDate, endDate, reportFrequency, reportDeadline) {
+    createProject: async function (id, managerId, name, description = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> startDate, endDate, reportFrequency) {
         const db = await this.connectDatabase();
-        const query = "CALL create_project(?, ?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
+        const query = "CALL create_project(?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
 &nbsp;
-        const res = await db.query(query, [id, managerId, name, description, startDate, endDate, reportFrequency, reportDeadline]);
+        const res = await db.query(query, [id, managerId, name, description, startDate, endDate, reportFrequency]);
 &nbsp;
         db.end();
 &nbsp;
         return Boolean(res[1][0].success);
     },
-    updateProject: async function (id, name = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> description = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> startDate = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> endDate = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> reportFrequency = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> reportDeadline = <span class="branch-0 cbranch-no" title="branch not covered" >null)</span> {
-        const db = await this.connectDatabase();
-        const query = "CALL update_project(?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
+    createProjectDeadline: <span class="fstat-no" title="function not covered" >as</span>ync function (projectId, reportDeadline) {
+        const db = <span class="cstat-no" title="statement not covered" >await this.connectDatabase();</span>
+        const query = <span class="cstat-no" title="statement not covered" >"CALL create_project_deadline(?, ?, @success); SELECT @success as success;";</span>
 &nbsp;
-        const res = await db.query(query, [id, name, description, startDate, endDate, reportFrequency, reportDeadline]);
+        const res = <span class="cstat-no" title="statement not covered" >await db.query(query, [projectId, reportDeadline]);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        db.end();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return Boolean(res[1][0].success);</span>
+    },
+    updateProject: async function (id, name = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> description = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> startDate = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> endDate = <span class="branch-0 cbranch-no" title="branch not covered" >null,</span> reportFrequency = <span class="branch-0 cbranch-no" title="branch not covered" >null)</span> {
+        const db = await this.connectDatabase();
+        const query = "CALL update_project(?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
+&nbsp;
+        const res = await db.query(query, [id, name, description, startDate, endDate, reportFrequency]);
 &nbsp;
         db.end();
 &nbsp;
@@ -1967,7 +1997,7 @@ const dbUtil = {
         data.modified_date = dateUtil.parseDateToReadableString(data.modified_date);
         data.start_date = dateUtil.parseDate(data.start_date);
         data.end_date = dateUtil.parseDate(data.end_date);
-        data.report_deadline = dateUtil.parseDateToReadableString(data.report_deadline);
+        data.deadline_date = dateUtil.parseDateToReadableString(data.deadline_date);
 &nbsp;
         return data;
     },
@@ -1986,7 +2016,7 @@ const dbUtil = {
             x.modified_date = dateUtil.parseDateToReadableString(x.modified_date);
             x.start_date = dateUtil.parseDate(x.start_date);
             x.end_date = dateUtil.parseDate(x.end_date);
-            x.report_deadline = dateUtil.parseDateToReadableString(x.report_deadline);
+            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
         });
 &nbsp;
         return data;
@@ -2006,7 +2036,7 @@ const dbUtil = {
             x.modified_date = dateUtil.parseDateToReadableString(x.modified_date);
             x.start_date = dateUtil.parseDate(x.start_date);
             x.end_date = dateUtil.parseDate(x.end_date);
-            x.report_deadline = dateUtil.parseDateToReadableString(x.report_deadline);
+            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
         });
 &nbsp;
         return data;
@@ -2091,8 +2121,8 @@ const dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
-            x.time_left = dateUtil.calcTimeLeft(x.deadline_date);
+            x.project_deadline_date = dateUtil.parseDateToReadableString(x.project_deadline_date);
+            x.time_left = dateUtil.calcTimeLeftAsString(x.project_deadline_date);
         });
 &nbsp;
         return data;
@@ -2185,7 +2215,7 @@ module.exports = dbUtil;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-14T16:10:41.391Z
+                at 2023-10-17T15:12:46.886Z
             </div>
         <script src="prettify.js"></script>
         <script>

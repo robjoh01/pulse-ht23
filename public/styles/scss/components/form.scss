@@ -175,6 +175,10 @@
         cursor: not-allowed;
     }
 
+    input.form-date-input {
+        cursor: pointer !important;
+    }
+
     select {
         width: 100%;
     }
@@ -200,7 +204,8 @@
             background-color: var(--color-blue);
         }
 
-        &:disabled {
+        &:disabled,
+        &.flatpickr-input:disabled + input {
             color: var(--color-fg-disabled);
             background-color: var(--color-bg-disabled);
             outline-color: var(--color-border-disabled);

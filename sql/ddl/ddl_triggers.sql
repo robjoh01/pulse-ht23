@@ -20,21 +20,23 @@ CREATE TRIGGER user_before_insert
 BEFORE INSERT ON `user`
 FOR EACH ROW
 BEGIN
-    SET NEW.creation_date = CURRENT_DATE();
+    SET NEW.creation_date = NOW();
+    SET NEW.modified_date = NOW();
 END;;
 
 CREATE TRIGGER project_before_insert
 BEFORE INSERT ON `project`
 FOR EACH ROW
 BEGIN
-    SET NEW.creation_date = CURRENT_DATE();
+    SET NEW.creation_date = NOW();
+    SET NEW.modified_date = NOW();
 END;;
 
 CREATE TRIGGER project_before_update
 BEFORE UPDATE ON project
 FOR EACH ROW
 BEGIN
-    SET NEW.modified_date = CURRENT_DATE();
+    SET NEW.modified_date = NOW();
 END;;
 
 CREATE TRIGGER user_before_delete

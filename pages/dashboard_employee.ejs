@@ -42,7 +42,7 @@
                                 <th class="primary-th">
                                     <div class="primary-flex primary-row">
                                         <i class='bx bx-calendar-x' ></i>
-                                        <span>Deadline</span>
+                                        <span>Deadline Date</span>
                                     </div>
                                 </th>
                                 <th class="primary-th">
@@ -61,8 +61,8 @@
                                         <span><%= x.project_name %></span>
                                     </a>
                                 </td>
-                                <td class="primary-td" data-label="Deadline" data-icon="🪦">
-                                    <span><%= x.deadline_date %></span>
+                                <td class="primary-td" data-label="Deadline Date" data-icon="🪦">
+                                    <span><%= x.project_deadline_date %></span>
                                 </td>
                                 <td class="primary-td" data-label="Time Left" data-icon="⏰">
                                     <span><%= x.time_left %></span>
@@ -133,7 +133,7 @@
                                 </td>
                                 <td class="primary-td" data-label="Actions" data-icon="📣">
                                     <div class="primary-flex primary-row">
-                                        <a href="/manager/report/history/<%= x.project_id %>">
+                                        <a href="/manager/report/history/<%= x.id %>">
                                             <i class='bx bx-history'></i>
                                         </a>
                                     </div>

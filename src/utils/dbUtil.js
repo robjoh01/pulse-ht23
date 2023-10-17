@@ -50,21 +50,31 @@ const dbUtil = {
 
         return Boolean(res[0][Object.keys(res[0])[0]]);
     },
-    createProject: async function (id, managerId, name, description = null, startDate, endDate, reportFrequency, reportDeadline) {
+    createProject: async function (id, managerId, name, description = null, startDate, endDate, reportFrequency) {
         const db = await this.connectDatabase();
-        const query = "CALL create_project(?, ?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
+        const query = "CALL create_project(?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
 
-        const res = await db.query(query, [id, managerId, name, description, startDate, endDate, reportFrequency, reportDeadline]);
+        const res = await db.query(query, [id, managerId, name, description, startDate, endDate, reportFrequency]);
 
         db.end();
 
         return Boolean(res[1][0].success);
     },
-    updateProject: async function (id, name = null, description = null, startDate = null, endDate = null, reportFrequency = null, reportDeadline = null) {
+    createProjectDeadline: async function (projectId, reportDeadline) {
         const db = await this.connectDatabase();
-        const query = "CALL update_project(?, ?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
+        const query = "CALL create_project_deadline(?, ?, @success); SELECT @success as success;";
 
-        const res = await db.query(query, [id, name, description, startDate, endDate, reportFrequency, reportDeadline]);
+        const res = await db.query(query, [projectId, reportDeadline]);
+
+        db.end();
+
+        return Boolean(res[1][0].success);
+    },
+    updateProject: async function (id, name = null, description = null, startDate = null, endDate = null, reportFrequency = null) {
+        const db = await this.connectDatabase();
+        const query = "CALL update_project(?, ?, ?, ?, ?, ?, @success); SELECT @success as success;";
+
+        const res = await db.query(query, [id, name, description, startDate, endDate, reportFrequency]);
 
         db.end();
 
@@ -492,7 +502,7 @@ const dbUtil = {
         data.modified_date = dateUtil.parseDateToReadableString(data.modified_date);
         data.start_date = dateUtil.parseDate(data.start_date);
         data.end_date = dateUtil.parseDate(data.end_date);
-        data.report_deadline = dateUtil.parseDateToReadableString(data.report_deadline);
+        data.deadline_date = dateUtil.parseDateToReadableString(data.deadline_date);
 
         return data;
     },
@@ -511,7 +521,7 @@ const dbUtil = {
             x.modified_date = dateUtil.parseDateToReadableString(x.modified_date);
             x.start_date = dateUtil.parseDate(x.start_date);
             x.end_date = dateUtil.parseDate(x.end_date);
-            x.report_deadline = dateUtil.parseDateToReadableString(x.report_deadline);
+            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
         });
 
         return data;
@@ -531,7 +541,7 @@ const dbUtil = {
             x.modified_date = dateUtil.parseDateToReadableString(x.modified_date);
             x.start_date = dateUtil.parseDate(x.start_date);
             x.end_date = dateUtil.parseDate(x.end_date);
-            x.report_deadline = dateUtil.parseDateToReadableString(x.report_deadline);
+            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
         });
 
         return data;
@@ -579,7 +589,7 @@ const dbUtil = {
         data.creation_date = dateUtil.parseDate(data.creation_date);
         data.project_start_date = dateUtil.parseDate(data.project_start_date);
         data.project_end_date = dateUtil.parseDate(data.project_end_date);
-        data.deadline_date = dateUtil.parseDateToReadableString(data.deadline_date);
+        data.project_deadline_date = dateUtil.parseDateToReadableString(data.project_deadline_date);
 
         return data;
     },
@@ -597,7 +607,7 @@ const dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
+            x.project_deadline_date = dateUtil.parseDateToReadableString(x.project_deadline_date);
         });
 
         return data;
@@ -616,8 +626,8 @@ const dbUtil = {
             x.creation_date = dateUtil.parseDate(x.creation_date);
             x.project_start_date = dateUtil.parseDate(x.project_start_date);
             x.project_end_date = dateUtil.parseDate(x.project_end_date);
-            x.deadline_date = dateUtil.parseDateToReadableString(x.deadline_date);
-            x.time_left = dateUtil.calcTimeLeft(x.deadline_date);
+            x.project_deadline_date = dateUtil.parseDateToReadableString(x.project_deadline_date);
+            x.time_left = dateUtil.calcTimeLeftAsString(x.project_deadline_date);
         });
 
         return data;

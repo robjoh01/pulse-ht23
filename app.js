@@ -19,7 +19,10 @@ const { minutesToMilliseconds } = require("./src/utils/conversionUtil.js");
 
 const dotenv = require("dotenv");
 const dotenvExpand = require("dotenv-expand");
-const cronUtil = require('./src/utils/cronUtil.js');
+const cronUtil = require("./src/utils/cronUtil.js");
+const dbUtil = require("./src/utils/dbUtil.js");
+const dateUtil = require("./src/utils/dateUtil.js");
+const emails = require("./src/emails/emails.js");
 
 const myEnv = dotenv.config();
 dotenvExpand.expand(myEnv);
@@ -76,8 +79,23 @@ app.listen(port, () => {
 
 if (process.env.CONFIG_MODE === "dist") {
     // Schedule everyday at 12 PM (24:00)
-    cronUtil.schedule("0 12 * * *", () => {
-        // TODO: Check if any employee needs an email reminders (24h or 36h notice)
-        console.log("Send email reminders!");
+    cronUtil.schedule("0 12 * * *", async () => {
+        const assignments = await dbUtil.fetchAssignments();
+
+        assignments.forEach(async (x) => {
+            const duration = dateUtil.calcTimeLeft(x.project_deadline_date);
+
+            if (duration.asHours() <= 24) {
+                await sendEmailReminder(x, 24);
+            } else if (duration.asHours() <= 36) {
+                await sendEmailReminder(x, 36);
+            }
+        });
     });
+}
+
+async function sendEmailReminder (assignment, hours) {
+    const userData = await dbUtil.fetchUser(assignment.employee_id);
+    const mail = new emails.ReminderEmail(assignment, hours);
+    await mail.send(userData.email_address);
 }

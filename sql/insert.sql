@@ -11,6 +11,7 @@ DELETE FROM employee;
 DELETE FROM project_manager;
 
 DELETE FROM project;
+DELETE FROM project_deadline;
 
 DELETE FROM assignment;
 
@@ -109,7 +110,22 @@ FIELDS
 LINES
     TERMINATED BY '\n'
 IGNORE 1 LINES
-    (`project_manager_id`, `id`, `name`, `description`, `creation_date`, `modified_date`, `start_date`, `end_date`, `report_frequency`, `report_deadline`)
+    (`project_manager_id`, `id`, `name`, `description`, `creation_date`, `modified_date`, `start_date`, `end_date`, `report_frequency`)
+;
+
+--
+-- Insert into project
+--
+LOAD DATA LOCAL INFILE 'csv/project_deadlines.csv'
+INTO TABLE project_deadline
+CHARSET utf8
+FIELDS
+    TERMINATED BY ','
+    ENCLOSED BY '"'
+LINES
+    TERMINATED BY '\n'
+IGNORE 1 LINES
+    (`project_id`, `report_deadline`)
 ;
 
 --

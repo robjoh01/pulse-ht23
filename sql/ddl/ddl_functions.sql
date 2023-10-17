@@ -4,6 +4,8 @@
 
 DROP FUNCTION IF EXISTS get_user_id;
 DROP FUNCTION IF EXISTS get_user_password;
+DROP FUNCTION IF EXISTS adjust_date;
+DROP FUNCTION IF EXISTS midnight_date;
 
 DELIMITER ;;
 
@@ -37,6 +39,31 @@ BEGIN
     ;
     
     RETURN user_password;
+END;;
+
+CREATE FUNCTION adjust_date(date_to_adjust DATE) RETURNS DATE
+BEGIN
+    DECLARE adjusted_date DATE;
+    
+    -- Check if the provided date is a Saturday or Sunday
+    IF DAYOFWEEK(date_to_adjust) IN (1, 7) THEN
+        -- Adjust to the nearest Friday
+        SET adjusted_date = date_to_adjust + INTERVAL (5 - DAYOFWEEK(date_to_adjust)) DAY;
+    ELSE
+        SET adjusted_date = date_to_adjust;
+    END IF;
+    
+    RETURN adjusted_date;
+END;;
+
+CREATE FUNCTION midnight_date(date_to_adjust DATE) RETURNS DATETIME
+BEGIN
+    DECLARE adjusted_datetime DATETIME;
+    
+    -- Set the adjusted date to the provided date with midnight time
+    SET adjusted_datetime = DATE_ADD(DATE_ADD(date_to_adjust, INTERVAL 1 DAY), INTERVAL -1 SECOND);
+    
+    RETURN adjusted_datetime;
 END;;
 
 DELIMITER ;

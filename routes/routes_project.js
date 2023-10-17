@@ -37,10 +37,10 @@ router.post("/project/create/posted", async (req, res, next) => {
         return;
     }
 
-    const { f_name, f_description, f_start_date, f_end_date, f_report_freq, f_report_deadline } = req.body;
+    const { f_name, f_description, f_start_date, f_end_date, f_report_freq, f_custom_deadlines } = req.body;
 
     if (!f_name ||
-        !f_report_freq && !f_report_deadline) {
+        !f_report_freq && !f_custom_deadlines) {
         new errors.BadCredentialsError(next, "/project/create");
         return;
     }
@@ -61,24 +61,27 @@ router.post("/project/create/posted", async (req, res, next) => {
 
     const projectId = hashUtil.generateGuid();
 
-    let reportFreq = f_report_freq;
-    let reportDeadline = null;
-
-    if (f_report_deadline) {
-        reportFreq = null;
-        reportDeadline = f_report_deadline;
-    }
-
-    const wasSuccessful = await dbUtil.createProject(
+    let wasSuccessful = await dbUtil.createProject(
         projectId,
         user.id,
         f_name,
         f_description,
         f_start_date,
         f_end_date,
-        reportFreq,
-        reportDeadline
+        f_report_freq
     );
+
+    if (f_custom_deadlines) {
+        const deadlines = f_custom_deadlines.split(";");
+
+        deadlines.forEach(async (x) => {
+            const wasCreationSuccessful = await dbUtil.createProjectDeadline(projectId, x);
+
+            if (!wasCreationSuccessful) {
+                wasSuccessful = false;
+            }
+        });
+    }
 
     if (!wasSuccessful) {
         new errors.UnknownError(next, "/project/create");

@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS `employee`;
 DROP TABLE IF EXISTS `project_manager`;
 
 DROP TABLE IF EXISTS `project`;
+DROP TABLE IF EXISTS `project_deadline`;
 DROP TABLE IF EXISTS `project_archive`;
 
 DROP TABLE IF EXISTS `assignment`;
@@ -78,11 +79,20 @@ CREATE TABLE `project`
     `modified_date` DATETIME,
     `start_date` DATE,
     `end_date` DATE,
-    `report_frequency` ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
-    `report_deadline` DATETIME,
+    `report_frequency` ENUM('custom', 'daily', 'weekly', 'fortnightly', 'monthly'),
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`project_manager_id`) REFERENCES project_manager(`id`)
+);
+
+CREATE TABLE `project_deadline`
+(
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `project_id` CHAR(36) NOT NULL,
+    `report_deadline` DATETIME,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`project_id`) REFERENCES project(`id`)
 );
 
 CREATE TABLE `project_archive`

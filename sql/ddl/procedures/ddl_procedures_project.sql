@@ -3,6 +3,7 @@
 --
 
 DROP PROCEDURE IF EXISTS create_project;
+DROP PROCEDURE IF EXISTS create_project_deadline;
 DROP PROCEDURE IF EXISTS update_project;
 DROP PROCEDURE IF EXISTS archive_project;
 DROP PROCEDURE IF EXISTS delete_archive_project;
@@ -17,8 +18,7 @@ CREATE PROCEDURE create_project(
     IN arg_description VARCHAR(96),
     IN arg_start_date DATE,
     IN arg_end_date DATE,
-    IN arg_report_frequency ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
-    IN arg_report_deadline DATETIME,
+    IN arg_report_frequency ENUM('custom', 'daily', 'weekly', 'fortnightly', 'monthly'),
     OUT success BOOLEAN
 )
 BEGIN
@@ -44,8 +44,7 @@ BEGIN
             `creation_date`,
             `start_date`,
             `end_date`,
-            `report_frequency`,
-            `report_deadline`
+            `report_frequency`
         )
         VALUES (
             arg_id,
@@ -55,9 +54,33 @@ BEGIN
             NOW(),
             arg_start_date,
             arg_end_date,
-            arg_report_frequency,
-            arg_report_deadline
+            arg_report_frequency
         );
+
+        SET success = TRUE;
+    END IF;
+END;;
+
+CREATE PROCEDURE create_project_deadline(
+    IN arg_project_id CHAR(36),
+    IN arg_report_deadline DATETIME,
+    OUT success BOOLEAN
+)
+BEGIN
+    DECLARE project_exists INT;
+
+    -- Check if the project exists
+    SELECT COUNT(*) INTO project_exists
+    FROM project
+    WHERE id = arg_project_id;
+
+    -- Check if the project exists
+    IF project_exists = 0 THEN
+        SET success = FALSE;
+    ELSE
+        -- Insert the project deadline
+        INSERT INTO project_deadline (project_id, report_deadline)
+        VALUES (arg_project_id, arg_report_deadline);
 
         SET success = TRUE;
     END IF;
@@ -70,7 +93,6 @@ CREATE PROCEDURE update_project (
     IN arg_start_date DATE,
     IN arg_end_date DATE,
     IN arg_report_frequency ENUM('daily', 'weekly', 'fortnightly', 'monthly'),
-    IN arg_report_deadline DATETIME,
     OUT success BOOLEAN
 )
 BEGIN
@@ -83,8 +105,7 @@ BEGIN
         `modified_date` = NOW(),
         `start_date` = arg_start_date,
         `end_date` = arg_end_date,
-        `report_frequency` = arg_report_frequency,
-        `report_deadline` = arg_report_deadline
+        `report_frequency` = arg_report_frequency
     WHERE
         `id` = arg_id;
 

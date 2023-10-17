@@ -140,8 +140,10 @@ BEGIN
     WHERE
         `id` = arg_query
         OR `name` LIKE arg_query_alt
+        OR `report_frequency` LIKE arg_query_alt
         OR `start_date` LIKE arg_query_alt
         OR `end_date` LIKE arg_query_alt
+        OR `deadline_date` LIKE arg_query_alt
     ;
 END;;
 

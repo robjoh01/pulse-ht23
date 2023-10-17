@@ -37,43 +37,43 @@ test("Get current date extend", () => {
 });
 
 test("Calculate time left", () => {
-    const res = dateUtil.calcTimeLeft(moment());
+    const res = dateUtil.calcTimeLeftAsString(moment());
 
     expect(res).toEqual(expect.any(String));
 });
 
 test("Calculate time left (5+ minutes)", () => {
-    const res = dateUtil.calcTimeLeft(moment().add(5, "minutes"));
+    const res = dateUtil.calcTimeLeftAsString(moment().add(5, "minutes"));
 
     expect(res).toEqual(expect.any(String));
 });
 
 test("Calculate time left (1+ day)", () => {
-    const res = dateUtil.calcTimeLeft(moment().add(1, "days"));
+    const res = dateUtil.calcTimeLeftAsString(moment().add(1, "days"));
 
     expect(res).toEqual(expect.any(String));
 });
 
 test("Calculate time left (1+ week)", () => {
-    const res = dateUtil.calcTimeLeft(moment().add(1, "weeks"));
+    const res = dateUtil.calcTimeLeftAsString(moment().add(1, "weeks"));
 
     expect(res).toEqual(expect.any(String));
 });
 
 test("Calculate time left (2+ weeks)", () => {
-    const res = dateUtil.calcTimeLeft(moment().add(2, "weeks"));
+    const res = dateUtil.calcTimeLeftAsString(moment().add(2, "weeks"));
 
     expect(res).toEqual(expect.any(String));
 });
 
 test("Calculate time left (1+ months)", () => {
-    const res = dateUtil.calcTimeLeft(moment().add(1, "months"));
+    const res = dateUtil.calcTimeLeftAsString(moment().add(1, "months"));
 
     expect(res).toEqual(expect.any(String));
 });
 
 test("Calculate time left (1+ years)", () => {
-    const res = dateUtil.calcTimeLeft(moment().add(1, "years"));
+    const res = dateUtil.calcTimeLeftAsString(moment().add(1, "years"));
 
     expect(res).toEqual(expect.any(String));
 });

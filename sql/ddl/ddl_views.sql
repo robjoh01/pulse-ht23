@@ -91,6 +91,16 @@ GROUP BY pm.id
 ORDER BY u.logout_date DESC, u.creation_date DESC
 ;
 
+CREATE VIEW v_project_deadlines AS
+SELECT
+    pd.id,
+    pd.project_id,
+    pd.report_deadline
+FROM `project_deadline` AS pd
+GROUP BY pd.id
+ORDER BY pd.report_deadline DESC
+;
+
 CREATE VIEW v_projects AS
 SELECT
     p.id,
@@ -101,31 +111,24 @@ SELECT
     p.start_date,
     p.end_date,
     p.report_frequency,
-    p.report_deadline,
-    CASE 
-        WHEN p.report_deadline IS NOT NULL THEN 
-            p.report_deadline
+    CASE
+        WHEN COUNT(DISTINCT pd.id) > 0 THEN
+            (SELECT MIN(report_deadline) FROM project_deadline WHERE report_deadline >= CURRENT_DATE())
         WHEN p.report_frequency = 'daily' THEN
-            LEAST(GREATEST(DATE(p.start_date) + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL 1 DAY), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
+            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 1 DAY, p.end_date))
         WHEN p.report_frequency = 'weekly' THEN
-            LEAST(GREATEST(
-                DATE(p.start_date) + INTERVAL 1 WEEK, 
-                CURRENT_DATE() + INTERVAL (CASE WHEN DAYOFWEEK(CURRENT_DATE()) <= 5 THEN 5 - DAYOFWEEK(CURRENT_DATE()) ELSE 7 - DAYOFWEEK(CURRENT_DATE()) + 5 END) DAY
-            ), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
+            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 1 WEEK, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 1 WEEK, p.end_date))
         WHEN p.report_frequency = 'fortnightly' THEN
-            LEAST(GREATEST(
-                DATE(p.start_date) + INTERVAL 2 WEEK, 
-                CURRENT_DATE() + INTERVAL (CASE WHEN DAYOFWEEK(CURRENT_DATE()) <= 5 THEN 12 - DAYOFWEEK(CURRENT_DATE()) ELSE 14 - DAYOFWEEK(CURRENT_DATE()) + 12 END) DAY
-            ), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
+            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 2 WEEK, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 2 WEEK, p.end_date))
         WHEN p.report_frequency = 'monthly' THEN
-            LEAST(GREATEST(
-                DATE_ADD(p.start_date, INTERVAL 1 MONTH), 
-                DATE_ADD(CURRENT_DATE(), INTERVAL (CASE WHEN DAYOFWEEK(CURRENT_DATE()) <= 5 THEN 5 - DAYOFWEEK(CURRENT_DATE()) ELSE 7 - DAYOFWEEK(CURRENT_DATE()) + 5 END) DAY)
-            ), p.end_date) + INTERVAL 23 HOUR + INTERVAL 59 MINUTE + INTERVAL 59 SECOND
+            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 1 MONTH, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 1 MONTH, p.end_date))
     END AS `deadline_date`,
-    COUNT(r.id) AS `report_count`
+    COUNT(DISTINCT r.id) AS `report_count`,
+    COUNT(DISTINCT a.project_id) AS `assignment_count`
 FROM `project` AS p
-    LEFT JOIN `report` AS r ON p.id = r.project_id AND r.status_id = 2
+    LEFT JOIN `report` AS r ON p.id = r.project_id
+    LEFT JOIN `assignment` AS a ON p.id = a.project_id
+    LEFT JOIN `project_deadline` AS pd ON p.id = pd.project_id
 GROUP BY p.id
 ORDER BY p.modified_date DESC, p.creation_date DESC
 ;

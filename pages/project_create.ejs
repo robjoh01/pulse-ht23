@@ -36,7 +36,7 @@
                                 <span>Choose a report frequency:</span>
                                 <div class="form-input">
                                     <select name="f_report_freq" id="reportFreqInput" class="form-select-input">
-                                        <option value="" selected>None</option>
+                                        <option value="custom" selected>Custom</option>
                                         <option value="daily">Daily</option>
                                         <option value="weekly">Weekly</option>
                                         <option value="fortnightly">Fortnightly</option>
@@ -44,10 +44,10 @@
                                     </select>
                                 </div>
                             </label>
-                            <label class="form-input-label" for="reportDeadlineInput" id="reportDeadlineLabel">
-                                <span>Report Deadline</span>
+                            <label class="form-input-label" for="customDeadlinesInput" id="customDeadlinesLabel">
+                                <span>Custom Deadlines</span>
                                 <div class="form-input">
-                                    <input class="form-date-input" type="datetime" aria-invalid="false" id="reportDeadlineInput" name="f_report_deadline">
+                                    <input class="form-date-input" type="datetime" aria-invalid="false" id="customDeadlinesInput" name="f_custom_deadlines">
                                 </div>
                             </label>
                         </div>
@@ -66,6 +66,7 @@
     </div>
 
     <script type="text/javascript" src="/js/project.js" defer></script>
+    <script type="text/javascript" src="/js/flatpickr.js" defer></script>
 
     <%- include("./../partials/footer.ejs") %>
 </div>
