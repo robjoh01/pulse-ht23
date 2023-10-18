@@ -1,0 +1,15 @@
+.toastify.toastify-success {
+    border-radius: 0.5rem;
+    background: linear-gradient(to right, var(--color-blue), var(--color-pink));
+    color: var(--color-fg-alt-300);
+    font-family: var(--font-poppins);
+    font-weight: 400;
+}
+
+.toastify.toastify-failure {
+    border-radius: 0.5rem;
+    background: linear-gradient(to right, var(--color-red), var(--color-pink));
+    color: var(--color-fg-300);
+    font-family: var(--font-poppins);
+    font-weight: 400;
+}

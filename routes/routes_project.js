@@ -46,7 +46,9 @@ router.post("/project/create/posted", async (req, res, next) => {
     }
 
     if (profanityUtil.exists(f_name)) {
-        new errors.ProfanityDetectedError(next, "/project/create");
+        // new errors.ProfanityDetectedError(next, "/project/create");
+        req.flash("failure", "The input contains inappropriate language. Please use respectful and clean language.");
+        res.redirect("/project/create");
         return;
     }
 
@@ -88,6 +90,7 @@ router.post("/project/create/posted", async (req, res, next) => {
         return;
     }
 
+    req.flash("success", "The project was successfully created");
     res.redirect("/dashboard");
 });
 
@@ -146,7 +149,9 @@ router.post("/project/update/posted", async (req, res, next) => {
     }
 
     if (profanityUtil.exists(f_name)) {
-        new errors.ProfanityDetectedError(next, `/project/update/${f_id}`);
+        // new errors.ProfanityDetectedError(next, `/project/update/${f_id}`);
+        req.flash("failure", "The input contains inappropriate language. Please use respectful and clean language.");
+        res.redirect(`/project/update/${f_id}`);
         return;
     }
 
@@ -165,6 +170,7 @@ router.post("/project/update/posted", async (req, res, next) => {
         return;
     }
 
+    req.flash("success", "The project was successfully updated");
     res.redirect(`/project/update/${f_id}`);
 });
 
@@ -212,6 +218,7 @@ router.post("/project/archive/posted", async (req, res, next) => {
         return;
     }
 
+    req.flash("success", "The project was successfully archived");
     res.redirect("/dashboard");
 });
 

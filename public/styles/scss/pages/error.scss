@@ -37,6 +37,10 @@
 
     .error-panel {
         height: 48px;
+
+        .a-button span {
+            color: var(--color-black) !important;
+        }
     }
 }
 

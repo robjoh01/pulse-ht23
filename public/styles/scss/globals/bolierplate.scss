@@ -23,6 +23,7 @@ body {
     // background-size: cover;
     background-repeat: repeat;
     background-position: center center;
+    background-size: contain;
 }
 
 article {
@@ -35,8 +36,4 @@ ul {
 
 img, embed, object, video {
     max-width: 100%;
-}
-
-pre {
-    white-space: pre-wrap;
 }

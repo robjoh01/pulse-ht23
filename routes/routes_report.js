@@ -69,6 +69,7 @@ router.post("/employee/report/posted", async (req, res, next) => {
         return;
     }
 
+    req.flash("success", "The report was successfully sent");
     res.redirect("/dashboard");
 });
 
@@ -138,6 +139,7 @@ router.post("/manager/report/posted", async (req, res, next) => {
         return;
     }
 
+    req.flash("success", "The report was successfully updated");
     res.redirect("/dashboard");
 });
 

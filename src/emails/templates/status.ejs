@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap" rel="stylesheet">
-    <title>Welcome to Pulse</title>
+    <title>Account status - Pulse Project Management</title>
     <style>
         * {
             margin: 0;
@@ -65,47 +65,27 @@
         .content {
             margin-bottom: 2rem;
         }
-
-        code {
-            background-color: hsl(0, 0%, 93%);
-            border-radius: 3px;
-            font-family: 'Ubuntu Mono', monospace;
-            padding: 0 3px;
-        }
     </style>
 </head>
 <body>
     <main class="container">
         <header class="header">
-            <h1>Welcome to <em>Pulse</em></h1>
+            <h1>Account status</h1>
         </header>
         <section>
             <article class="content">
                 <p>
-                    <em>Hello</em> <span><%= name %></span>,
+                    <em>Dear</em> <span><%= name %></span>,
                 </p>
+                <% if (wasDeactivated) { %>
                 <p>
-                    You have been successfully registered with Pulse Project Management by your project manager. <em>Welcome to our project management platform!</em>
+                    Your account has been successfully deactivated. If you did not request this action, please contact our support team immediately.
                 </p>
+                <% } else { %>
                 <p>
-                    With Pulse Project Management, you will have access to a user-friendly interface to collaborate on projects, report progress, and stay organized. Your project manager will guide you on your assigned projects and reporting requirements.
+                    Your account has been successfully reinstated. If you did not request this action, please contact our support team immediately.
                 </p>
-            </article>
-            <article class="content">
-                <p>
-                    <strong>Important:</strong> For security reasons, we strongly recommend that you change your password to a secure and unique one. You have been assigned a default password.
-                </p>
-                <p>Your user details:</p>
-                <p><strong>Username:</strong> <code><%= username %></code></p>
-                <p><strong>Password:</strong> <code><%= password %></code></p>
-                <p>
-                    To change your password, <a href="<%= link %>">click here</a>.
-                </p>
-            </article>
-            <article class="content">
-                <p>
-                    If you have any questions or need assistance, feel free to reach out to your project manager or our support team. We're here to help you succeed in managing your projects effectively.
-                </p>
+                <% } %>
             </article>
             <article class="content">
                 <p>

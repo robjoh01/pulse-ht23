@@ -6,10 +6,10 @@ const { getBaseURL } = require("../utils/appUtil.js");
 
 /** Docs */
 class RegistrationEmail extends BaseEmail {
-    constructor (req, username, password, displayName) {
+    constructor (req, name, username, password) {
         const data = {};
 
-        data.name = displayName;
+        data.name = name;
         data.username = username;
         data.password = password;
         data.link = `${getBaseURL(req)}/user/change_password`;

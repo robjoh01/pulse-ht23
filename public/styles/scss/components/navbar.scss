@@ -43,6 +43,7 @@
     #themeBtn {
         position: absolute;
         right: 0;
+        color: var(--color-fg-300);
 
         &.light {
             #themeSun {
@@ -79,6 +80,14 @@
         .nav-item-label {
             display: none;
         }
+    }
+
+    .nav-item {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 0.5rem;
+        align-items: center;
+        text-decoration: none;
     }
 }
 

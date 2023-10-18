@@ -100,6 +100,17 @@ const dbUtil = {
 
         return Boolean(res[1][0].success);
     },
+
+    doesAssignmentExists: async function (employeeId, projectId) {
+        const db = await this.connectDatabase();
+
+        const sql = "SELECT does_assignment_exists(?, ?);";
+        const res = await db.query(sql, [employeeId, projectId]);
+
+        db.end();
+
+        return Boolean(res[0][Object.keys(res[0])[0]]);
+    },
     assignToProject: async function (employeeId, projectId) {
         const doesUserExists = await this.doesUserExists(null, employeeId);
 

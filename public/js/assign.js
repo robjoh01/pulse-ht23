@@ -40,7 +40,13 @@ async function onFileSelected (file) {
     dropText.textContent = "File Selected";
 
     /* eslint-disable no-undef */
-    showSnackBar("File selected");
+    Toastify({
+        text: "File selected",
+        className: "toastify-success",
+        duration: 3000,
+        gravity: "bottom",
+        position: "center",
+    }).showToast();
     /* eslint-enable no-undef */
 
     fileText = await file.text();
@@ -51,6 +57,69 @@ function resetDropForm () {
     dropText.textContent = "Choose a file or drag it here";
 }
 
+function displayToast (wasSuccessful, message) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            /* eslint-disable no-undef */
+            Toastify({
+                text: message,
+                className: wasSuccessful ? "toastify-success" : "toastify-failure",
+                duration: wasSuccessful ? 8000 : 15000,
+                close: !wasSuccessful,
+                stopOnFocus: true,
+                gravity: "bottom",
+                position: "center",
+            }).showToast();
+            /* eslint-enable no-undef */
+
+            resolve();  // Resolve the promise after displaying the toast
+        }, 1500);  // Delay of 1500 milliseconds (1.5 seconds)
+    });
+}
+
+async function processStack(output) {
+    while (output.stack.length > 0) {
+        const obj = output.stack.pop();  // Pop the last message
+        await displayToast(obj.wasSuccessful, obj.message);
+    }
+}
+
+const uploadData = async (formData) => {
+    /* eslint-disable no-undef */
+    Toastify({
+        text: "Processing data...",
+        className: "toastify-success",
+        duration: 3000,
+        gravity: "bottom",
+        position: "center",
+    }).showToast();
+    /* eslint-enable no-undef */
+
+    try {
+        const res = await fetch("/project/assign/upload", {
+            method: "POST",
+            body: formData,
+        });
+
+        if (!res.ok) {
+            throw new Error("Network response was not ok");
+        }
+
+        const json = await res.json();
+        await processStack(json.output);
+    } catch (error) {
+        console.error(`Error fetching data: ${error}`);
+
+        Toastify({
+            text: "Error fetching data. Please try again.",
+            className: "toastify-error",
+            duration: 3000,
+            gravity: "bottom",
+            position: "center",
+        }).showToast();
+    }
+};
+
 dropForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -58,26 +127,7 @@ dropForm.addEventListener("submit", async (e) => {
     formData.append("data", fileText);
     formData.append("projectId", projectInput.value);
 
-    const res = await fetch("/project/assign/upload", {
-        method: "POST",
-        body: formData
-    });
+    await uploadData(formData);
 
-    if (!res) {
-        return;
-    }
-
-    /* eslint-disable no-undef */
-    showSnackBar("Processing the data");
-    /* eslint-enable no-undef */
-
-    const json = await res.json();
-
-    if (json.wasUploaded) {
-        /* eslint-disable no-undef */
-        showSnackBar("Data was uploaded");
-        /* eslint-enable no-undef */
-
-        resetDropForm();
-    }
+    resetDropForm();
 });

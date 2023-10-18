@@ -77,6 +77,15 @@
                 background-color: var(--color-red);
             }
         }
+
+        a,
+        button {
+            color: var(--color-link-100);
+
+            &:hover {
+                color: var(--color-link-300);
+            }
+        }
     }
 
     .primary-td[data-cell="text"] {

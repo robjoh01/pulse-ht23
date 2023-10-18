@@ -2,6 +2,7 @@
 
 // Import dependencies
 const express = require("express");
+const flash = require("connect-flash");
 const multer  = require("multer");
 const upload = multer({ dest: "uploads/" });
 
@@ -87,6 +88,7 @@ router.get("/user/logout", async (req, res, next) => {
 
     req.session.destroy();
 
+    req.flash("success", "Your was successfully logged out");
     res.redirect("/user/login");
 });
 
@@ -176,12 +178,16 @@ router.post("/user/register/posted", async (req, res, next) => {
     }
 
     if (profanityUtil.exists(f_username)) {
-        new errors.ProfanityDetectedError(next, "/user/register");
+        // new errors.ProfanityDetectedError(next, "/user/register");
+        req.flash("failure", "The input contains inappropriate language. Please use respectful and clean language.");
+        res.redirect("/user/register");
         return;
     }
 
     if (f_password != f_password_again) {
-        new errors.PasswordNotMatchError(next, "/user/register");
+        // new errors.PasswordNotMatchError(next, "/user/register");
+        req.flash("failure", "The passwords entered do not match. Please ensure both passwords match to proceed.");
+        res.redirect("/user/register");
         return;
     }
 
@@ -210,8 +216,9 @@ router.post("/user/register/posted", async (req, res, next) => {
     appUtil.authenticateUser(req, id, isEmployee);
 
     const mail = new emails.WelcomeEmail();
-    mail.send(f_email);
+    await mail.send(f_email);
 
+    req.flash("success", "Your account was successfully created");
     res.redirect("/user/profile");
 });
 
@@ -228,6 +235,14 @@ router.post("/user/reactivate/posted", async (req, res, next) => {
         return;
     }
 
+    const doesUserExists = await dbUtil.doesUserExists(null, f_id);
+
+    if (!doesUserExists) {
+        new errors.UserNotFoundError(next, "/user/login");
+        return;
+    }
+
+    const userData = await dbUtil.fetchUser(f_id);
     const wasSuccessful = await dbUtil.reactivateUser(f_id);
 
     if (!wasSuccessful) {
@@ -239,7 +254,10 @@ router.post("/user/reactivate/posted", async (req, res, next) => {
 
     appUtil.authenticateUser(req, f_id, isEmployee);
 
-    // TODO: Flash("your account was successfully reinstated")
+    const mail = new emails.StatusEmail(false, userData.name);
+    await mail.send(userData.email_address);
+
+    req.flash("success", "Your account was successfully reinstated");
 
     res.redirect("/user/profile");
 });
@@ -292,7 +310,8 @@ router.post("/user/login/posted", async (req, res, next) => {
         req.session.cookie.maxAge = conversionUtil.daysToMilliseconds(31);
     }
 
-    res.redirect("/");
+    req.flash("success", "Login was successful");
+    res.redirect("/dashboard");
 });
 
 router.post("/user/profile/posted", async (req, res) => {
@@ -318,6 +337,7 @@ router.post("/user/profile/posted", async (req, res) => {
         return;
     }
 
+    req.flash("success", "Your account was successfully updated");
     res.redirect("/user/profile");
 });
 
@@ -336,7 +356,9 @@ router.post("/user/change_password/posted", async (req, res, next) => {
     }
 
     if (f_new_password != f_new_password_again) {
-        new errors.PasswordNotMatchError(next, "/user/profile");
+        // new errors.PasswordNotMatchError(next, "/user/profile");
+        req.flash("failure", "The passwords entered do not match. Please ensure both passwords match to proceed.");
+        res.redirect("/user/change_password");
         return;
     }
 
@@ -351,8 +373,9 @@ router.post("/user/change_password/posted", async (req, res, next) => {
 
     const userData = await dbUtil.fetchUser(user.id);
     const mail = new emails.PasswordEmail(req, user.id, f_new_password, userData.display_name);
-    mail.send(userData.email_address);
+    await mail.send(userData.email_address);
 
+    req.flash("success", "Your password was successfully updated");
     res.redirect("/user/profile");
 });
 
@@ -370,11 +393,14 @@ router.post("/user/deactivate/posted", async (req, res, next) => {
     }
 
     if (f_password != f_password_again) {
-        new errors.PasswordNotMatchError(next, "/user/deactivate");
+        // new errors.PasswordNotMatchError(next, "/user/deactivate");
+        req.flash("failure", "The passwords entered do not match. Please ensure both passwords match to proceed.");
+        res.redirect("/user/deactivate");
         return;
     }
 
     const user = appUtil.getSessionUser(req);
+    const userData = await dbUtil.fetchUser(user.id);
 
     const id = await dbUtil.doesUserHavePermission(user.id, f_password);
 
@@ -386,15 +412,17 @@ router.post("/user/deactivate/posted", async (req, res, next) => {
     let wasSuccessful = await dbUtil.deactivateUser(user.id);
 
     if (!wasSuccessful) {
+        req.flash("failure", "A problem occurred! Try again later on.");
         res.redirect("/user/profile");
         return;
     }
 
     appUtil.invalidateUser(req);
 
-    // TODO: Add toast popup message for successful deletion
-    // req.flash("successful", "Yay!");
+    const mail = new emails.StatusEmail(true, userData.name);
+    await mail.send(userData.email_address);
 
+    req.flash("success", "Your account was successfully deactivated");
     res.redirect("/user/login");
 });
 

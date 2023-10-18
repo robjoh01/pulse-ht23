@@ -1,3 +1,3 @@
 id,username,password,display_name,email_address,phone_number,image_url
 "2e889992-6993-42c2-9366-cf9249a1e61b","admin","$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa","Admin","admin@example.com","555-XXXX","https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg"
-"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","john","$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa","John Doe","johndoe@example.com","555-XXXX","https://upload.wikimedia.org/wikipedia/commons/a/a6/User-admin.svg"
+"c3dc5b5e-d54c-494c-afcc-ffd709b7b2ef","jasmin93","$2a$10$LAzKDxuiDFISTLk0ruL7..POJs1YWQ6Yi/S7dBMn4zTEjjJEEzRVa","Jasmin Breana","jasmin93@example.com","555-XXXX",""

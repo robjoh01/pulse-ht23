@@ -1,6 +1,14 @@
-h1, h2, h3 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+q,
+p,
+pre {
     margin-top: 0;
-    color: var(--color-fg-100);
+    color: var(--color-fg-100) !important;
 }
 
 a,
@@ -23,31 +31,38 @@ h3 {
     font-weight: 700;
 }
 
+pre {
+    white-space: pre-wrap;
+}
+
 p, span {
-    font-family: var(--font-poppins);
+    font-family: var(--font-poppins) !important;
     font-weight: 300;
     font-style: italic;
-    color: var(--color-fg-100);
+    color: var(--color-fg-100) !important;
 }
 
 a, span {
     font-style: normal;
 }
 
-a {
-    color: var(--color-link-100);
-    font-family: var(--font-manrope);
+a,
+a > button > i,
+a > i {
+    color: var(--color-link-100) !important;
+    font-family: var(--font-manrope) !important;
 
     &:hover {
-        color: var(--color-link-300);
+        color: var(--color-link-300) !important;
     }
 
     span {
-        color: var(--color-link-100);
-        font-family: var(--font-manrope);
+        color: var(--color-link-100) !important;
+        font-family: var(--font-manrope) !important;
     }
 
     &:hover span {
-        color: var(--color-link-300);
+        color: var(--color-link-300) !important;
     }
 }
+

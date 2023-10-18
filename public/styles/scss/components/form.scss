@@ -123,16 +123,6 @@
     .form-link {
         font-size: 0.9rem;
         text-align: center;
-
-        a {
-            color: var(--color-link-100);
-            text-decoration: underline;
-            font-weight: 600;
-
-            &:hover {
-                color: var(--color-link-300);
-            }
-        }
     }
 
     .form-button-link {
@@ -177,6 +167,10 @@
 
     input.form-date-input {
         cursor: pointer !important;
+    }
+
+    button {
+        color: var(--color-fg-100);
     }
 
     select {
@@ -244,5 +238,6 @@
         position: absolute;
         font-size: 1em;
         right: 0.5em;
+        color: var(--color-fg-200);
     }
 }

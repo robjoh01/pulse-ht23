@@ -4,6 +4,7 @@
 
 // Import dependencies
 const ejs = require("ejs");
+const flash = require("connect-flash");
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -32,28 +33,29 @@ const store = new session.MemoryStore();
 
 const port = process.env.PORT;
 
+app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-const sessionMiddleware = session({
+app.use(session({
     secret: process.env.COOKIE_SECRET,
     cookie: { maxAge: minutesToMilliseconds(45) },
     resave: false,
     saveUninitialized: false,
     store: store,
-});
-
-app.use(sessionMiddleware);
-
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
-
-app.use(bodyParser.urlencoded({
-    extended: true
 }));
 
-app.use(bodyParser.json());
+app.use(flash());
 
+app.use(function(req, res, next){
+    res.locals.message = req.flash();
+    next();
+});
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.set('json spaces', 4);
+
+app.use(express.urlencoded({ extended: false }));
 
 app.use(routes);
 app.use(routesUser);

@@ -2,6 +2,7 @@
 
 // Import dependencies
 const express = require("express");
+const flash = require("connect-flash");
 
 // Import libraries
 const dbUtil = require("./../src/utils/dbUtil.js");
