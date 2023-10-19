@@ -13,6 +13,10 @@ Welcome to **Pulse - Project Management System** 🚀
 
 _Pulse is a powerful custom reporting system developed with Node.js and Express to streamline project management for our team. It revolutionizes how we register team members, configure projects, set reporting frequencies, customize report formats, and provide insightful dashboards for better collaboration and efficiency._
 
+View [docs](https://htmlpreview.github.io/?https://github.com/robjoh01/pulse-ht23/blob/main/docs/index.html)
+
+View [coverage](https://htmlpreview.github.io/?https://github.com/robjoh01/pulse-ht23/blob/main/coverage/index.html)
+
 > [!NOTE]
 > This project uses `npm` package manager and `express.js` package for handling the server side.
 
