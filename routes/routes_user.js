@@ -3,20 +3,21 @@
 // Import dependencies
 const express = require("express");
 const flash = require("connect-flash");
-const multer  = require("multer");
-const upload = multer({ dest: "uploads/" });
+const multer = require("multer");
 
 // Import libraries
-const dbUtil = require("../src/utils/dbUtil.js");
-const appUtil = require("../src/utils/appUtil.js");
+const dbUtil = require("./../src/utils/dbUtil.js");
+const appUtil = require("./../src/utils/appUtil.js");
 const conversionUtil = require("../src/utils/conversionUtil.js");
 const profanityUtil = require("./../src/utils/profanityUtil.js");
 const hashUtil = require('../src/utils/hashUtil.js');
 const errors = require("../src/errors/errors.js");
 const emails = require("./../src/emails/emails.js");
+const uploadUtil = require("./../src/utils/uploadUtil.js");
 
 // Make instances
 const router = express.Router();
+const upload = multer({ storage: uploadUtil.getStorage() });
 
 router.get("/user/register", (req, res, next) => {
     let data = {};
@@ -426,15 +427,25 @@ router.post("/user/deactivate/posted", async (req, res, next) => {
     res.redirect("/user/login");
 });
 
-router.post("/user/profile/image/posted", async (req, res, next) => {
+router.post("/user/profile/image/posted", upload.single("f_image"), async (req, res, next) => {
     if (!appUtil.isUserAuthenticated(req)) {
         new errors.UserNotLoggedInError(next, "/user/profile");
         return;
     }
 
-    // TODO: Create logic for retrive the image and updating the data table in the database.
-    // https://www.npmjs.com/package/multer
+    let imageURL = req.file.path;
+    imageURL = imageURL.replace("public/", "/");
 
+    const user = appUtil.getSessionUser(req);
+
+    const wasSuccessful = await dbUtil.updateUser(user.id, null, null, null, null, imageURL);
+
+    if (!wasSuccessful) {
+        new errors.UnknownError(next, "/user/profile");
+        return;
+    }
+
+    req.flash("success", "Your profile image was successfully updated");
     res.redirect("/user/profile");
 });
 

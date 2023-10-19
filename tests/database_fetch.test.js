@@ -1,4 +1,4 @@
-const dbUtil = require("../src/utils/dbUtil.js");
+const dbUtil = require("./../src/utils/dbUtil.js");
 
 // expect();
 // .toBe();

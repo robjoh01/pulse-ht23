@@ -1,29 +1,45 @@
 "use strict";
 
-// const profileImg = document.getElementById("profileImg");
-// const profileImgFile = document.getElementById("profileImgFile");
-// const profileImgSubmit = document.getElementById("profileImgSubmit");
-// const profileImgReset = document.getElementById("profileImgReset");
+const profileImageForm = document.getElementById("profileImageForm");
+const profileImageInput = document.getElementById("profileImageInput");
+const profileImagePreview = document.getElementById("profileImagePreview");
 
-// localStorage.setItem("profileImgURL", profileImg.src);
+const defaultImageSrc = profileImagePreview.getAttribute("srcset");
 
-// profileImgReset.addEventListener("click", () => {
-//     profileImg.setAttribute("src", localStorage.getItem("profileImgURL"));
-// });
+profileImageInput.addEventListener("change", (e) => {
+    const file = profileImageInput.files[0];
 
-// profileImgFile.addEventListener("change", () => {
-//     const file = profileImgFile.files[0];
-//     const reader = new FileReader();
+    if (file) {
+        const fileReader = new FileReader();
 
-//     reader.onloadend = function () {
-//         localStorage.setItem("profileImgURL", profileImg.src);
-//         profileImg.setAttribute("src", reader.result);
-//     }
+        fileReader.onload = event => {
+            /* eslint-disable no-undef */
+            Toastify({
+                text: "Image selected",
+                className: "toastify-success",
+                duration: 3000,
+                gravity: "bottom",
+                position: "center"
+            }).showToast();
+            /* eslint-enable no-undef */
 
-//     if (!file) {
-//         profileImg.setAttribute("src", localStorage.getItem("profileImgURL"));
-//         return;
-//     }
+            profileImagePreview.setAttribute("srcset", event.target.result);
+        };
 
-//     reader.readAsDataURL(file);
-// });
+        fileReader.readAsDataURL(file);
+    }
+});
+
+profileImageForm.addEventListener("reset", () => {
+    profileImagePreview.setAttribute("srcset", defaultImageSrc);
+
+    /* eslint-disable no-undef */
+    Toastify({
+        text: "Image was defaulted",
+        className: "toastify-success",
+        duration: 3000,
+        gravity: "bottom",
+        position: "center"
+    }).showToast();
+    /* eslint-enable no-undef */
+});

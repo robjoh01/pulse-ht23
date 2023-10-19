@@ -6,13 +6,13 @@
         <main class="main">
             <div class="form-root">
                 <div class="form-container profile-container">
-                    <form class="profile-form-header" method="POST" action="/user/profile/image/posted" enctype="multipart/form-data">
-                        <label class="profile-image-label" for="profileImgFile" role="button">
+                    <form id="profileImageForm" class="profile-form-header" method="POST" action="/user/profile/image/posted" enctype="multipart/form-data">
+                        <label class="profile-image-label" for="profileImageInput" role="button">
                             <picture>
-                                <source srcset="<%= user.image_url %>">
-                                <img id="profileImg" src="/img/avatar.png" alt="Profile Image" width="120px" height="120px" fetchPriority="high">
+                                <source id="profileImagePreview" srcset="<%= user.image_url %>">
+                                <img id="profileImage" src="/img/avatar.png" alt="Profile Image" width="120px" height="120px" fetchPriority="high">
                             </picture>
-                            <input id="profileImgFile" type="file" accept="image/png, image/jpeg" name="f_img" required hidden>
+                            <input id="profileImageInput" type="file" accept="image/png, image/jpeg" name="f_image" required hidden>
                         </label>
                         <div class="profile-image-details-container">
                             <div class="profile-image-details">
