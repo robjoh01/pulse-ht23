@@ -45,7 +45,7 @@ async function onFileSelected (file) {
         className: "toastify-success",
         duration: 3000,
         gravity: "bottom",
-        position: "center",
+        position: "center"
     }).showToast();
     /* eslint-enable no-undef */
 
@@ -68,18 +68,18 @@ function displayToast (wasSuccessful, message) {
                 close: !wasSuccessful,
                 stopOnFocus: true,
                 gravity: "bottom",
-                position: "center",
+                position: "center"
             }).showToast();
             /* eslint-enable no-undef */
 
-            resolve();  // Resolve the promise after displaying the toast
-        }, 1500);  // Delay of 1500 milliseconds (1.5 seconds)
+            resolve(); // Resolve the promise after displaying the toast
+        }, 1500); // Delay of 1500 milliseconds (1.5 seconds)
     });
 }
 
-async function processStack(output) {
+async function processStack (output) {
     while (output.stack.length > 0) {
-        const obj = output.stack.pop();  // Pop the last message
+        const obj = output.stack.pop(); // Pop the last message
         await displayToast(obj.wasSuccessful, obj.message);
     }
 }
@@ -91,14 +91,14 @@ const uploadData = async (formData) => {
         className: "toastify-success",
         duration: 3000,
         gravity: "bottom",
-        position: "center",
+        position: "center"
     }).showToast();
     /* eslint-enable no-undef */
 
     try {
         const res = await fetch("/project/assign/upload", {
             method: "POST",
-            body: formData,
+            body: formData
         });
 
         if (!res.ok) {
@@ -110,13 +110,15 @@ const uploadData = async (formData) => {
     } catch (error) {
         console.error(`Error fetching data: ${error}`);
 
+        /* eslint-disable no-undef */
         Toastify({
             text: "Error fetching data. Please try again.",
             className: "toastify-error",
             duration: 3000,
             gravity: "bottom",
-            position: "center",
+            position: "center"
         }).showToast();
+        /* eslint-enable no-undef */
     }
 };
 

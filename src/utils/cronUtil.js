@@ -20,7 +20,17 @@ const cron = require("node-cron");
 
 */
 
+/**
+ * Utility for scheduling tasks using cron expressions.
+ * @namespace
+ */
 const cronUtil = {
+    /**
+     * Schedule a task based on a cron expression.
+     * @function
+     * @param {string} cronExpression - The cron expression for scheduling.
+     * @param {Function} callback - The function to execute on the defined schedule.
+     */
     schedule: function (cronExpression, callback) {
         cron.schedule(cronExpression, callback, {
             scheduled: true,

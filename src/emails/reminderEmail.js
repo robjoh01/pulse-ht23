@@ -1,10 +1,20 @@
 "use strict";
 
 const conversionUtil = require("../utils/conversionUtil.js");
-const dateUtil = require('../utils/dateUtil.js');
 const BaseEmail = require("./baseEmail.js");
 
+/**
+ * Class representing a reminder email for impending project report deadlines.
+ * @memberof emails
+ * @extends BaseEmail
+ */
 class ReminderEmail extends BaseEmail {
+    /**
+     * Create an instance of ReminderEmail.
+     * @constructor
+     * @param {object} assignment - The assignment details including project information.
+     * @param {number} hoursNotice - The number of hours before the report deadline.
+     */
     constructor (assignment, hoursNotice) {
         const data = {};
 

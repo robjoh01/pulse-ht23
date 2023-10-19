@@ -1,4 +1,11 @@
 {
+    "roots": [
+        "./tests"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+        "./src/**/*.js"
+    ],
     "bail": 1,
     "verbose": true,
     "coverageReporters": [

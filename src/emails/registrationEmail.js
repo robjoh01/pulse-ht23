@@ -4,8 +4,20 @@ const BaseEmail = require("./baseEmail.js");
 
 const { getBaseURL } = require("../utils/appUtil.js");
 
-/** Docs */
+/**
+ * Class representing an email for user registration confirmation.
+ * @memberof emails
+ * @extends BaseEmail
+ */
 class RegistrationEmail extends BaseEmail {
+    /**
+     * Create an instance of RegistrationEmail.
+     * @constructor
+     * @param {object} req - The Express request object.
+     * @param {string} name - The user's name.
+     * @param {string} username - The user's chosen username.
+     * @param {string} password - The user's chosen password.
+     */
     constructor (req, name, username, password) {
         const data = {};
 

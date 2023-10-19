@@ -11,8 +11,19 @@ const validator = require("email-validator");
 
 const errors = require("./../errors/errors.js");
 
-/** Docs */
+/**
+ * Base class for sending emails using Node.js and nodemailer.
+ * @memberof emails
+ * @class BaseEmail
+ */
 class BaseEmail {
+    /**
+     * Create an instance of BaseEmail.
+     * @constructor
+     * @param {string} subject - The subject of the email.
+     * @param {string} template - The template file path for the email content.
+     * @param {object} data - The data to be rendered in the email template.
+     */
     constructor (subject, template, data) {
         this.subject = subject;
         this.template = path.join(__dirname, "/templates/", template);
@@ -20,20 +31,23 @@ class BaseEmail {
     }
 
     /**
-     * Send email to somebody
-     * @param {string} to Messenger receiver.
-     * @return {boolean} was successful or not.
+     * Send email to a specified recipient.
+     * @async
+     * @param {string} to - The recipient's email address.
+     * @returns {boolean} - Indicates whether the email was sent successfully.
+     * @throws Will throw an error if the email address is invalid or sending fails.
      */
     async send (to) {
         if (process.env.ENABLE_EMAIL === "false") {
             return;
         }
 
+        // Validate the email address
         const validation = validator.validate(to);
 
-        // "Invalid email address!"
-
-        if (!validation) { throw new errors.UnknownError(null); }
+        if (!validation) {
+            throw new errors.UnknownError("Invalid email address!");
+        }
 
         const transporter = nodeMailer.createTransport({
             host: process.env.EMAIL_HOST,

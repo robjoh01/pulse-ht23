@@ -1,5 +1,9 @@
 const dbUtil = require("../src/utils/dbUtil.js");
 const hashUtil = require('../src/utils/hashUtil.js');
+const cronUtil = require('../src/utils/cronUtil.js');
+const profanityUtil = require('../src/utils/profanityUtil.js');
+const conversionUtil = require('../src/utils/conversionUtil.js');
+const appUtil = require('../src/utils/appUtil.js');
 
 // expect();
 // .toBe();

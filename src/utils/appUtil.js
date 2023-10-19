@@ -1,7 +1,17 @@
 "use strict";
 
-/** @namespace */
+/**
+ * Utility functions related to the application.
+ * @namespace appUtil
+ */
 const appUtil = {
+    /**
+     * Get the base URL from the request.
+     * @function
+     * @param {Object} req - The request Object.
+     * @return {string} The base URL.
+     * @memberof appUtil
+     */
     getBaseURL: function (req) {
         const protocol = req.protocol;
         const host = req.hostname;
@@ -9,6 +19,14 @@ const appUtil = {
 
         return `${protocol}://${host}:${port}`;
     },
+
+    /**
+     * Gets the full URL including protocol, host, port, and the original URL.
+     * @function
+     * @param {Object} req - The request Object.
+     * @return {string} The full URL.
+     * @memberof appUtil
+     */
     getFullURL: function (req) {
         const protocol = req.protocol;
         const host = req.hostname;
@@ -17,28 +35,60 @@ const appUtil = {
 
         return `${protocol}://${host}:${port}${url}`;
     },
+
+    /**
+     * Retrieves the session Object from the request.
+     * @function
+     * @param {Object} req - The request Object.
+     * @return {Object} The session Object.
+     * @memberof appUtil
+     */
     getSession: function (req) {
         return req.session;
     },
+
+    /**
+     * Retrieves the user Object from the session.
+     * @function
+     * @param {Object} req - The request Object.
+     * @return {Object} The user Object from the session.
+     * @memberof appUtil
+     */
     getSessionUser: function (req) {
         return req.session.user;
     },
+
+    /**
+     * Checks if the user is an employee.
+     * @function
+     * @param {Object} req - The request Object.
+     * @return {boolean} A value indicating if the user is an employee.
+     * @memberof appUtil
+     */
     isUserAnEmployee: function (req) {
         return req.session.user.isEmployee;
     },
+
     /**
-    * Checks if the user is logged in. If not, sign in page will be redirected. Otherwise, continue back on the page.
-    * @return {boolean} A value either {true} or {false}.
-    * @memberof appUtil
-    */
+     * Checks if the user is authenticated (logged in).
+     * @function
+     * @param {Object} req - The request Object.
+     * @return {boolean} A value indicating if the user is authenticated.
+     * @memberof appUtil
+     */
     isUserAuthenticated: function (req) {
         return req.session.authenticated;
     },
+
     /**
-    * Checks if the user is logged in. If not, sign in page will be redirected. Otherwise, continue back on the page.
-    * @return {boolean} A value either {true} or {false}.
-    * @memberof appUtil
-    */
+     * Checks if the user is authenticated.
+     * If not, redirects to the login page.
+     * @function
+     * @param {Object} req - The request Object.
+     * @param {Object} res - The response Object.
+     * @return {boolean} A value either true or false.
+     * @memberof appUtil
+     */
     hasUserLoggedIn: function (req, res) {
         if (!this.isUserAuthenticated(req)) {
             res.redirect("/user/login");
@@ -47,10 +97,15 @@ const appUtil = {
 
         return true;
     },
+
     /**
-    * Authenticate and set up a global access to the user. Stores inside a cookie session (server-side).
-    * @return {void}
-    */
+     * Authenticates a user and sets up a global access to the user by storing user information in the session (server-side).
+     * @function
+     * @param {Object} req - The request Object.
+     * @param {string} id - The user ID.
+     * @param {boolean} isEmployee - Indicates if the user is an employee.
+     * @memberof appUtil
+     */
     authenticateUser: function (req, id, isEmployee) {
         req.session.authenticated = true;
 
@@ -59,10 +114,13 @@ const appUtil = {
             isEmployee
         };
     },
+
     /**
-    * Invalidate a user. Removes the privileges from authentication.
-    * @return {void}
-    */
+     * Invalidate a user's session and log them out.
+     * @function
+     * @param {Object} req - The request Object.
+     * @memberof appUtil
+     */
     invalidateUser: function (req) {
         req.session.authenticated = false;
         req.session.user = { };

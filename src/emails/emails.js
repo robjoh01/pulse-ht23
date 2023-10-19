@@ -7,6 +7,7 @@ const PasswordEmail = require("./passwordEmail.js");
 const ReminderEmail = require("./reminderEmail.js");
 const StatusEmail = require("./statusEmail.js");
 
+/** @namespace */
 module.exports = {
     BaseEmail,
     WelcomeEmail,

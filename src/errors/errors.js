@@ -14,6 +14,7 @@ const ProjectNotFoundError = require("./projectNotFoundError.js");
 const ReportNotFoundError = require("./reportNotFoundError.js");
 const UnknownError = require("./unknownError.js");
 
+/** @namespace */
 module.exports = {
     PasswordNotMatchError,
     BadCredentialsError,

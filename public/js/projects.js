@@ -10,7 +10,7 @@ async function copyToClipboard (text) {
             className: "toastify-success",
             duration: 3000,
             gravity: "bottom",
-            position: "center",
+            position: "center"
         }).showToast();
     } catch (err) {
         console.error("Failed to copy: ", err);
