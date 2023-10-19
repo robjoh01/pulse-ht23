@@ -87,9 +87,9 @@ router.get("/user/logout", async (req, res, next) => {
 
     await dbUtil.logoutUser(user.id);
 
-    req.session.destroy();
+    appUtil.invalidateUser(req);
 
-    req.flash("success", "Your was successfully logged out");
+    req.flash("success", "You was successfully logged out");
     res.redirect("/user/login");
 });
 
