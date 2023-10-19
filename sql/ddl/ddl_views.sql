@@ -115,13 +115,13 @@ SELECT
         WHEN COUNT(DISTINCT pd.id) > 0 THEN
             (SELECT MIN(report_deadline) FROM project_deadline WHERE report_deadline >= CURRENT_DATE())
         WHEN p.report_frequency = 'daily' THEN
-            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 1 DAY, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 1 DAY, p.end_date))
+            midnight_date(LEAST(GREATEST(p.start_date, CURRENT_DATE()), p.end_date))
         WHEN p.report_frequency = 'weekly' THEN
-            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 1 WEEK, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 1 WEEK, p.end_date))
+            midnight_date(LEAST(adjust_date(GREATEST(p.start_date + INTERVAL 1 WEEK, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY + INTERVAL 1 WEEK)), p.end_date))
         WHEN p.report_frequency = 'fortnightly' THEN
-            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 2 WEEK, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 2 WEEK, p.end_date))
+            midnight_date(LEAST(adjust_date(GREATEST(p.start_date + INTERVAL 2 WEEK, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY + INTERVAL 2 WEEK)), p.end_date))
         WHEN p.report_frequency = 'monthly' THEN
-            midnight_date(LEAST(GREATEST(p.start_date + INTERVAL 1 MONTH, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY) + INTERVAL 1 MONTH, p.end_date))
+            midnight_date(LEAST(adjust_date(GREATEST(p.start_date + INTERVAL 1 MONTH, CURRENT_DATE() + INTERVAL(DAYOFWEEK(p.start_date) - DAYOFWEEK(CURRENT_DATE())) DAY + INTERVAL 1 MONTH)), p.end_date))
     END AS `deadline_date`,
     COUNT(DISTINCT r.id) AS `report_count`,
     COUNT(DISTINCT a.project_id) AS `assignment_count`

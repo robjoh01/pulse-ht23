@@ -44,15 +44,19 @@ END;;
 CREATE FUNCTION adjust_date(date_to_adjust DATE) RETURNS DATE
 BEGIN
     DECLARE adjusted_date DATE;
-    
+
     -- Check if the provided date is a Saturday or Sunday
-    IF DAYOFWEEK(date_to_adjust) IN (1, 7) THEN
-        -- Adjust to the nearest Friday
-        SET adjusted_date = date_to_adjust + INTERVAL (5 - DAYOFWEEK(date_to_adjust)) DAY;
-    ELSE
-        SET adjusted_date = date_to_adjust;
-    END IF;
-    
+    CASE DAYOFWEEK(date_to_adjust)
+        WHEN 1 THEN
+            -- Adjust to the nearest Friday
+            SET adjusted_date = date_to_adjust - INTERVAL 2 DAY;
+        WHEN 7 THEN
+            -- Adjust to the nearest Friday
+            SET adjusted_date = date_to_adjust - INTERVAL 1 DAY;
+        ELSE
+            SET adjusted_date = date_to_adjust;
+    END CASE;
+
     RETURN adjusted_date;
 END;;
 
