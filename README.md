@@ -32,15 +32,17 @@ View [coverage](https://htmlpreview.github.io/?https://github.com/robjoh01/pulse
 - **Testing**: Includes [Jest](https://www.npmjs.com/package/jest) for testing and ensuring code coverage.
 - **NPM Packages**: Utilizes a wide range of npm packages for added functionalities and productivity.
 
-## Installment
+## Installment (Automatic)
 
-You can either run `setup.bash`:
+Run `setup.bash` to install and start the server:
 
 ```console
 $ ./setup.bash
 ```
 
-or install manually:
+## Installment (Manual)
+
+Run these commands to install and start the server:
 
 ```console
 $ npm install
