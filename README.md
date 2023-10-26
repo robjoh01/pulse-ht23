@@ -34,6 +34,14 @@ View [coverage](https://htmlpreview.github.io/?https://github.com/robjoh01/pulse
 
 ## Installment
 
+You can either run `setup.bash`:
+
+```console
+$ ./setup.bash
+```
+
+or install manually:
+
 ```console
 $ npm install
 ```
@@ -49,13 +57,13 @@ $ touch .env
 PORT=<number>
 SALT_ROUNDS=<number>
 COOKIE_SECRET=<string>
-CONFIG_MODE=<dev|dist>
+CONFIG_MODE=<string> # dev|dist
 
 # Development Config
 FORCE_LOGIN=<boolean>
 ADMIN_ID=<guid>
 EMPLOYEE_ID=<guid>
-FORCE_ID=$ADMIN_ID <ADMIN_ID|EMPLOYEE_ID>
+FORCE_ID=$ADMIN_ID # ADMIN_ID|EMPLOYEE_ID
 
 # Email config
 ENABLE_EMAIL=<boolean>
@@ -94,6 +102,20 @@ Then initialize the database locally:
 ```console
 $ cd sql
 $ ./scripts/run.bash
+```
+
+## Run server
+
+To run the server, you can either run in dev mode:
+
+```console
+$ npm run dev
+```
+
+or you can run in distribution mode:
+
+```console
+$ npm run dist
 ```
 
 ## Stylelint
