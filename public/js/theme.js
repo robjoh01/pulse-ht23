@@ -1,6 +1,6 @@
 "use strict";
 
-const matchMedia = window.matchMedia?.("(prefers-color-scheme: dark)");
+const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
 const overrideColorTheme = localStorage.getItem("color-theme");
 
 if (overrideColorTheme) {
